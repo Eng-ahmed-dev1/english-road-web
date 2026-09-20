@@ -1,32 +1,72 @@
-# React + TypeScript + Vite
+# 🚀 English Road (ER) • Interactive Learning Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2FEnglish-Road)
 
-Currently, two official plugins are available:
+> **English Road** is a state-of-the-art interactive English learning platform designed for high school curricula and interactive classroom smartboards. Engineered with React 19, TypeScript, Vite, and Tailwind CSS v4.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌟 Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🏛️ **Comprehensive Curriculum Coverage (Units 1 to 12):**
+  - **36 Interactive Lessons** across 12 Units (Part 1, Part 2, and Lesson 5 Writing Skills).
+  - **Over 6,400 Words** of authentic, ministry-aligned reading passages with interactive keyword highlighting and tooltips.
+  - **266 Key Vocabulary Items** with definitions, part of speech, Arabic translations, and contextual examples.
+  - **1,342 Additional Vocabulary Items** covering all reading and listening texts.
+  - **364 Prepositions and Idiomatic Expressions**.
 
-## Expanding the Oxlint configuration
+- 🎯 **Interactive Assessment & Practice:**
+  - **847 Quiz Questions** across three dedicated modes: Definitions Quiz, Collocations Quiz, and Fill-in-the-Blanks.
+  - **186 Sentence Builder Puzzles** with drag-and-click word chunks and real-time validation.
+  - **Web Speech API Pronunciation** for authentic audio pronunciation.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- 🎬 **Classroom Smartboard Features (`StoryHook`):**
+  - Animated visual hooks for every unit with discussion prompts, classroom checkboxes, and scientific/cultural "Did You Know?" fun facts.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- ✍️ **Specialized Interactive Writing Studios:**
+  - **Blog Post Studio** (Unit 1).
+  - **Diary Activities Studio** (Unit 10).
+  - **Poetry Studio with Wordsworth Rhyme Inspector** (Unit 11).
+  - **Biography Studio with Naguib Mahfouz Milestone Timeline** (Unit 12).
+  - Live word counter, 5-step checklist validation, and one-click copy to clipboard.
+
+- 🌓 **Modern UI & Responsive Design:**
+  - Seamless Dark and Light theme toggle.
+  - Fully responsive layout optimized for mobile phones, tablets, desktop, and smart interactive whiteboards.
+
+---
+
+## 🚀 Quick Start & Local Development
+
+```bash
+# Clone the repository
+git clone https://github.com/Eng-ahmed-dev1/English-Road.git
+
+# Navigate into the project
+cd English-Road
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 🌐 Deploy to Vercel
+
+Click the button below to deploy this project directly to Vercel in 1 click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2FEnglish-Road)
+
+---
+
+## 👨‍💻 Author & Copyright
+
+**Developed by:** Eng. Ahmed Alaa  
+**GitHub:** [@Eng-ahmed-dev1](https://github.com/Eng-ahmed-dev1)  
+**Copyright:** © 2026 Eng. Ahmed Alaa • All Rights Reserved.
