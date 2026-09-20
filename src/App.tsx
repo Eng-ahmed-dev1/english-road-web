@@ -78,6 +78,7 @@ export function App() {
           <StoryReader
             passage={currentUnit.readingPassage}
             keyVocabulary={[...currentUnit.keyVocabulary, ...currentUnit.additionalVocabulary]}
+            phrasesAndExpressions={currentUnit.phrasesAndExpressions}
             onCompleteReading={markReadingDone}
             isCompleted={currentUnitProgress.readingCompleted}
             unitNumber={currentUnit.unitNumber}
