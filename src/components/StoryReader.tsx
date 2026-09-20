@@ -36,7 +36,75 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 }) => {
   const [selectedWord, setSelectedWord] = useState<SelectedWordInfo | null>(null);
 
-  // Helper to generate candidate stems (handles plurals, inflections, phrasal verbs)
+  // Comprehensive irregular verbs dictionary for secondary school curriculum reading passages
+  const IRREGULAR_VERBS: Record<string, string> = {
+    laid: 'lay',
+    took: 'take',
+    taken: 'take',
+    built: 'build',
+    made: 'make',
+    began: 'begin',
+    begun: 'begin',
+    came: 'come',
+    ran: 'run',
+    saw: 'see',
+    seen: 'see',
+    went: 'go',
+    gone: 'go',
+    knew: 'know',
+    known: 'know',
+    spoke: 'speak',
+    spoken: 'speak',
+    wrote: 'write',
+    written: 'write',
+    drove: 'drive',
+    driven: 'drive',
+    chose: 'choose',
+    chosen: 'choose',
+    held: 'hold',
+    kept: 'keep',
+    left: 'leave',
+    lost: 'lose',
+    meant: 'mean',
+    met: 'meet',
+    paid: 'pay',
+    said: 'say',
+    sold: 'sell',
+    sent: 'send',
+    spent: 'spend',
+    stood: 'stand',
+    told: 'tell',
+    thought: 'think',
+    understood: 'understand',
+    won: 'win',
+    became: 'become',
+    fell: 'fall',
+    fallen: 'fall',
+    broke: 'break',
+    broken: 'break',
+    froze: 'freeze',
+    frozen: 'freeze',
+    woke: 'wake',
+    woken: 'wake',
+    hid: 'hide',
+    hidden: 'hide',
+    ate: 'eat',
+    eaten: 'eat',
+    bit: 'bite',
+    bitten: 'bite',
+    blew: 'blow',
+    blown: 'blow',
+    flew: 'fly',
+    flown: 'fly',
+    grew: 'grow',
+    grown: 'grow',
+    threw: 'throw',
+    thrown: 'throw',
+    drew: 'draw',
+    drawn: 'draw'
+  };
+
+  // Helper to generate candidate stems (handles plurals, inflections, compound nouns, phrasal verbs)
   const getCandidateStems = (str: string): string[] => {
     const s = str.toLowerCase().trim();
     const candidates = new Set<string>();
@@ -46,14 +114,22 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     const stripped = s.replace(/^[“"'‘\s]+|[”"'’,\.\!\?\s]+$/g, '').trim();
     candidates.add(stripped);
 
-    // Check if multi-word phrase or phrasal verb (e.g., "kicks off", "wrapped up like mummies")
+    // Single-word irregular verbs
+    if (IRREGULAR_VERBS[stripped]) {
+      candidates.add(IRREGULAR_VERBS[stripped]);
+    }
+
+    // Multi-word phrase processing
     const words = stripped.split(/\s+/);
     if (words.length > 1) {
-      // Un-inflect the first word of a phrasal verb (e.g., "kicks off" -> "kick off")
       const first = words[0];
-      const rest = words.slice(1).join(' ');
-      const uninflectedFirst: string[] = [];
+      const last = words[words.length - 1];
+      const restAfterFirst = words.slice(1).join(' ');
+      const restBeforeLast = words.slice(0, words.length - 1).join(' ');
 
+      // 1. Un-inflect the first word (phrasal verbs, e.g. "charges full steam ahead", "took over", "laid the groundwork")
+      const uninflectedFirst: string[] = [];
+      if (IRREGULAR_VERBS[first]) uninflectedFirst.push(IRREGULAR_VERBS[first]);
       if (first.endsWith('ies')) uninflectedFirst.push(first.slice(0, -3) + 'y');
       if (first.endsWith('es')) uninflectedFirst.push(first.slice(0, -2));
       if (first.endsWith('s')) uninflectedFirst.push(first.slice(0, -1));
@@ -65,38 +141,65 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
         uninflectedFirst.push(first.slice(0, -3));
         uninflectedFirst.push(first.slice(0, -3) + 'e');
       }
+      uninflectedFirst.forEach(uf => candidates.add(`${uf} ${restAfterFirst}`));
 
-      uninflectedFirst.forEach(uf => candidates.add(`${uf} ${rest}`));
+      // 2. Un-inflect the last word (compound nouns, e.g. "Cotton gins" -> "cotton gin", "human skills" -> "human skill")
+      const uninflectedLast: string[] = [];
+      if (last.endsWith('ies')) uninflectedLast.push(last.slice(0, -3) + 'y');
+      if (last.endsWith('es')) uninflectedLast.push(last.slice(0, -2));
+      if (last.endsWith('s')) uninflectedLast.push(last.slice(0, -1));
+      if (last.endsWith('ed')) {
+        uninflectedLast.push(last.slice(0, -2));
+        uninflectedLast.push(last.slice(0, -1));
+      }
+      if (last.endsWith('ing')) {
+        uninflectedLast.push(last.slice(0, -3));
+        uninflectedLast.push(last.slice(0, -3) + 'e');
+      }
+      uninflectedLast.forEach(ul => candidates.add(`${restBeforeLast} ${ul}`));
+
+      // 3. Middle adverb stripping (e.g. "relied heavily on" -> "relied on", "rely on")
+      const commonAdverbs = new Set(['heavily', 'deeply', 'greatly', 'completely', 'entirely', 'rapidly', 'gradually', 'firmly', 'strongly']);
+      const nonAdverbWords = words.filter(w => !commonAdverbs.has(w));
+      if (nonAdverbWords.length !== words.length) {
+        const strippedAdverbPhrase = nonAdverbWords.join(' ');
+        candidates.add(strippedAdverbPhrase);
+        const firstNonAdv = nonAdverbWords[0];
+        const restNonAdv = nonAdverbWords.slice(1).join(' ');
+        if (IRREGULAR_VERBS[firstNonAdv]) candidates.add(`${IRREGULAR_VERBS[firstNonAdv]} ${restNonAdv}`);
+        if (firstNonAdv.endsWith('ed')) {
+          candidates.add(`${firstNonAdv.slice(0, -2)} ${restNonAdv}`);
+          candidates.add(`${firstNonAdv.slice(0, -1)} ${restNonAdv}`);
+        }
+        if (firstNonAdv.endsWith('s')) candidates.add(`${firstNonAdv.slice(0, -1)} ${restNonAdv}`);
+      }
     }
 
     // Single-word inflection variants
     [s, stripped].forEach(word => {
-      // Plural -ies -> -y (emergencies -> emergency, facilities -> facility, difficulties -> difficulty)
+      if (IRREGULAR_VERBS[word]) {
+        candidates.add(IRREGULAR_VERBS[word]);
+      }
       if (word.endsWith('ies')) {
         candidates.add(word.slice(0, -3) + 'y');
       }
-      // Plural -ves -> -f or -fe (lives -> life)
       if (word.endsWith('ves')) {
         candidates.add(word.slice(0, -3) + 'f');
         candidates.add(word.slice(0, -3) + 'fe');
       }
-      // Plural -es
       if (word.endsWith('es')) {
         candidates.add(word.slice(0, -2));
       }
-      // Plural / 3rd person -s
       if (word.endsWith('s')) {
         candidates.add(word.slice(0, -1));
       }
-      // Past tense -ed
       if (word.endsWith('ed')) {
         candidates.add(word.slice(0, -2));
-        candidates.add(word.slice(0, -1)); // e.g., fascinated -> fascinate
+        candidates.add(word.slice(0, -1));
       }
-      // Continuous -ing
       if (word.endsWith('ing')) {
         candidates.add(word.slice(0, -3));
-        candidates.add(word.slice(0, -3) + 'e'); // e.g., managing -> manage
+        candidates.add(word.slice(0, -3) + 'e');
       }
     });
 
@@ -142,8 +245,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             word: foundPhrase.phrase,
             partOfSpeech: typeLabel,
             arabicMeaning: foundPhrase.arabicMeaning,
-            definition: `An authentic ${foundPhrase.type} from this unit's curriculum.`,
-            exampleSentence: `From text: "${wordStr}"`,
+            definition: foundPhrase.definition || `An authentic ${foundPhrase.type} from this unit's curriculum.`,
+            exampleSentence: foundPhrase.exampleSentence || `From text: "${wordStr}"`,
             type: foundPhrase.type
           };
         }
@@ -182,8 +285,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             word: p.phrase,
             partOfSpeech: typeLabel,
             arabicMeaning: p.arabicMeaning,
-            definition: `An authentic ${p.type} from this unit's curriculum.`,
-            exampleSentence: `From text: "${wordStr}"`,
+            definition: p.definition || `An authentic ${p.type} from this unit's curriculum.`,
+            exampleSentence: p.exampleSentence || `From text: "${wordStr}"`,
             type: p.type
           };
         }

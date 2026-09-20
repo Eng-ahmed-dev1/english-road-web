@@ -735,6 +735,14 @@ export const UNIT_2_LESSONS_3_4_DATA: UnitData = {
       phrase: 'shaped by',
       arabicMeaning: 'مُشكَّل / متأثر بـ',
       type: 'preposition'
+    },
+    {
+      id: 'u2-l34-p25',
+      phrase: 'come to a standstill',
+      arabicMeaning: 'يتوقف تماماً عن الحركة أو العمل',
+      type: 'idiom',
+      definition: 'to stop completely and halt all activity or operation',
+      exampleSentence: 'If modern technology fails, our daily lives could come to a standstill.'
     }
   ],
   definitionsQuiz: [

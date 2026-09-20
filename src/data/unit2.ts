@@ -656,6 +656,42 @@ export const UNIT_2_DATA: UnitData = {
       definition: 'in spite of that; nevertheless; but still',
       exampleSentence: 'Technology is advancing rapidly, yet our cultural values remain grounded.',
       category: 'reading_listening'
+    },
+    {
+      id: 'u2-a49',
+      word: 'Industrial Revolution',
+      partOfSpeech: 'n',
+      arabicMeaning: 'الثورة الصناعية',
+      definition: 'the period of rapid industrial growth characterized by the introduction of machinery and factories',
+      exampleSentence: 'During the Industrial Revolution, Egypt began importing advanced machinery from Europe.',
+      category: 'reading_listening'
+    },
+    {
+      id: 'u2-a50',
+      word: 'disappear',
+      partOfSpeech: 'v (ed)',
+      arabicMeaning: 'يختفي / يتلاشى / يندثر',
+      definition: 'to cease to exist, be in use, or be visible; to vanish',
+      exampleSentence: 'Some traditional crafts disappeared as modern industrial factories expanded.',
+      category: 'reading_listening'
+    },
+    {
+      id: 'u2-a51',
+      word: 'human skills',
+      partOfSpeech: 'n',
+      arabicMeaning: 'المهارات والقدرات البشرية الإبداعية',
+      definition: 'the unique craft, judgment, and creative abilities of human beings rather than automated machines',
+      exampleSentence: 'Machines are tools, not replacements for human skills.',
+      category: 'reading_listening'
+    },
+    {
+      id: 'u2-a52',
+      word: 'digital age',
+      partOfSpeech: 'n',
+      arabicMeaning: 'العصر الرقمي / عصر التكنولوجيا الحديثة',
+      definition: 'the modern historical period characterized by computer technology, internet networks, and digital automation',
+      exampleSentence: 'Egypt is charging full steam ahead into the digital age with smart infrastructure.',
+      category: 'reading_listening'
     }
   ],
   phrasesAndExpressions: [
@@ -663,139 +699,217 @@ export const UNIT_2_DATA: UnitData = {
       id: 'u2-p1',
       phrase: 'at the end',
       arabicMeaning: 'في النهاية',
-      type: 'expression'
+      type: 'expression',
+      definition: 'finally; at the conclusion of an event or period of time',
+      exampleSentence: 'At the end of the lesson, students discuss the impact of machines.'
     },
     {
       id: 'u2-p2',
       phrase: 'blend old and new',
-      arabicMeaning: 'يمزج القديم بالجديد',
-      type: 'expression'
+      arabicMeaning: 'يمزج القديم بالجديد / يجمع بين الأصالة والمعاصرة',
+      type: 'expression',
+      definition: 'to combine traditional heritage and modern technology in a harmonious, balanced way',
+      exampleSentence: 'Museums use 3D laser scanning to preserve ancient artifacts, blending old and new.'
     },
     {
       id: 'u2-p3',
       phrase: 'charge full steam ahead',
-      arabicMeaning: 'يندفع بقوة كاملة / ينطلق بأقصى سرعة',
-      type: 'idiom'
+      arabicMeaning: 'يندفع بقوة كاملة / ينطلق بأقصى سرعة وعزيمة',
+      type: 'idiom',
+      definition: 'to move forward or progress with maximum energy, determination, and speed',
+      exampleSentence: 'Egypt charges full steam ahead into the digital age with modern infrastructure.'
     },
     {
       id: 'u2-p4',
       phrase: 'come to a standstill',
       arabicMeaning: 'يتوقف تماماً',
-      type: 'idiom'
+      type: 'idiom',
+      definition: 'to stop completely and cease all movement or operation',
+      exampleSentence: 'Without electricity, modern computerized factories come to a standstill.'
     },
     {
       id: 'u2-p5',
       phrase: 'connect ... with',
       arabicMeaning: 'يربط ... بـ',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to join or establish a relation between two distinct elements',
+      exampleSentence: 'High-speed trains connect Cairo with new industrial cities.'
     },
     {
       id: 'u2-p6',
       phrase: 'connected to',
-      arabicMeaning: 'متصل بـ',
-      type: 'preposition'
+      arabicMeaning: 'متصل بـ / مرتبط بـ',
+      type: 'preposition',
+      definition: 'joined, linked, or maintaining a deep, meaningful relationship with something',
+      exampleSentence: 'Even in the digital era, Egyptian culture remains deeply connected to its past.'
     },
     {
       id: 'u2-p7',
       phrase: 'continue to',
       arabicMeaning: 'يستمر في',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to keep doing an action without interruption',
+      exampleSentence: 'Egyptian scientists continue to develop renewable energy solutions.'
     },
     {
       id: 'u2-p8',
       phrase: 'depend on',
       arabicMeaning: 'يعتمد على',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to rely on someone or something for support or success',
+      exampleSentence: 'Agricultural irrigation projects depend on automated pumping stations.'
     },
     {
       id: 'u2-p9',
       phrase: 'drive forward projects',
       arabicMeaning: 'يدفع المشروعات إلى الأمام',
-      type: 'expression'
+      type: 'expression',
+      definition: 'to actively advance and execute large-scale initiatives',
+      exampleSentence: 'Public-private partnerships drive forward projects in artificial intelligence.'
     },
     {
       id: 'u2-p10',
       phrase: 'give advice on',
       arabicMeaning: 'يُقدّم نصيحة بشأن',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to offer guidance and recommendations about a specific matter',
+      exampleSentence: 'Experienced technicians give advice on troubleshooting computer hardware.'
     },
     {
       id: 'u2-p11',
       phrase: 'have a long history',
-      arabicMeaning: 'لديه تاريخٌ طويل',
-      type: 'expression'
+      arabicMeaning: 'لديه تاريخٌ طويل وممتد',
+      type: 'expression',
+      definition: 'to possess a rich and lengthy past in a particular domain',
+      exampleSentence: 'Egypt has a long and fascinating history with machines and engineering.'
     },
     {
       id: 'u2-p12',
       phrase: 'have a problem with',
       arabicMeaning: 'لديه مشكلة مع',
-      type: 'expression'
+      type: 'expression',
+      definition: 'to encounter a difficulty or obstacle regarding something',
+      exampleSentence: 'Call customer support if you have a problem with your software.'
     },
     {
       id: 'u2-p13',
       phrase: 'different to/from',
       arabicMeaning: 'مختلف عن',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'not the same as another entity',
+      exampleSentence: 'Modern automated robots are very different from simple ancient tools.'
     },
     {
       id: 'u2-p14',
       phrase: 'enhance with',
-      arabicMeaning: 'يعزز بـ',
-      type: 'preposition'
+      arabicMeaning: 'يعزز بـ / يثري بواسطة',
+      type: 'preposition',
+      definition: 'to improve quality or strength using additional tools or features',
+      exampleSentence: 'Engineers enhance productivity with computerized control panels.'
     },
     {
       id: 'u2-p15',
       phrase: 'import from',
       arabicMeaning: 'يستورد من',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to bring goods or machinery into a nation from abroad',
+      exampleSentence: 'During the 19th century, Egypt imported steam machinery from Britain.'
     },
     {
       id: 'u2-p16',
       phrase: 'rely on',
-      arabicMeaning: 'يعتمد على',
-      type: 'preposition'
+      arabicMeaning: 'يعتمد على / يتكل على',
+      type: 'preposition',
+      definition: 'to depend on something with confidence or necessity',
+      exampleSentence: 'Factories rely on automated machinery to produce goods efficiently.'
     },
     {
       id: 'u2-p17',
       phrase: 'lay the groundwork',
-      arabicMeaning: 'يضع / يرسي الأساس',
-      type: 'idiom'
+      arabicMeaning: 'يضع / يرسي حجر الأساس / يمهد الطريق لـ',
+      type: 'idiom',
+      definition: 'to do the basic work in order to make it possible for future success or progress to happen',
+      exampleSentence: 'Ancient Egyptian innovations laid the groundwork for future engineering marvels.'
     },
     {
       id: 'u2-p18',
       phrase: 'look to the future',
       arabicMeaning: 'يتطلع إلى المستقبل',
-      type: 'expression'
+      type: 'expression',
+      definition: 'to plan ahead with optimism and visionary thinking',
+      exampleSentence: 'Egypt respects its heritage while looking to the future with artificial intelligence.'
     },
     {
       id: 'u2-p19',
       phrase: 'play an important role',
-      arabicMeaning: 'يلعب دوراً مهماً',
-      type: 'expression'
+      arabicMeaning: 'يلعب دوراً مهماً / يؤدي دوراً رئيسياً',
+      type: 'expression',
+      definition: 'to have a significant influence, effect, or function in an outcome or history',
+      exampleSentence: 'Machines have played an important role in shaping the nation.'
     },
     {
       id: 'u2-p20',
       phrase: 'show as offline',
       arabicMeaning: 'يظهر كغير متصل',
-      type: 'expression'
+      type: 'expression',
+      definition: 'to display an indicator that a device is disconnected from the network',
+      exampleSentence: 'The printer may show as offline if the network cable is loose.'
     },
     {
       id: 'u2-p21',
       phrase: 'take over',
-      arabicMeaning: 'يتولى عمل / يسيطر على',
-      type: 'idiom'
+      arabicMeaning: 'يتولى عمل / يسيطر على / يحل محل',
+      type: 'idiom',
+      definition: 'to assume control, management, or responsibility for something',
+      exampleSentence: 'Some traditional crafts disappeared as industrial machines took over.'
     },
     {
       id: 'u2-p22',
       phrase: 'work with',
-      arabicMeaning: 'يعمل مع',
-      type: 'preposition'
+      arabicMeaning: 'يعمل مع / يتعامل مع',
+      type: 'preposition',
+      definition: 'to collaborate or utilize specific tools and materials',
+      exampleSentence: 'Egypt is now working with advanced technology like artificial intelligence.'
     },
     {
       id: 'u2-p23',
       phrase: 'worry about',
       arabicMeaning: 'يقلق بشأن',
-      type: 'preposition'
+      type: 'preposition',
+      definition: 'to feel anxious or concerned about a potential issue',
+      exampleSentence: 'Some workers worry about automated machines replacing manual jobs.'
+    },
+    {
+      id: 'u2-p24',
+      phrase: 'relied heavily on',
+      arabicMeaning: 'اعتمد بشدة على / اتكل بصورة أساسية على',
+      type: 'expression',
+      definition: 'to depend with absolute necessity or deep reliance on someone or something',
+      exampleSentence: 'In ancient times, Egyptians relied heavily on simple machines like levers and ramps.'
+    },
+    {
+      id: 'u2-p25',
+      phrase: 'rely heavily on',
+      arabicMeaning: 'يعتمد بشدة على / يتكل أساسياً على',
+      type: 'expression',
+      definition: 'to depend with great reliance or necessity on something to operate',
+      exampleSentence: 'Modern industries rely heavily on automation and smart infrastructure.'
+    },
+    {
+      id: 'u2-p26',
+      phrase: 'laid the groundwork',
+      arabicMeaning: 'وضع حجر الأساس / مهّد الطريق لـ',
+      type: 'idiom',
+      definition: 'did the essential foundation work making future breakthroughs and achievements possible',
+      exampleSentence: 'These early innovations laid the groundwork for future engineering marvels.'
+    },
+    {
+      id: 'u2-p27',
+      phrase: 'took over',
+      arabicMeaning: 'استولى على / تولى السيطرة بدلاً من غيره',
+      type: 'idiom',
+      definition: 'assumed complete control, operation, or dominance over a process',
+      exampleSentence: 'Traditional crafts disappeared as automated factories took over production.'
     }
   ],
   definitionsQuiz: [

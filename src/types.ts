@@ -13,6 +13,8 @@ export interface PhraseExpression {
   phrase: string;
   arabicMeaning: string;
   type: 'preposition' | 'expression' | 'idiom';
+  definition?: string;
+  exampleSentence?: string;
 }
 
 export interface ReadingPassage {
