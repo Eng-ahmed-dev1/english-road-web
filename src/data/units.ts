@@ -1085,7 +1085,7 @@ export const UNITS_DATA: UnitData[] = [
       { id: 'p2-2', phrase: 'bring hope and healing', arabicMeaning: 'يجلب الأمل والشفاء', type: 'expression' },
       { id: 'p2-3', phrase: 'fly open', arabicMeaning: 'يفتح بشدة بشكل مفاجئ', type: 'expression' },
       { id: 'p2-4', phrase: 'have a severe viral cold', arabicMeaning: 'يُصاب بنزلة برد فيروسية شديدة', type: 'expression' },
-      { id: 'p2-5', phrase: 'It rained cats and dogs', arabicMeaning: 'أمطرت بشدة وغزارة', type: 'idiom' },
+      { id: 'p2-5', phrase: 'rain cats and dogs', arabicMeaning: 'تمطر بشدة وغزارة كأفواه القرب', type: 'idiom' },
       { id: 'p2-6', phrase: 'angry at', arabicMeaning: 'غاضب من (شخص)', type: 'preposition' },
       { id: 'p2-7', phrase: 'covered in', arabicMeaning: 'مغطى بـ', type: 'preposition' },
       { id: 'p2-8', phrase: 'jump into action', arabicMeaning: 'ينطلق للعمل فوراً', type: 'idiom' },

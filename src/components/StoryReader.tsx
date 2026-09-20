@@ -125,7 +125,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
       }
     }
 
-    // 2. Search in phrasesAndExpressions (includes Idioms & Prepositions e.g. "teamwork makes the dream work", "kicks off")
+    // 2. Search in phrasesAndExpressions (includes Idioms & Prepositions e.g. "teamwork makes the dream work", "raining cats and dogs", "kicks off")
     if (phrasesAndExpressions && phrasesAndExpressions.length > 0) {
       for (const stem of stems) {
         const foundPhrase = phrasesAndExpressions.find(p => {
@@ -145,6 +145,46 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             definition: `An authentic ${foundPhrase.type} from this unit's curriculum.`,
             exampleSentence: `From text: "${wordStr}"`,
             type: foundPhrase.type
+          };
+        }
+      }
+
+      // Advanced phrase normalization and word overlap (e.g., "raining cats and dogs" -> "rain cats and dogs")
+      const normalizePhrase = (p: string) =>
+        p.toLowerCase()
+          .replace(/^(it\s+|to\s+)/, '')
+          .replace(/^(is|was|were|are)\s+/, '')
+          .replace(/(ing|ed|es|s)\b/g, '')
+          .replace(/[^a-z0-9\s]/g, '')
+          .trim();
+
+      const normTarget = normalizePhrase(rawClean);
+      for (const p of phrasesAndExpressions) {
+        const normP = normalizePhrase(p.phrase);
+        const stopwords = new Set(['a', 'an', 'the', 'to', 'in', 'of', 'for', 'with', 'and', 'it', 'was', 'is', 'on', 'at', 'their', 'his', 'her']);
+        const wordsA = normTarget.split(/\s+/).filter(w => !stopwords.has(w) && w.length > 1);
+        const wordsB = normP.split(/\s+/).filter(w => !stopwords.has(w) && w.length > 1);
+        const common = wordsA.filter(w => wordsB.includes(w));
+
+        if (
+          normTarget === normP ||
+          normTarget.includes(normP) ||
+          normP.includes(normTarget) ||
+          (wordsA.length >= 2 && wordsB.length >= 2 && common.length >= 2) ||
+          (common.length >= 1 && (wordsA.length <= 2 || wordsB.length <= 2))
+        ) {
+          const typeLabel = p.type === 'idiom'
+            ? 'تعبير اصطلاحي (Idiom)'
+            : p.type === 'preposition'
+            ? 'حرف جر وتعبير (Preposition)'
+            : 'تعبير لغوي (Expression)';
+          return {
+            word: p.phrase,
+            partOfSpeech: typeLabel,
+            arabicMeaning: p.arabicMeaning,
+            definition: `An authentic ${p.type} from this unit's curriculum.`,
+            exampleSentence: `From text: "${wordStr}"`,
+            type: p.type
           };
         }
       }
