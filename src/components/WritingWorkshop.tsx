@@ -97,59 +97,59 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
   const currentTopic = writingData.task.suggestedTopics.find(t => t.id === selectedTopicId) || writingData.task.suggestedTopics[0];
 
   return (
-    <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
       {/* Header Banner */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-3xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-xs shrink-0">
-              <PenTool className="w-8 h-8" />
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-xs shrink-0">
+              <PenTool className="w-6 h-6 sm:w-8 sm:h-8" />
             </div>
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-xs sm:text-sm font-bold px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 font-en">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[11px] sm:text-sm font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 font-en">
                   Lesson {writingData.lessonNumber} • Writing Skills
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              <h2 className="text-xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
                 {writingData.lessonTitleArabic}
               </h2>
-              <p className="text-xs sm:text-base text-slate-500 dark:text-slate-400 mt-1 font-en">
+              <p className="text-xs sm:text-base text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 font-en">
                 {writingData.lessonTitle} • Structure, Exam Practice & Practical Workshop
               </p>
             </div>
           </div>
 
           {/* Nav Switcher */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 w-full md:w-auto">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 w-full md:w-auto overflow-x-auto scrollbar-none gap-1 sm:gap-1.5">
             <button
               onClick={() => setActiveTab('structure')}
-              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all touch-manipulation ${
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                 activeTab === 'structure'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <BookOpen className="w-4 h-4" />
+              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>هيكل الكتابة</span>
             </button>
 
             <button
               onClick={() => setActiveTab('practice')}
-              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all touch-manipulation ${
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                 activeTab === 'practice'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <HelpCircle className="w-4 h-4" />
+              <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>أسئلة الامتحانات ({writingData.examQuestions.length})</span>
             </button>
 
             {hasSpecialActivities && (
               <button
                 onClick={() => setActiveTab('activities')}
-                className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all touch-manipulation ${
+                className={`flex-1 md:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                   activeTab === 'activities'
                     ? isPoemLesson
                       ? 'bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 shadow-xs ring-1 ring-rose-500/30'
@@ -159,20 +159,20 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                <Sparkles className={`w-4 h-4 ${isPoemLesson ? 'text-rose-500' : isBiographyLesson ? 'text-indigo-500' : 'text-teal-500'}`} />
+                <Sparkles className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isPoemLesson ? 'text-rose-500' : isBiographyLesson ? 'text-indigo-500' : 'text-teal-500'}`} />
                 <span>{isPoemLesson ? 'استوديو نظم الشعر' : isBiographyLesson ? 'استوديو السيرة الذاتية' : 'أنشطة الكتاب (5 أنشطة)'}</span>
               </button>
             )}
 
             <button
               onClick={() => setActiveTab('task')}
-              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all touch-manipulation ${
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                 activeTab === 'task'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <PenTool className="w-4 h-4" />
+              <PenTool className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>التاسك التطبيقي</span>
             </button>
           </div>
@@ -363,15 +363,14 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               </div>
 
               {/* Question Card */}
-              {/* Question Card */}
-              <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
-                <span className="text-xs sm:text-sm font-bold text-slate-400 block mb-3 uppercase tracking-wider">اختر الإجابة الصحيحة طبقاً للمنهج:</span>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-en text-slate-900 dark:text-white leading-relaxed mb-8" dir="ltr">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
+                <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">اختر الإجابة الصحيحة طبقاً للمنهج:</span>
+                <h3 className="text-base sm:text-2xl lg:text-3xl font-bold font-en text-slate-900 dark:text-white leading-relaxed mb-6 sm:mb-8" dir="ltr">
                   {currentQ.question}
                 </h3>
 
                 {/* Options */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" dir="ltr">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4" dir="ltr">
                   {currentQ.options.map((option, idx) => {
                     const isSelected = selectedOption === option;
                     const isCorrect = option === currentQ.correctAnswer;
@@ -393,16 +392,16 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                         key={idx}
                         onClick={() => handleOptionSelect(option)}
                         disabled={showFeedback}
-                        className={`p-4 sm:p-5 rounded-2xl border-2 font-en text-base sm:text-lg lg:text-xl font-bold flex items-center justify-between transition-all text-left min-h-[64px] active:scale-[0.98] touch-manipulation shadow-2xs ${btnStyle}`}
+                        className={`p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 font-en text-sm sm:text-lg lg:text-xl font-bold flex items-center justify-between transition-all text-left min-h-[50px] sm:min-h-[64px] active:scale-[0.98] touch-manipulation shadow-2xs ${btnStyle}`}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs sm:text-base font-black text-slate-600 dark:text-slate-300 shrink-0 shadow-2xs">
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                          <span className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs sm:text-base font-black text-slate-600 dark:text-slate-300 shrink-0 shadow-2xs">
                             {String.fromCharCode(65 + idx)}
                           </span>
                           <span className="font-semibold">{option}</span>
                         </div>
-                        {showFeedback && isCorrect && <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />}
-                        {showFeedback && isSelected && !isCorrect && <XCircle className="w-6 h-6 text-rose-600 dark:text-rose-400 shrink-0" />}
+                        {showFeedback && isCorrect && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />}
+                        {showFeedback && isSelected && !isCorrect && <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-rose-600 dark:text-rose-400 shrink-0" />}
                       </button>
                     );
                   })}
@@ -410,19 +409,19 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
 
                 {/* Explanation */}
                 {selectedOption !== null && (
-                  <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800">
-                    <div className="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl mb-6" dir="rtl">
-                      <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-2">
+                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800">
+                    <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl mb-4 sm:mb-6" dir="rtl">
+                      <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-1.5 sm:mb-2">
                         💡 توضيح الإجابة الصحيحة:
                       </span>
-                      <p className="text-sm sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 font-en leading-relaxed" dir="ltr">
+                      <p className="text-xs sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 font-en leading-relaxed" dir="ltr">
                         {currentQ.explanation}
                       </p>
                     </div>
 
                     <button
                       onClick={handleNextMCQ}
-                      className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2.5 text-base sm:text-lg shadow-md active:scale-95 touch-manipulation min-h-[54px]"
+                      className="w-full py-3 sm:py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-2xl transition-all flex items-center justify-center gap-2 text-sm sm:text-lg shadow-md active:scale-95 touch-manipulation min-h-[46px] sm:min-h-[54px]"
                     >
                       <span>{mcqIndex + 1 === writingData.examQuestions.length ? 'عرض النتيجة' : 'السؤال التالي'}</span>
                     </button>
@@ -447,52 +446,52 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
 
       {/* TAB 3: PRACTICAL INTERACTIVE WRITING TASK */}
       {activeTab === 'task' && (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Task Instructions */}
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800 mb-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-6">
               <div>
-                <span className="text-xs sm:text-sm font-bold px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-2 inline-block">
+                <span className="text-[11px] sm:text-sm font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-1.5 sm:mb-2 inline-block">
                   تاسك تطبيقي عملي
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white">
                   {writingData.task.titleArabic}
                 </h3>
               </div>
 
               {/* Word Count Live Badge */}
-              <div className={`px-5 py-2.5 rounded-2xl border flex items-center gap-2.5 text-xs sm:text-sm font-bold font-en ${
+              <div className={`px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl border flex items-center gap-2 text-xs sm:text-sm font-bold font-en ${
                 totalWords >= writingData.task.minWords
                   ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
               }`}>
                 <span>{totalWords} / {writingData.task.minWords} words</span>
-                {totalWords >= writingData.task.minWords && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+                {totalWords >= writingData.task.minWords && <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />}
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-5 leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 mb-4 sm:mb-5 leading-relaxed">
               {writingData.task.promptArabic}
             </p>
 
             {/* Suggested Topic Buttons */}
             <div>
-              <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 block mb-3">اختر موضوعاً للكتابة:</span>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 block mb-2 sm:mb-3">اختر موضوعاً للكتابة:</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 {writingData.task.suggestedTopics.map((topic) => (
                   <button
                     key={topic.id}
                     onClick={() => setSelectedTopicId(topic.id)}
-                    className={`p-4 sm:p-5 rounded-2xl border-2 text-right transition-all flex flex-col justify-between touch-manipulation min-h-[85px] ${
+                    className={`p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border-2 text-right transition-all flex flex-col justify-between touch-manipulation min-h-[75px] sm:min-h-[85px] ${
                       selectedTopicId === topic.id
                         ? 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-500 shadow-md ring-2 ring-indigo-200 dark:ring-indigo-900'
                         : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 border-slate-200 dark:border-slate-700'
                     }`}
                   >
-                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mb-1.5">
+                    <span className="text-xs sm:text-base font-black text-slate-900 dark:text-white mb-1">
                       {topic.title}
                     </span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                    <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
                       {topic.hint}
                     </span>
                   </button>
@@ -502,108 +501,108 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           </div>
 
           {/* Structured Blog Post Editor */}
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4 sm:space-y-6">
             {currentTopic && (
-              <div className="pb-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between text-xs sm:text-sm gap-2">
-                <span className="text-slate-500">الموضوع المختار: <strong className="text-indigo-600 dark:text-indigo-400 text-sm sm:text-base">{currentTopic.title}</strong></span>
-                <span className="text-xs text-slate-400">{currentTopic.hint}</span>
+              <div className="pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between text-xs sm:text-sm gap-1.5 sm:gap-2">
+                <span className="text-slate-500">الموضوع المختار: <strong className="text-indigo-600 dark:text-indigo-400 text-xs sm:text-base">{currentTopic.title}</strong></span>
+                <span className="text-[11px] sm:text-xs text-slate-400">{currentTopic.hint}</span>
               </div>
             )}
 
             {/* Step 1: Headline */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-en font-black">1</span>
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+                  <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">1</span>
                   <span>العنوان الجذاب (Catchy Title / Headline):</span>
                 </label>
-                <span className="text-xs text-slate-400 font-en font-bold">{countWords(headline)} words</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(headline)} words</span>
               </div>
               <input
                 type="text"
                 value={headline}
                 onChange={(e) => setHeadline(e.target.value)}
                 placeholder="e.g.: 5 Secrets of Hospital Nurses You Never Knew!"
-                className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-base sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500"
                 dir="ltr"
               />
             </div>
 
             {/* Step 2: Introduction & Hook */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-en font-black">2</span>
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+                  <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">2</span>
                   <span>المقدمة والخاطف (Introduction & Hook):</span>
                 </label>
-                <span className="text-xs text-slate-400 font-en font-bold">{countWords(intro)} words</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(intro)} words</span>
               </div>
               <textarea
                 rows={2}
                 value={intro}
                 onChange={(e) => setIntro(e.target.value)}
                 placeholder="e.g.: Have you ever wondered what happens behind the closed doors of an emergency room? Today, I want to share..."
-                className="w-full p-4 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-base sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
+                className="w-full p-3 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
                 dir="ltr"
               />
             </div>
 
             {/* Step 3: Main Body */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-en font-black">3</span>
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+                  <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">3</span>
                   <span>صلب التدوينة والتفاصيل (Main Body):</span>
                 </label>
-                <span className="text-xs text-slate-400 font-en font-bold">{countWords(body)} words</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(body)} words</span>
               </div>
               <textarea
                 rows={4}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 placeholder="e.g.: During my visit, I witnessed incredible teamwork. Paramedics rushed in with injured patients, while doctors and nurses remained calm under pressure..."
-                className="w-full p-4 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-base sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
+                className="w-full p-3 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
                 dir="ltr"
               />
             </div>
 
             {/* Step 4: Conclusion */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-en font-black">4</span>
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+                  <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">4</span>
                   <span>الخاتمة وسؤال التفاعل (Conclusion & Question):</span>
                 </label>
-                <span className="text-xs text-slate-400 font-en font-bold">{countWords(conclusion)} words</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(conclusion)} words</span>
               </div>
               <textarea
                 rows={2}
                 value={conclusion}
                 onChange={(e) => setConclusion(e.target.value)}
                 placeholder="e.g.: Overall, it was an eye-opening experience. What do you admire most about healthcare workers? Let me know in the comments below!"
-                className="w-full p-4 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-base sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
+                className="w-full p-3 sm:p-5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-en text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-indigo-500 resize-y leading-relaxed"
                 dir="ltr"
               />
             </div>
 
             {/* Actions Bar */}
-            <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
+            <div className="pt-4 sm:pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <button
                   onClick={handleCopyBlogPost}
                   disabled={totalWords === 0}
-                  className="flex items-center gap-2.5 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold rounded-2xl text-sm sm:text-base transition-all shadow-md active:scale-95 touch-manipulation min-h-[50px]"
+                  className="flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold rounded-xl sm:rounded-2xl text-xs sm:text-base transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
                 >
-                  <Copy className="w-5 h-5" />
+                  <Copy className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>{copied ? 'تم النسخ بنجاح!' : 'نسخ النص كاملاً'}</span>
                 </button>
 
                 <button
                   onClick={handleClearTask}
                   disabled={totalWords === 0}
-                  className="flex items-center gap-2 px-4 py-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors active:scale-95 touch-manipulation"
+                  className="flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors active:scale-95 touch-manipulation"
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>تفريغ الحقول</span>
                 </button>
               </div>
@@ -611,9 +610,9 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               {/* Toggle Model Answer */}
               <button
                 onClick={() => setShowModelAnswer(!showModelAnswer)}
-                className="flex items-center gap-2.5 px-6 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-indigo-700 dark:text-indigo-400 font-bold rounded-2xl text-sm sm:text-base transition-all border border-slate-200 dark:border-slate-700 active:scale-95 touch-manipulation min-h-[50px]"
+                className="flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-indigo-700 dark:text-indigo-400 font-bold rounded-xl sm:rounded-2xl text-xs sm:text-base transition-all border border-slate-200 dark:border-slate-700 active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
               >
-                {showModelAnswer ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showModelAnswer ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                 <span>{showModelAnswer ? 'إخفاء النموذج المثالي' : 'عرض النموذج المثالي الإرشادي'}</span>
               </button>
             </div>

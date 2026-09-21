@@ -82,49 +82,49 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
   };
 
   return (
-    <div className={compactMode ? 'w-full p-2' : 'max-w-5xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8'}>
+    <div className={compactMode ? 'w-full p-2' : 'max-w-5xl 2xl:max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8'}>
       {/* Header */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-8">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-8">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {!compactMode && <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
-            <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {!compactMode && <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" />}
+            <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
               جملة {currentIndex + 1} من {puzzles.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {showPoints && (
-              <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
+              <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
                 الدرجة: {score}
               </span>
             )}
             <button
               onClick={handleReset}
               disabled={selectedChunks.length === 0 || isCorrect}
-              className="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 disabled:opacity-40 active:scale-95 touch-manipulation transition-all"
+              className="p-2 sm:p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 disabled:opacity-40 active:scale-95 touch-manipulation transition-all"
               title="إعادة الترتيب"
             >
-              <RotateCcw className="w-5 h-5" />
+              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Puzzle Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
         {/* Arabic Translation Target */}
-        <div className="mb-8 space-y-2">
-          <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">معنى الجملة المطلوب تكوينها:</span>
-          <h3 className={`${compactMode ? 'text-xl' : 'text-2xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white leading-snug`}>
+        <div className="mb-6 sm:mb-8 space-y-1.5 sm:space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">معنى الجملة المطلوب تكوينها:</span>
+          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white leading-snug`}>
             {currentPuzzle.arabicTranslation}
           </h3>
         </div>
 
         {/* Selected chunks slot / assembled sentence */}
-        <div className="p-5 sm:p-8 min-h-24 sm:min-h-32 bg-slate-50 dark:bg-slate-800/60 rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8" dir="ltr">
+        <div className="p-3.5 sm:p-6 lg:p-8 min-h-20 sm:min-h-32 bg-slate-50 dark:bg-slate-800/60 rounded-2xl sm:rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-6 sm:mb-8" dir="ltr">
           {selectedChunks.length === 0 ? (
-            <span className="text-sm sm:text-base text-slate-400 font-en">
+            <span className="text-xs sm:text-base text-slate-400 font-en">
               Click the word blocks below in order to build the sentence on the whiteboard...
             </span>
           ) : (
@@ -133,7 +133,7 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
                 key={idx}
                 onClick={() => handleRemoveChunk(idx)}
                 disabled={isCorrect}
-                className="px-5 py-3 sm:px-7 sm:py-4 bg-slate-900 dark:bg-blue-600 text-white font-en font-black text-base sm:text-xl lg:text-2xl rounded-2xl hover:bg-slate-800 dark:hover:bg-blue-500 transition-all shadow-md active:scale-95 touch-manipulation"
+                className="px-3.5 py-2 sm:px-6 sm:py-3.5 bg-slate-900 dark:bg-blue-600 text-white font-en font-black text-sm sm:text-lg lg:text-2xl rounded-xl sm:rounded-2xl hover:bg-slate-800 dark:hover:bg-blue-500 transition-all shadow-md active:scale-95 touch-manipulation"
               >
                 {chunk.text}
               </button>
@@ -143,20 +143,20 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
 
         {/* Correct status */}
         {isCorrect && (
-          <div className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-2xl flex items-center justify-center gap-2.5 text-emerald-800 dark:text-emerald-300 text-sm sm:text-base font-bold animate-pulse">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300 text-xs sm:text-base font-bold animate-pulse">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
             <span>ترتيب نحوي صحيح وسليم 100%! أحسنت 👏</span>
           </div>
         )}
 
         {/* Available chunks - Big Touch Friendly Blocks for Whiteboard */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10" dir="ltr">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-6 sm:mb-10" dir="ltr">
           {availableChunks.map(chunk => (
             <button
               key={chunk.id}
               onClick={() => handleSelectChunk(chunk)}
               disabled={chunk.used || isCorrect}
-              className={`px-5 py-3 sm:px-7 sm:py-4 rounded-2xl font-en font-black text-base sm:text-xl lg:text-2xl transition-all select-none touch-manipulation ${
+              className={`px-3.5 py-2 sm:px-6 sm:py-3.5 rounded-xl sm:rounded-2xl font-en font-black text-sm sm:text-lg lg:text-2xl transition-all select-none touch-manipulation ${
                 chunk.used
                   ? 'opacity-20 bg-slate-100 dark:bg-slate-800 text-slate-400 border border-slate-200 dark:border-slate-700 cursor-not-allowed'
                   : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-750 border-2 border-slate-300 dark:border-slate-600 shadow-sm hover:scale-105 active:scale-90 active:bg-blue-50'
@@ -171,10 +171,10 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={handleNext}
-            className="flex items-center gap-2.5 px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-base sm:text-lg transition-all shadow-md active:scale-95 touch-manipulation min-h-[52px]"
+            className="flex items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[52px]"
           >
             <span>الجملة التالية</span>
-            <ArrowRight className="w-5 h-5 rotate-180" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
           </button>
         </div>
       </div>

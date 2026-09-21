@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, BookOpen, Layers, Volume2 } from 'lucide-react';
+import { CheckCircle2, BookOpen, Layers, Volume2, X } from 'lucide-react';
 import type { ReadingPassage, VocabWord, PhraseExpression } from '../types';
 import { StoryHook } from './StoryHook';
 import { speakEnglish } from '../utils/audio';
@@ -330,11 +330,13 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     speakEnglish(item.word);
   };
 
+  const cleanTitle = passage.title.replace(/^[“"'‘\s]+|[”"'’\s]+$/g, '');
+
   const renderParagraph = (paragraph: string, pIndex: number) => {
     const parts = paragraph.split(/(\*\*.*?\*\*)/g);
 
     return (
-      <p key={pIndex} className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-lg sm:text-xl lg:text-2xl mb-8 text-justify font-en font-normal">
+      <p key={pIndex} className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-base sm:text-lg lg:text-xl mb-6 text-justify font-en font-normal">
         {parts.map((part, index) => {
           if (part.startsWith('**') && part.endsWith('**')) {
             const rawWord = part.slice(2, -2);
@@ -343,7 +345,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
               <span
                 key={index}
                 onClick={() => handleWordClick(rawWord)}
-                className="cursor-pointer inline-block px-2.5 py-0.5 mx-1 rounded-lg font-bold transition-all duration-150 bg-blue-100 dark:bg-blue-950/70 text-blue-950 dark:text-blue-200 border-b-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-900 active:scale-95 touch-manipulation shadow-2xs hover:shadow-xs"
+                className="cursor-pointer inline-block px-1.5 sm:px-2.5 py-0.5 my-0.5 mx-0.5 sm:mx-1 rounded-md sm:rounded-lg font-bold transition-all duration-150 bg-blue-100 dark:bg-blue-950/70 text-blue-950 dark:text-blue-200 border-b-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-900 active:scale-95 touch-manipulation shadow-2xs hover:shadow-xs"
                 title="اضغط لعرض المعنى والتعريف والاستماع للنطق"
               >
                 {rawWord}
@@ -357,10 +359,10 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
   };
 
   return (
-    <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
       {/* Top Breadcrumb & Title Bar */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-8">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">
               <span>Unit {unitNumber}</span>
@@ -369,36 +371,36 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
               <span>•</span>
               <span className="text-blue-600 dark:text-blue-400">Reading & Listening Text</span>
             </div>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-en tracking-tight">
-              {passage.title}
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white font-en tracking-tight break-words">
+              {cleanTitle}
             </h1>
           </div>
 
-          <div>
+          <div className="self-stretch sm:self-auto">
             <button
               onClick={onCompleteReading}
-              className={`flex items-center gap-2.5 px-6 py-3 rounded-2xl font-bold text-sm sm:text-base transition-all border min-h-[50px] shadow-xs active:scale-95 touch-manipulation ${
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all border min-h-[44px] sm:min-h-[50px] shadow-xs active:scale-95 touch-manipulation ${
                 isCompleted
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 cursor-default'
                   : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600'
               }`}
             >
-              <CheckCircle2 className="w-5 h-5" />
+              <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>{isCompleted ? 'تمت القراءة والاستيعاب ✓' : 'تحديد الدرس كمكتمل'}</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Main Text Area */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
           {/* Animated Interactive Story Hook */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <StoryHook
               unitNumber={unitNumber}
               partNumber={partNumber}
-              title={passage.title}
+              title={cleanTitle}
             />
           </div>
 
@@ -407,14 +409,14 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             {passage.paragraphs.map((p, idx) => renderParagraph(p, idx))}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2.5">
-            <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" />
+          <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2.5">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 shrink-0" />
             <span>نصيحة للمذاكرة والشرح: اضغط على أي كلمة أو تعبير مظلل لسماع النطق الصوتي المباشر ورؤية المعنى والتعريف.</span>
           </div>
         </div>
 
-        {/* Word Details Sidebar */}
-        <div>
+        {/* Word Details Sidebar (Visible on Desktop) */}
+        <div className="hidden lg:block">
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-slate-800 shadow-xs sticky top-24">
             <div className="pb-4 border-b border-slate-100 dark:border-slate-800 mb-5 flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
@@ -490,6 +492,78 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Mobile Word Details Bottom Sheet Drawer (Visible on Mobile / Tablet) */}
+      {selectedWord && (
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs animate-fade-in"
+            onClick={() => setSelectedWord(null)}
+          />
+          
+          {/* Slide-Up Drawer */}
+          <div className="relative z-10 bg-white dark:bg-slate-900 rounded-t-3xl border-t border-slate-200 dark:border-slate-800 shadow-2xl p-5 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
+            {/* Pull Handle Bar */}
+            <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-3" />
+
+            {/* Header */}
+            <div className="flex items-start justify-between gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-2xl font-black font-en text-slate-950 dark:text-white capitalize tracking-tight truncate">
+                    {selectedWord.word}
+                  </h3>
+                  <button
+                    onClick={() => speakEnglish(selectedWord.word)}
+                    className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 transition-colors shadow-2xs shrink-0"
+                    title="استمع للنطق الصوتي"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
+                </div>
+                <span className="inline-block mt-1 text-xs font-mono font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-lg border border-blue-200 dark:border-blue-800">
+                  {selectedWord.partOfSpeech}
+                </span>
+              </div>
+
+              <button
+                onClick={() => setSelectedWord(null)}
+                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-xl shrink-0"
+                aria-label="إغلاق"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content Details */}
+            <div className="space-y-3">
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <span className="text-[11px] font-bold text-slate-400 block mb-0.5">المعنى بالعربية:</span>
+                <p className="text-xl font-black text-blue-600 dark:text-blue-400 font-ar">{selectedWord.arabicMeaning}</p>
+              </div>
+
+              {selectedWord.definition && (
+                <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700" dir="ltr">
+                  <span className="text-[11px] font-bold text-slate-400 block mb-0.5 text-right">English Definition:</span>
+                  <p className="text-sm font-en text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
+                    "{selectedWord.definition}"
+                  </p>
+                </div>
+              )}
+
+              {selectedWord.exampleSentence && (
+                <div className="p-3.5 bg-blue-50/50 dark:bg-blue-950/40 rounded-2xl border border-blue-100 dark:border-blue-800/50" dir="ltr">
+                  <span className="text-[11px] font-bold text-blue-900 dark:text-blue-300 block mb-0.5 text-right">Example in text:</span>
+                  <p className="text-xs font-en text-slate-700 dark:text-slate-300 leading-relaxed">
+                    "{selectedWord.exampleSentence}"
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

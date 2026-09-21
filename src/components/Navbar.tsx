@@ -32,33 +32,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
-        {/* Top Header Row - Bigger, Spacious & Elegant */}
-        <div className="flex flex-wrap items-center justify-between min-h-20 py-3 gap-4">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors duration-200">
+      <div className="w-full max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-12">
+        {/* Top Header Row - Single Clean Row on all screens */}
+        <div className="flex items-center justify-between h-14 sm:h-20 py-2 sm:py-3 gap-2 sm:gap-4">
           {/* Logo & Platform Name */}
-          <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 font-en font-black text-lg tracking-tight">
+          <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 font-en font-black text-sm sm:text-lg tracking-tight shrink-0">
               ER
             </div>
             <div>
-              <span className="font-extrabold text-xl sm:text-2xl font-en tracking-tight text-slate-900 dark:text-white">
+              <span className="font-extrabold text-base sm:text-2xl font-en tracking-tight text-slate-900 dark:text-white block leading-tight">
                 English Road
               </span>
-              <span className="block text-[11px] text-slate-400 font-medium">
+              <span className="hidden sm:block text-[11px] text-slate-400 font-medium">
                 منصة تعليمية شاملة للمنهج المدرسي
               </span>
             </div>
           </div>
 
           {/* Controls: Unit Dropdown + Dark Mode Toggle */}
-          <div className="flex items-center gap-3">
-            {/* Unit Selector Dropdown - Bigger & Clearer */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Unit Selector Dropdown - Clean & Responsive */}
             <div className="relative">
               <select
                 value={currentUnit.id}
                 onChange={(e) => onSelectUnit(e.target.value)}
-                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-sm font-bold rounded-xl pl-9 pr-4 py-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
+                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pl-7 sm:pl-9 pr-2.5 sm:pr-4 py-1.5 sm:py-2.5 max-w-[155px] xs:max-w-[200px] sm:max-w-[300px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
               >
                 {units.map((u) => (
                   <option 
@@ -71,33 +71,33 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
             {/* Dark / Light Mode Toggle */}
             <button
               onClick={onToggleDarkMode}
-              className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors shadow-2xs"
+              className="p-2 sm:p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors shadow-2xs shrink-0"
               title={isDarkMode ? 'التبديل إلى الوضع الفاتح (Light Mode)' : 'التبديل إلى الوضع الداكن (Dark Mode)'}
             >
               {isDarkMode ? (
-                <Sun className="w-5 h-5 text-amber-400" />
+                <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
               ) : (
-                <Moon className="w-5 h-5 text-slate-700" />
+                <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Navigation Tabs - Full Width, Flex-Wrap (NO SCROLL!) */}
-        <div className="py-3 border-t border-slate-200 dark:border-slate-800/90 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-semibold">
-          {/* Main Lessons & Vocabulary */}
-          <div className="flex flex-wrap items-center gap-2">
+        {/* Navigation Tabs - Clean Swipeable Bar on Mobile / Structured on Desktop */}
+        <div className="py-1.5 sm:py-2.5 border-t border-slate-200 dark:border-slate-800/90">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none flex-nowrap scroll-smooth text-xs sm:text-sm font-semibold pb-1 lg:pb-0">
+            {/* Core Study Tabs */}
             <button
               onClick={() => setActiveTab('story')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                 activeTab === 'story'
-                  ? 'bg-blue-600 text-white shadow-sm font-bold'
+                  ? 'bg-blue-600 text-white shadow-xs font-bold'
                   : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
               }`}
             >
@@ -107,60 +107,62 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => setActiveTab('vocab')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                 activeTab === 'vocab'
-                  ? 'bg-blue-600 text-white shadow-sm font-bold'
-                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-855'
+                  ? 'bg-blue-600 text-white shadow-xs font-bold'
+                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
               }`}
             >
               <span>📚</span>
-              <span>بنك المفردات الكامل</span>
+              <span>بنك المفردات</span>
             </button>
 
             {currentUnit.writingLesson && (
               <button
                 onClick={() => setActiveTab('writing')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+                className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                   activeTab === 'writing'
-                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                    ? 'bg-indigo-600 text-white shadow-xs font-bold'
                     : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
                 }`}
               >
                 <span>✍️</span>
-                <span>{currentUnit.writingLesson.lessonTitleArabic || 'مهارات الكتابة (Blog Post)'}</span>
+                <span>{currentUnit.writingLesson.lessonTitleArabic || 'الكتابة (Blog)'}</span>
               </button>
             )}
-          </div>
 
-          {/* Interactive Practice Games */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-slate-100/70 dark:bg-slate-900/90 p-1 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+            {/* Separator on wider screens */}
+            <div className="hidden lg:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1 shrink-0" />
+
+            {/* Practice Tabs */}
             {practiceTabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
                   activeTab === tab.id
-                    ? 'bg-white dark:bg-blue-600 text-slate-900 dark:text-white shadow-xs font-bold'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800'
+                    ? 'bg-blue-600 text-white shadow-xs font-bold'
+                    : 'bg-slate-100 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
                 }`}
               >
                 <span>{tab.icon}</span>
                 <span>{tab.label}</span>
               </button>
             ))}
-          </div>
 
-          {/* Standout Versus Battle Tab */}
-          <div>
+            {/* Separator on wider screens */}
+            <div className="hidden lg:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1 shrink-0" />
+
+            {/* Versus Battle Tab */}
             <button
               onClick={() => setActiveTab('versus')}
-              className={`flex items-center gap-2 px-5 py-2 rounded-xl font-bold transition-all shadow-xs ${
+              className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 font-bold transition-all shadow-xs touch-manipulation ${
                 activeTab === 'versus'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 ring-2 ring-amber-400'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-sm ring-2 ring-amber-400'
                   : 'bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/80 hover:bg-amber-100 dark:hover:bg-amber-900/60'
               }`}
             >
-              <Swords className="w-4 h-4" />
+              <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>الوضع التنافسي ⚔️</span>
             </button>
           </div>

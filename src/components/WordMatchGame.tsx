@@ -128,22 +128,22 @@ export const WordMatchGame: React.FC<WordMatchGameProps> = ({
   const totalPairsCount = cards.length / 2;
 
   return (
-    <div className={compactMode ? 'w-full p-2' : 'max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'}>
+    <div className={compactMode ? 'w-full p-2' : 'max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8'}>
       {/* Top Header */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-8">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
             {!compactMode && (
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">نشاط تفاعلي على السبورة الذكية</span>
                 {isCompleted && (
-                  <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-400 px-3 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                  <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-400 px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800">
                     مكتمل ✓
                   </span>
                 )}
               </div>
             )}
-            <h2 className={`${compactMode ? 'text-lg' : 'text-2xl sm:text-3xl'} font-black text-slate-900 dark:text-white`}>
+            <h2 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl'} font-black text-slate-900 dark:text-white`}>
               مطابقة الكلمات والمفردات
             </h2>
             {!compactMode && (
@@ -153,21 +153,21 @@ export const WordMatchGame: React.FC<WordMatchGameProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
             {/* Pairs progress */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold font-en">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold font-en">
               <span>الأزواج:</span>
               <span className="text-blue-600 dark:text-blue-400 text-sm sm:text-base font-black">{matchedPairsCount} / {totalPairsCount}</span>
             </div>
 
             {/* Timer (Only shown when hasTimer is true) */}
             {hasTimer && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-2xl border text-xs sm:text-sm font-bold font-en ${
+              <div className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border text-xs sm:text-sm font-bold font-en ${
                 timeLeft < 15 
                   ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-400 border-rose-200 dark:border-rose-800 animate-pulse' 
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
               }`}>
-                <Timer className="w-4 h-4" />
+                <Timer className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>{timeLeft} ثانية</span>
               </div>
             )}
@@ -175,17 +175,17 @@ export const WordMatchGame: React.FC<WordMatchGameProps> = ({
             {/* Restart */}
             <button
               onClick={startNewGame}
-              className="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl transition-colors border border-slate-200 dark:border-slate-700 active:scale-95 touch-manipulation"
+              className="p-2 sm:p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl sm:rounded-2xl transition-colors border border-slate-200 dark:border-slate-700 active:scale-95 touch-manipulation"
               title="إعادة بدء جولة جديدة"
             >
-              <RotateCcw className="w-5 h-5" />
+              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Grid of Cards - Optimized for Finger & Stylus Touch on Whiteboards */}
-      <div className={`grid ${compactMode ? 'grid-cols-2 gap-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'}`}>
+      {/* Grid of Cards - Responsive for all screens */}
+      <div className={`grid ${compactMode ? 'grid-cols-2 gap-2.5' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6'}`}>
         {cards.map(card => {
           const isSelected = selectedCards.some(c => c.id === card.id);
 
@@ -196,23 +196,23 @@ export const WordMatchGame: React.FC<WordMatchGameProps> = ({
               disabled={card.isMatched || gameState !== 'playing'}
               className={`${
                 compactMode 
-                  ? 'min-h-[85px] p-3' 
-                  : 'min-h-[110px] sm:min-h-[125px] lg:min-h-[140px] p-5 sm:p-6'
+                  ? 'min-h-[75px] p-2.5' 
+                  : 'min-h-[85px] sm:min-h-[120px] lg:min-h-[135px] p-3 sm:p-5'
               } rounded-2xl sm:rounded-3xl font-semibold transition-all duration-150 flex flex-col items-center justify-center text-center select-none border-2 touch-manipulation active:scale-95 ${
                 card.isMatched
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 opacity-60 cursor-default'
                   : isSelected
-                  ? 'bg-slate-900 dark:bg-blue-600 text-white border-slate-900 dark:border-blue-400 shadow-lg scale-102 ring-4 ring-blue-300 dark:ring-blue-500'
+                  ? 'bg-slate-900 dark:bg-blue-600 text-white border-slate-900 dark:border-blue-400 shadow-md scale-102 ring-2 sm:ring-4 ring-blue-300 dark:ring-blue-500'
                   : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:shadow-md'
               }`}
             >
-              <span className={`${compactMode ? 'text-sm sm:text-base' : 'text-base sm:text-xl lg:text-2xl'} ${card.type === 'en' ? 'font-en font-black capitalize tracking-wide' : 'font-black'}`}>
+              <span className={`${compactMode ? 'text-xs sm:text-base' : 'text-sm sm:text-lg lg:text-xl'} ${card.type === 'en' ? 'font-en font-black capitalize tracking-wide' : 'font-black'}`}>
                 {card.text}
               </span>
 
               {card.isMatched && (
-                <span className="text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 mt-2 font-bold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4" /> متطابق
+                <span className="text-[10px] sm:text-xs text-emerald-700 dark:text-emerald-400 mt-1 font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" /> متطابق
                 </span>
               )}
             </button>

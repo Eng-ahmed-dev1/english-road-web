@@ -101,22 +101,22 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
   };
 
   return (
-    <div className={compactMode ? 'w-full p-2' : 'max-w-5xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8'}>
+    <div className={compactMode ? 'w-full p-2' : 'max-w-5xl 2xl:max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8'}>
       {/* Header */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-8">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
             {!compactMode && (
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">تدريب تفاعلي للسبورة الذكية</span>
                 {isCompleted && (
-                  <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-400 px-3 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                  <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-400 px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800">
                     مكتمل ✓
                   </span>
                 )}
               </div>
             )}
-            <h2 className={`${compactMode ? 'text-lg' : 'text-2xl sm:text-3xl'} font-black text-slate-900 dark:text-white`}>
+            <h2 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl'} font-black text-slate-900 dark:text-white`}>
               تحدي ترتيب حروف الكلمة
             </h2>
             {!compactMode && (
@@ -126,17 +126,17 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
+            <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700">
               أنجزت: <strong className="text-blue-600 dark:text-blue-400 font-en text-sm sm:text-base">{completedCount}</strong> / 5
             </span>
 
             <button
               onClick={handleHint}
               disabled={hintShown || isCorrect}
-              className="px-4 py-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all disabled:opacity-40 active:scale-95 touch-manipulation"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all disabled:opacity-40 active:scale-95 touch-manipulation"
             >
-              <HelpCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 dark:text-blue-400" />
               <span>تلميح</span>
             </button>
           </div>
@@ -144,25 +144,25 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
       </div>
 
       {/* Main Challenge Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
         {/* Arabic Meaning & Definition */}
-        <div className="mb-8 space-y-2">
-          <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">المعنى المطلوب:</span>
-          <h3 className={`${compactMode ? 'text-xl' : 'text-2xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white`}>
+        <div className="mb-6 sm:mb-8 space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">المعنى المطلوب:</span>
+          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white`}>
             {currentWord.arabicMeaning}
           </h3>
-          <p className="text-sm sm:text-base lg:text-lg font-en text-slate-600 dark:text-slate-300 italic max-w-2xl mx-auto leading-relaxed" dir="ltr">
+          <p className="text-xs sm:text-base lg:text-lg font-en text-slate-600 dark:text-slate-300 italic max-w-2xl mx-auto leading-relaxed" dir="ltr">
             "{currentWord.definition}"
           </p>
           {hintShown && (
-            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-bold bg-blue-50 dark:bg-blue-950/60 py-1.5 px-4 rounded-xl inline-block mt-3 border border-blue-200 dark:border-blue-800">
+            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-bold bg-blue-50 dark:bg-blue-950/60 py-1 px-3 sm:py-1.5 sm:px-4 rounded-xl inline-block mt-2 sm:mt-3 border border-blue-200 dark:border-blue-800">
               💡 تلميح: تبدأ الكلمة بحرف ({targetWordUpper[0]})
             </div>
           )}
         </div>
 
         {/* Selected Letter Slots */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 my-8 min-h-16" dir="ltr">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 lg:gap-3.5 my-4 sm:my-8 min-h-12 sm:min-h-16" dir="ltr">
           {Array.from({ length: targetWordUpper.length }).map((_, idx) => {
             const letterObj = userLetters[idx];
             return (
@@ -172,9 +172,9 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
                 disabled={isCorrect || !letterObj}
                 className={`${
                   compactMode 
-                    ? 'w-9 h-11 text-lg' 
-                    : 'w-12 h-14 sm:w-16 sm:h-18 lg:w-20 lg:h-22 text-2xl sm:text-3xl lg:text-4xl'
-                } rounded-2xl font-en font-black flex items-center justify-center transition-all touch-manipulation active:scale-95 ${
+                    ? 'w-8 h-10 text-base' 
+                    : 'w-8 h-10 sm:w-12 sm:h-14 lg:w-16 lg:h-18 text-base sm:text-2xl lg:text-3xl'
+                } rounded-xl sm:rounded-2xl font-en font-black flex items-center justify-center transition-all touch-manipulation active:scale-95 ${
                   isCorrect
                     ? 'bg-emerald-600 text-white border-2 border-emerald-500 shadow-md shadow-emerald-500/20'
                     : letterObj
@@ -190,14 +190,14 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
 
         {/* Correct feedback */}
         {isCorrect && (
-          <div className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-2xl flex items-center justify-center gap-2.5 text-emerald-800 dark:text-emerald-300 text-sm sm:text-base font-bold animate-pulse">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300 text-xs sm:text-base font-bold animate-pulse">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
             <span>تهجئة صحيحة ومطابقة للمنهج الدراسي! أحسنت 🌟</span>
           </div>
         )}
 
-        {/* Scrambled Available Letters - Big, Satisfying Touch Tiles for Whiteboard */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 mb-10" dir="ltr">
+        {/* Scrambled Available Letters */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 lg:gap-3.5 mb-6 sm:mb-10" dir="ltr">
           {scrambledLetters.map(item => (
             <button
               key={item.id}
@@ -205,9 +205,9 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
               disabled={item.used || isCorrect}
               className={`${
                 compactMode 
-                  ? 'w-9 h-11 text-lg' 
-                  : 'w-12 h-14 sm:w-16 sm:h-18 lg:w-20 lg:h-22 text-2xl sm:text-3xl lg:text-4xl'
-              } rounded-2xl font-en font-black transition-all touch-manipulation select-none ${
+                  ? 'w-8 h-10 text-base' 
+                  : 'w-8 h-10 sm:w-12 sm:h-14 lg:w-16 lg:h-18 text-base sm:text-2xl lg:text-3xl'
+              } rounded-xl sm:rounded-2xl font-en font-black transition-all touch-manipulation select-none ${
                 item.used
                   ? 'opacity-20 bg-slate-100 dark:bg-slate-800 text-slate-400 border border-slate-200 dark:border-slate-700 cursor-not-allowed'
                   : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-750 border-2 border-slate-300 dark:border-slate-600 shadow-sm hover:scale-105 active:scale-90 active:bg-blue-50'
@@ -219,22 +219,22 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           <button
             onClick={handleReset}
             disabled={isCorrect || userLetters.length === 0}
-            className="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl text-sm sm:text-base font-bold transition-all disabled:opacity-40 min-h-[50px] active:scale-95 touch-manipulation"
+            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl sm:rounded-2xl text-xs sm:text-base font-bold transition-all disabled:opacity-40 min-h-[44px] sm:min-h-[50px] active:scale-95 touch-manipulation"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>مسح الحروف</span>
           </button>
 
           <button
             onClick={handleNextWord}
-            className="flex items-center gap-2.5 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm sm:text-base font-bold transition-all shadow-md active:scale-95 touch-manipulation min-h-[50px]"
+            className="flex items-center gap-1.5 sm:gap-2.5 px-5 py-2.5 sm:px-8 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl sm:rounded-2xl text-xs sm:text-base font-bold transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
           >
             <span>الكلمة التالية</span>
-            <ArrowRight className="w-4 h-4 rotate-180" />
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-180" />
           </button>
         </div>
       </div>

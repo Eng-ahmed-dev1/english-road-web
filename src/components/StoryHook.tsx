@@ -709,43 +709,43 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
       {/* Top Animated Shimmer Bar */}
       <div className={`h-2.5 w-full bg-gradient-to-r ${hook.gradient} animate-pulse`} />
 
-      <div className="p-6 sm:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Badge & Unit Marker Header */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div className="flex items-center gap-2.5">
-            <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black text-white bg-gradient-to-r ${hook.gradient} shadow-sm animate-pulse`}>
-              <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
+        <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4">
+          <div className="flex items-center gap-2">
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-black text-white bg-gradient-to-r ${hook.gradient} shadow-xs`}>
+              <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '4s' }} />
               <span>{hook.badge}</span>
               <span className="opacity-80">|</span>
               <span className="font-ar font-bold">{hook.badgeArabic}</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-xl">
-            <Compass className="w-4 h-4 text-blue-500" />
+          <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-xl">
+            <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
             <span>Unit {unitNumber} • Part {partNumber}</span>
           </div>
         </div>
 
         {/* Big Hook Question (Whiteboard-Ready Typography) */}
-        <div className="my-5 space-y-3">
-          <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 shrink-0 mt-1 shadow-xs border border-blue-100 dark:border-blue-800/50">
-              <Lightbulb className="w-6 h-6 animate-bounce" style={{ animationDuration: '2.5s' }} />
+        <div className="my-3 sm:my-5 space-y-3">
+          <div className="flex items-start gap-2.5 sm:gap-3">
+            <div className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5 shadow-xs border border-blue-100 dark:border-blue-800/50">
+              <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce" style={{ animationDuration: '2.5s' }} />
             </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 block mb-1">
+            <div className="min-w-0 flex-1">
+              <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 block mb-1">
                 The Core Warm-Up Hook • خطاف التمهيد والتفكير
               </span>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-white font-en leading-snug tracking-tight">
-                "{hook.hookQuestionEn}"
+              <h2 className="text-base sm:text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white font-en leading-snug tracking-tight break-words">
+                {hook.hookQuestionEn}
               </h2>
             </div>
           </div>
 
           {/* Arabic Hook translation for classroom teachers */}
-          <div className="pr-12">
-            <p className="text-base sm:text-lg lg:text-xl font-bold text-slate-700 dark:text-slate-300 font-ar leading-relaxed bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+          <div className="pr-0 sm:pr-3">
+            <p className="text-sm sm:text-base lg:text-lg font-bold text-slate-700 dark:text-slate-300 font-ar leading-relaxed bg-slate-50 dark:bg-slate-800/60 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800">
               💡 {hook.hookQuestionAr}
             </p>
           </div>
