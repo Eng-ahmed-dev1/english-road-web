@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <select
                 value={currentUnit.id}
                 onChange={(e) => onSelectUnit(e.target.value)}
-                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pl-7 sm:pl-9 pr-2.5 sm:pr-4 py-1.5 sm:py-2.5 max-w-[155px] xs:max-w-[200px] sm:max-w-[300px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
+                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pl-7 sm:pl-9 pr-2.5 sm:pr-4 py-1.5 sm:py-2.5 max-w-[135px] xs:max-w-[185px] sm:max-w-[300px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
               >
                 {units.map((u) => (
                   <option 
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Navigation Tabs - Clean Swipeable Bar on Mobile / Structured on Desktop */}
         <div className="py-1.5 sm:py-2.5 border-t border-slate-200 dark:border-slate-800/90">
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none flex-nowrap scroll-smooth text-xs sm:text-sm font-semibold pb-1 lg:pb-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none flex-nowrap scroll-smooth text-xs sm:text-sm font-semibold pb-1 lg:pb-0 touch-pan-x [-webkit-overflow-scrolling:touch]">
             {/* Core Study Tabs */}
             <button
               onClick={() => setActiveTab('story')}

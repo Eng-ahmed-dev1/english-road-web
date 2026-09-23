@@ -336,7 +336,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     const parts = paragraph.split(/(\*\*.*?\*\*)/g);
 
     return (
-      <p key={pIndex} className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-base sm:text-lg lg:text-xl mb-6 text-justify font-en font-normal">
+      <p key={pIndex} className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-base sm:text-lg lg:text-xl mb-6 text-left sm:text-justify font-en font-normal">
         {parts.map((part, index) => {
           if (part.startsWith('**') && part.endsWith('**')) {
             const rawWord = part.slice(2, -2);

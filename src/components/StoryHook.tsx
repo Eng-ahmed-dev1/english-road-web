@@ -755,7 +755,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
         <div className="pt-2">
           <button
             onClick={toggleExpand}
-            className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl font-black text-sm sm:text-base transition-all border shadow-xs active:scale-98 touch-manipulation min-h-[56px] ${
+            className={`w-full flex items-center justify-between px-3.5 py-3 sm:px-5 sm:py-4 rounded-2xl font-black text-xs sm:text-base transition-all border shadow-xs active:scale-98 touch-manipulation min-h-[48px] sm:min-h-[56px] ${
               isExpanded
                 ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-900 dark:text-blue-200 border-blue-300 dark:border-blue-800'
                 : `text-white bg-gradient-to-r ${hook.gradient} hover:opacity-95 border-transparent shadow-md`
