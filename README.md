@@ -1,8 +1,10 @@
 # 🚀 English Road (ER) • Interactive Learning Platform
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2FEnglish-Road)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2Fenglish-road-web)
 
 > **English Road** is a state-of-the-art interactive English learning platform designed for high school curricula and interactive classroom smartboards. Engineered with React 19, TypeScript, Vite, and Tailwind CSS v4.
+> 
+> 🌐 **Live Demo:** [https://english-road-web.vercel.app](https://english-road-web.vercel.app)
 
 ---
 
@@ -40,10 +42,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/Eng-ahmed-dev1/English-Road.git
+git clone https://github.com/Eng-ahmed-dev1/english-road-web.git
 
 # Navigate into the project
-cd English-Road
+cd english-road-web
 
 # Install dependencies
 npm install
@@ -61,7 +63,7 @@ npm run build
 
 Click the button below to deploy this project directly to Vercel in 1 click:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2FEnglish-Road)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEng-ahmed-dev1%2Fenglish-road-web)
 
 ---
 
