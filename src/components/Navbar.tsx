@@ -1,4 +1,4 @@
-import { CheckCircle2, ChevronDown, Sun, Moon, Swords } from 'lucide-react';
+import { CheckCircle2, ChevronDown, Sun, Moon, Swords, Printer } from 'lucide-react';
 import type { UnitData } from '../types';
 
 interface NavbarProps {
@@ -10,6 +10,7 @@ interface NavbarProps {
   notification: string | null;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
+  onOpenExamGenerator: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,7 +21,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   notification,
   isDarkMode,
-  onToggleDarkMode
+  onToggleDarkMode,
+  onOpenExamGenerator
 }) => {
   const practiceTabs = [
     { id: 'match', label: 'Word Match', icon: '⚡' },
@@ -51,14 +53,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Controls: Unit Dropdown + Dark Mode Toggle */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Controls: Unit Dropdown + Exam Maker Button + Dark Mode Toggle */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
             {/* Unit Selector Dropdown - Clean & Responsive */}
             <div className="relative">
               <select
                 value={currentUnit.id}
                 onChange={(e) => onSelectUnit(e.target.value)}
-                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pr-7 sm:pr-9 pl-2.5 sm:pl-4 py-1.5 sm:py-2.5 max-w-[140px] xs:max-w-[200px] sm:max-w-[320px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
+                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pr-7 sm:pr-9 pl-2.5 sm:pl-4 py-1.5 sm:py-2.5 max-w-[130px] xs:max-w-[190px] sm:max-w-[300px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
               >
                 {units.map((u) => (
                   <option 
@@ -73,6 +75,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               </select>
               <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+
+            {/* Teacher's Exam & Worksheet Generator Button */}
+            <button
+              onClick={onOpenExamGenerator}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-xs transition-all active:scale-95 touch-manipulation shrink-0 cursor-pointer"
+              title="Create Printable Exam / Worksheet (A4 PDF)"
+            >
+              <Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Exam Maker</span>
+            </button>
 
             {/* Dark / Light Mode Toggle */}
             <button

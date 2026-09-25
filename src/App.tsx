@@ -10,6 +10,7 @@ import { SpeedQuiz } from './components/SpeedQuiz';
 import { VocabList } from './components/VocabList';
 import { VersusBattle } from './components/VersusBattle';
 import { WritingWorkshop } from './components/WritingWorkshop';
+import { ExamGeneratorModal } from './components/ExamGeneratorModal';
 import { useProgress } from './hooks/useProgress';
 import { UNITS_DATA } from './data/units';
 import { BookOpen } from 'lucide-react';
@@ -17,6 +18,7 @@ import { BookOpen } from 'lucide-react';
 export function App() {
   const [activeUnitId, setActiveUnitId] = useState('unit-1');
   const [activeTab, setActiveTab] = useState('story');
+  const [isExamModalOpen, setIsExamModalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme_mode');
@@ -70,6 +72,7 @@ export function App() {
         notification={notification}
         isDarkMode={isDarkMode}
         onToggleDarkMode={() => setIsDarkMode(prev => !prev)}
+        onOpenExamGenerator={() => setIsExamModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -186,6 +189,13 @@ export function App() {
           </div>
         </div>
       </footer>
+
+      {/* Teacher's Exam & Worksheet Generator Modal */}
+      <ExamGeneratorModal
+        isOpen={isExamModalOpen}
+        onClose={() => setIsExamModalOpen(false)}
+        unit={currentUnit}
+      />
     </div>
   );
 }
