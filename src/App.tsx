@@ -143,6 +143,8 @@ export function App() {
           <VocabList
             keyWords={currentUnit.keyVocabulary}
             additionalWords={currentUnit.additionalVocabulary}
+            unitNumber={currentUnit.unitNumber}
+            unitTitle={currentUnit.title}
           />
         )}
 

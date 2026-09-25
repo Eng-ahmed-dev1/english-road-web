@@ -120,23 +120,68 @@ class SoundEffects {
 
 export const soundEffects = new SoundEffects();
 
+export const isSpeechSynthesisSupported = (): boolean => {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+};
+
+export const getBestEnglishVoice = (): SpeechSynthesisVoice | null => {
+  if (!isSpeechSynthesisSupported()) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || voices.length === 0) return null;
+
+  // Prefer high quality English voices (Natural / Neural / US / GB)
+  const preferred = voices.find(
+    v => (v.lang.startsWith('en-US') || v.lang.startsWith('en-GB') || v.lang.startsWith('en')) &&
+         (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen'))
+  );
+  if (preferred) return preferred;
+
+  return voices.find(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-GB') || v.lang.startsWith('en')) || null;
+};
+
+export const cleanTextForSpeech = (text: string): string => {
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // remove markdown bold markers
+    .replace(/[_~`#]/g, '')
+    .trim();
+};
+
+export const stopSpeech = () => {
+  if (isSpeechSynthesisSupported()) {
+    window.speechSynthesis.cancel();
+  }
+};
+
+export const pauseSpeech = () => {
+  if (isSpeechSynthesisSupported()) {
+    window.speechSynthesis.pause();
+  }
+};
+
+export const resumeSpeech = () => {
+  if (isSpeechSynthesisSupported()) {
+    window.speechSynthesis.resume();
+  }
+};
+
 // Browser Speech Synthesis for High-Quality Pronunciation
 export const speakEnglish = (text: string, rate: number = 0.9) => {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+  if (!isSpeechSynthesisSupported()) {
     console.warn('Speech synthesis not supported');
     return;
   }
 
   window.speechSynthesis.cancel(); // Stop any ongoing speech
 
-  const utterance = new SpeechSynthesisUtterance(text);
+  const cleanText = cleanTextForSpeech(text);
+  if (!cleanText) return;
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = 'en-US';
   utterance.rate = rate;
   utterance.pitch = 1.0;
 
-  // Try to find a natural English voice
-  const voices = window.speechSynthesis.getVoices();
-  const englishVoice = voices.find(v => (v.lang.startsWith('en-US') || v.lang.startsWith('en-GB')) && !v.name.includes('Google'));
+  const englishVoice = getBestEnglishVoice();
   if (englishVoice) {
     utterance.voice = englishVoice;
   }

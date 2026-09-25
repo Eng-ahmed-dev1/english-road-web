@@ -1,8 +1,29 @@
-import { useState } from 'react';
-import { CheckCircle2, BookOpen, Layers, Volume2, X } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { 
+  CheckCircle2, 
+  BookOpen, 
+  Layers, 
+  Volume2, 
+  X, 
+  Play, 
+  Pause, 
+  Square, 
+  SkipForward, 
+  SkipBack, 
+  Gauge, 
+  Headphones 
+} from 'lucide-react';
 import type { ReadingPassage, VocabWord, PhraseExpression } from '../types';
 import { StoryHook } from './StoryHook';
-import { speakEnglish } from '../utils/audio';
+import { 
+  speakEnglish, 
+  cleanTextForSpeech, 
+  stopSpeech, 
+  pauseSpeech, 
+  resumeSpeech, 
+  getBestEnglishVoice, 
+  isSpeechSynthesisSupported 
+} from '../utils/audio';
 
 export interface SelectedWordInfo {
   word: string;
@@ -323,6 +344,137 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     };
   };
 
+  // Audio Playback state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeParagraphIndex, setActiveParagraphIndex] = useState<number | null>(null);
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.95);
+
+  const readingRef = useRef<{
+    isPlaying: boolean;
+    isPaused: boolean;
+    currentIndex: number;
+    speed: number;
+  }>({
+    isPlaying: false,
+    isPaused: false,
+    currentIndex: 0,
+    speed: 0.95
+  });
+
+  useEffect(() => {
+    readingRef.current.speed = playbackSpeed;
+  }, [playbackSpeed]);
+
+  const stopReading = useCallback(() => {
+    stopSpeech();
+    readingRef.current.isPlaying = false;
+    readingRef.current.isPaused = false;
+    readingRef.current.currentIndex = 0;
+    setIsPlaying(false);
+    setIsPaused(false);
+    setActiveParagraphIndex(null);
+  }, []);
+
+  const readParagraphByIndex = useCallback((index: number) => {
+    if (!passage.paragraphs[index]) {
+      stopReading();
+      return;
+    }
+
+    if (!isSpeechSynthesisSupported()) {
+      alert('ميزة القراءة الصوتية غير مدعومة في هذا المتصفح');
+      return;
+    }
+
+    stopSpeech();
+
+    readingRef.current.isPlaying = true;
+    readingRef.current.isPaused = false;
+    readingRef.current.currentIndex = index;
+    setIsPlaying(true);
+    setIsPaused(false);
+    setActiveParagraphIndex(index);
+
+    const cleanText = cleanTextForSpeech(passage.paragraphs[index]);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'en-US';
+    utterance.rate = readingRef.current.speed;
+    utterance.pitch = 1.0;
+
+    const voice = getBestEnglishVoice();
+    if (voice) {
+      utterance.voice = voice;
+    }
+
+    utterance.onend = () => {
+      if (!readingRef.current.isPlaying || readingRef.current.isPaused) return;
+
+      const nextIdx = index + 1;
+      if (nextIdx < passage.paragraphs.length) {
+        setTimeout(() => {
+          if (readingRef.current.isPlaying && !readingRef.current.isPaused) {
+            readParagraphByIndex(nextIdx);
+          }
+        }, 400);
+      } else {
+        stopReading();
+      }
+    };
+
+    utterance.onerror = (e) => {
+      if (e.error !== 'canceled' && e.error !== 'interrupted') {
+        console.warn('Speech synthesis error:', e);
+        stopReading();
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }, [passage.paragraphs, stopReading]);
+
+  const togglePlayPause = () => {
+    if (!isPlaying) {
+      const startIndex = activeParagraphIndex ?? 0;
+      readParagraphByIndex(startIndex);
+    } else if (isPaused) {
+      readingRef.current.isPaused = false;
+      setIsPaused(false);
+      resumeSpeech();
+    } else {
+      readingRef.current.isPaused = true;
+      setIsPaused(true);
+      pauseSpeech();
+    }
+  };
+
+  const handleNextParagraph = () => {
+    const cur = activeParagraphIndex ?? 0;
+    if (cur + 1 < passage.paragraphs.length) {
+      readParagraphByIndex(cur + 1);
+    }
+  };
+
+  const handlePrevParagraph = () => {
+    const cur = activeParagraphIndex ?? 0;
+    if (cur - 1 >= 0) {
+      readParagraphByIndex(cur - 1);
+    }
+  };
+
+  const handleSpeedChange = (speed: number) => {
+    setPlaybackSpeed(speed);
+    readingRef.current.speed = speed;
+    if (isPlaying && !isPaused && activeParagraphIndex !== null) {
+      readParagraphByIndex(activeParagraphIndex);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, [passage]);
+
   const handleWordClick = (wordText: string) => {
     const item = findItem(wordText);
     setSelectedWord(item);
@@ -334,27 +486,64 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
   const renderParagraph = (paragraph: string, pIndex: number) => {
     const parts = paragraph.split(/(\*\*.*?\*\*)/g);
+    const isCurrentParagraphPlaying = isPlaying && activeParagraphIndex === pIndex;
 
     return (
-      <p key={pIndex} className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-base sm:text-lg lg:text-xl mb-6 text-left sm:text-justify font-en font-normal">
-        {parts.map((part, index) => {
-          if (part.startsWith('**') && part.endsWith('**')) {
-            const rawWord = part.slice(2, -2);
-
-            return (
-              <span
-                key={index}
-                onClick={() => handleWordClick(rawWord)}
-                className="cursor-pointer inline-block px-1.5 sm:px-2.5 py-0.5 my-0.5 mx-0.5 sm:mx-1 rounded-md sm:rounded-lg font-bold transition-all duration-150 bg-blue-100 dark:bg-blue-950/70 text-blue-950 dark:text-blue-200 border-b-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-900 active:scale-95 touch-manipulation shadow-2xs hover:shadow-xs"
-                title="اضغط لعرض المعنى والتعريف والاستماع للنطق"
-              >
-                {rawWord}
+      <div
+        key={pIndex}
+        className={`group/p relative transition-all duration-300 rounded-2xl mb-6 p-3 sm:p-4.5 ${
+          isCurrentParagraphPlaying
+            ? 'bg-blue-50/90 dark:bg-blue-950/40 ring-2 ring-blue-500 dark:ring-blue-400 shadow-xs'
+            : 'hover:bg-slate-50/70 dark:hover:bg-slate-800/40'
+        }`}
+      >
+        <div className="flex items-center justify-between mb-2 pb-1 border-b border-slate-100 dark:border-slate-800/80">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+              Paragraph {pIndex + 1}
+            </span>
+            {isCurrentParagraphPlaying && (
+              <span className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 animate-pulse font-ar">
+                <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 inline-block animate-ping"></span>
+                جاري الاستماع الآن...
               </span>
-            );
-          }
-          return <span key={index}>{part}</span>;
-        })}
-      </p>
+            )}
+          </div>
+
+          <button
+            onClick={() => readParagraphByIndex(pIndex)}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all active:scale-95 touch-manipulation ${
+              isCurrentParagraphPlaying
+                ? 'bg-blue-600 text-white shadow-2xs'
+                : 'text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/60'
+            }`}
+            title="استمع لهذه الفقرة بصوت واضح"
+          >
+            <Volume2 className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{isCurrentParagraphPlaying ? 'إعادة الفقرة' : 'استمع للفقرة'}</span>
+          </button>
+        </div>
+
+        <p className="text-slate-800 dark:text-slate-200 leading-relaxed sm:leading-loose text-base sm:text-lg lg:text-xl text-left sm:text-justify font-en font-normal">
+          {parts.map((part, index) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              const rawWord = part.slice(2, -2);
+
+              return (
+                <span
+                  key={index}
+                  onClick={() => handleWordClick(rawWord)}
+                  className="cursor-pointer inline-block px-1.5 sm:px-2.5 py-0.5 my-0.5 mx-0.5 sm:mx-1 rounded-md sm:rounded-lg font-bold transition-all duration-150 bg-blue-100 dark:bg-blue-950/70 text-blue-950 dark:text-blue-200 border-b-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-900 active:scale-95 touch-manipulation shadow-2xs hover:shadow-xs"
+                  title="اضغط لعرض المعنى والتعريف والاستماع للنطق"
+                >
+                  {rawWord}
+                </span>
+              );
+            }
+            return <span key={index}>{part}</span>;
+          })}
+        </p>
+      </div>
     );
   };
 
@@ -402,6 +591,112 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
               partNumber={partNumber}
               title={cleanTitle}
             />
+          </div>
+
+          {/* Interactive Audio Passage Player */}
+          <div className="mb-6 sm:mb-8 p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-cyan-50/90 dark:from-slate-850 dark:via-blue-950/30 dark:to-slate-850 border border-blue-200/90 dark:border-blue-900/60 shadow-xs">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              {/* Player Title & Current Status */}
+              <div className="flex items-center gap-3 w-full md:w-auto">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-blue-600 text-white shadow-xs shrink-0">
+                  <Headphones className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white font-ar">
+                      القارئ الصوتي التفاعلي للدرس (Audio Player)
+                    </h3>
+                    {isPlaying && !isPaused && (
+                      <span className="flex gap-0.5 items-end h-3.5">
+                        <span className="w-1 bg-blue-600 rounded-full animate-bounce h-2" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1 bg-blue-600 rounded-full animate-bounce h-3.5" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1 bg-blue-600 rounded-full animate-bounce h-2.5" style={{ animationDelay: '300ms' }} />
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-ar">
+                    {isPlaying
+                      ? `جاري قراءة الفقرة ${(activeParagraphIndex ?? 0) + 1} من أصل ${passage.paragraphs.length}`
+                      : 'استمع إلى قراءة النص الإنجليزي بالكامل بلكنة واضحة مع إبراز الفقرات'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Player Controls */}
+              <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 sm:gap-3 w-full md:w-auto">
+                {/* Prev Paragraph */}
+                <button
+                  onClick={handlePrevParagraph}
+                  disabled={!isPlaying || activeParagraphIndex === 0}
+                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors"
+                  title="الفقرة السابقة"
+                >
+                  <SkipBack className="w-4 h-4" />
+                </button>
+
+                {/* Main Play / Pause Button */}
+                <button
+                  onClick={togglePlayPause}
+                  className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-xs active:scale-95 transition-all touch-manipulation"
+                >
+                  {isPlaying && !isPaused ? (
+                    <>
+                      <Pause className="w-4 h-4 fill-white" />
+                      <span>إيقاف مؤقت</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 fill-white" />
+                      <span>{isPaused ? 'استئناف القراءة' : 'تشغيل النص كاملاً'}</span>
+                    </>
+                  )}
+                </button>
+
+                {/* Stop Button */}
+                {isPlaying && (
+                  <button
+                    onClick={stopReading}
+                    className="p-2 sm:p-2.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/60 hover:bg-red-100 dark:hover:bg-red-900/60 shadow-2xs transition-colors"
+                    title="إيقاف نهائي"
+                  >
+                    <Square className="w-4 h-4 fill-current" />
+                  </button>
+                )}
+
+                {/* Next Paragraph */}
+                <button
+                  onClick={handleNextParagraph}
+                  disabled={!isPlaying || activeParagraphIndex === passage.paragraphs.length - 1}
+                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors"
+                  title="الفقرة التالية"
+                >
+                  <SkipForward className="w-4 h-4" />
+                </button>
+
+                {/* Speed Selector */}
+                <div className="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold shadow-2xs">
+                  <Gauge className="w-3.5 h-3.5 text-slate-400 mr-1 ml-0.5" />
+                  {[
+                    { label: '0.75x', val: 0.75 },
+                    { label: '1.0x', val: 0.95 },
+                    { label: '1.25x', val: 1.25 }
+                  ].map(s => (
+                    <button
+                      key={s.label}
+                      onClick={() => handleSpeedChange(s.val)}
+                      className={`px-2 py-0.5 rounded-lg transition-colors ${
+                        playbackSpeed === s.val
+                          ? 'bg-blue-600 text-white font-black'
+                          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      }`}
+                      title={`سرعة القراءة: ${s.label}`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Reading Paragraphs */}
