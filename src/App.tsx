@@ -165,11 +165,11 @@ export function App() {
               <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span className="font-bold text-slate-700 dark:text-slate-200">English Road</span>
               <span>•</span>
-              <span>منهج اللغة الإنجليزية الشامل للثانوية العامة</span>
+              <span>Comprehensive Secondary Curriculum Platform</span>
             </div>
 
             <div className="text-slate-400 text-right">
-              <span>جاهز للشرح التفاعلي على السبورة الذكية (Smart Whiteboard Ready)</span>
+              <span>Interactive Smart Whiteboard Ready</span>
             </div>
           </div>
 
@@ -181,7 +181,7 @@ export function App() {
               <span>• All Rights Reserved</span>
             </div>
             <div>
-              <span>منصة تفاعلية مجهزة للشرح الذكي للثانوية العامة</span>
+              <span>Interactive Classroom Platform for Secondary Education</span>
             </div>
           </div>
         </div>

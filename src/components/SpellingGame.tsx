@@ -108,27 +108,27 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
           <div>
             {!compactMode && (
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">تدريب تفاعلي للسبورة الذكية</span>
+                <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">Interactive Smartboard Practice</span>
                 {isCompleted && (
                   <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-400 px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800">
-                    مكتمل ✓
+                    Completed ✓
                   </span>
                 )}
               </div>
             )}
             <h2 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl'} font-black text-slate-900 dark:text-white`}>
-              تحدي ترتيب حروف الكلمة
+              Spelling & Letter Order Challenge
             </h2>
             {!compactMode && (
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                اقرأ المعنى والتعريف ثم اضغط على الحروف على الشاشة بالترتيب الإملائي الصحيح.
+                Read the definition and tap the letters in the correct spelling order.
               </p>
             )}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
             <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700">
-              أنجزت: <strong className="text-blue-600 dark:text-blue-400 font-en text-sm sm:text-base">{completedCount}</strong> / 5
+              Completed: <strong className="text-blue-600 dark:text-blue-400 font-en text-sm sm:text-base">{completedCount}</strong> / 5
             </span>
 
             <button
@@ -137,7 +137,7 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
               className="px-3 py-1.5 sm:px-4 sm:py-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all disabled:opacity-40 active:scale-95 touch-manipulation"
             >
               <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 dark:text-blue-400" />
-              <span>تلميح</span>
+              <span>Hint</span>
             </button>
           </div>
         </div>
@@ -147,8 +147,8 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
       <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
         {/* Arabic Meaning & Definition */}
         <div className="mb-6 sm:mb-8 space-y-2">
-          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">المعنى المطلوب:</span>
-          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white`}>
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Target Meaning:</span>
+          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white font-ar`}>
             {currentWord.arabicMeaning}
           </h3>
           <p className="text-xs sm:text-base lg:text-lg font-en text-slate-600 dark:text-slate-300 italic max-w-2xl mx-auto leading-relaxed" dir="ltr">
@@ -156,7 +156,7 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
           </p>
           {hintShown && (
             <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-bold bg-blue-50 dark:bg-blue-950/60 py-1 px-3 sm:py-1.5 sm:px-4 rounded-xl inline-block mt-2 sm:mt-3 border border-blue-200 dark:border-blue-800">
-              💡 تلميح: تبدأ الكلمة بحرف ({targetWordUpper[0]})
+              💡 Hint: Starts with ({targetWordUpper[0]})
             </div>
           )}
         </div>
@@ -192,7 +192,7 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
         {isCorrect && (
           <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300 text-xs sm:text-base font-bold animate-pulse">
             <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
-            <span>تهجئة صحيحة ومطابقة للمنهج الدراسي! أحسنت 🌟</span>
+            <span>Correct spelling! Well done! 🌟</span>
           </div>
         )}
 
@@ -226,15 +226,15 @@ export const SpellingGame: React.FC<SpellingGameProps> = ({
             className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl sm:rounded-2xl text-xs sm:text-base font-bold transition-all disabled:opacity-40 min-h-[44px] sm:min-h-[50px] active:scale-95 touch-manipulation"
           >
             <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>مسح الحروف</span>
+            <span>Clear</span>
           </button>
 
           <button
             onClick={handleNextWord}
             className="flex items-center gap-1.5 sm:gap-2.5 px-5 py-2.5 sm:px-8 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl sm:rounded-2xl text-xs sm:text-base font-bold transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
           >
-            <span>الكلمة التالية</span>
-            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-180" />
+            <span>Next Word</span>
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </div>

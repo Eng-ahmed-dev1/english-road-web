@@ -9,8 +9,7 @@ import {
   Link2,
   BookOpen,
   Search,
-  Sparkles,
-  ArrowLeft
+  Sparkles
 } from 'lucide-react';
 import type { QuizQuestion, PhraseExpression } from '../types';
 
@@ -110,19 +109,19 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
       case 'preposition':
         return (
           <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-            حرف جر Preposition
+            Preposition
           </span>
         );
       case 'expression':
         return (
           <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-            تعبير Expression
+            Expression
           </span>
         );
       case 'idiom':
         return (
           <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-            مثل / مصطلح Idiom
+            Idiom
           </span>
         );
     }
@@ -137,16 +136,16 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
             <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
 
-          <h2 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mb-1.5 sm:mb-2">
-            اكتمل تدريب حروف الجر والمتلازمات!
+          <h2 className="text-lg sm:text-2xl font-bold text-slate-900 dark:white mb-1.5 sm:mb-2">
+            Collocations & Prepositions Practice Completed!
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-4 sm:mb-6">
-            تمت مراجعة جميع حروف الجر والتعبيرات الاصطلاحية الـ {questions.length} المقررة بنجاح.
+            Successfully reviewed all {questions.length} curriculum collocations, idioms, and prepositions.
           </p>
 
           {showPoints && (
             <div className="my-3 sm:my-4 inline-flex items-center gap-3 sm:gap-4 px-4 py-2 sm:px-6 sm:py-3 bg-slate-50 dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700">
-              <span className="text-xs text-slate-500 dark:text-slate-400">النتيجة:</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Score:</span>
               <span className="text-xl sm:text-2xl font-black font-en text-blue-600 dark:text-blue-400">{score} / {questions.length}</span>
             </div>
           )}
@@ -157,7 +156,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
               className="flex items-center gap-1.5 sm:gap-2 px-5 py-2.5 sm:px-6 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm"
             >
               <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>إعادة التدريب</span>
+              <span>Restart Practice</span>
             </button>
             {!compactMode && (
               <button
@@ -168,7 +167,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
                 className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-bold text-xs sm:text-sm transition-all border border-slate-200 dark:border-slate-700"
               >
                 <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span>عرض جدول المتلازمات</span>
+                <span>View Expressions Table</span>
               </button>
             )}
           </div>
@@ -242,7 +241,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
           </div>
 
           {selectedOption !== null && (
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800" dir="rtl">
+            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
               <p className="text-[11px] text-slate-600 dark:text-slate-400 font-en mb-3">
                 {currentQ.explanation}
               </p>
@@ -250,8 +249,8 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
                 onClick={handleNext}
                 className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-1 text-xs"
               >
-                <span>{currentIndex + 1 === questions.length ? 'إنهاء' : 'التالي'}</span>
-                <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                <span>{currentIndex + 1 === questions.length ? 'Finish' : 'Next'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           )}
@@ -272,11 +271,11 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
                 <Link2 className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <h2 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                حروف الجر والمتلازمات اللفظية
+                Collocations & Prepositions
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              قائمة وحروف الجر والتعبيرات الاصطلاحية (Collocations, Idioms & Prepositions) المقررة في الوحدة.
+              Curriculum collocations, idioms, and prepositional phrases for this unit.
             </p>
           </div>
 
@@ -291,7 +290,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
               }`}
             >
               <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>جدول التعبيرات ({phrases.length || 24})</span>
+              <span>Expressions Table ({phrases.length || 24})</span>
             </button>
 
             <button
@@ -303,7 +302,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>التدريب التفاعلي ({questions.length})</span>
+              <span>Interactive Quiz ({questions.length})</span>
             </button>
           </div>
         </div>
@@ -313,13 +312,13 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
           <div className="pt-4 sm:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
             {/* Search Input */}
             <div className="relative w-full md:w-96">
-              <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="ابحث بالإنجليزية أو العربية..."
-                className="w-full pr-10 pl-4 py-2 sm:py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-hidden focus:border-blue-500"
+                placeholder="Search expressions or meanings..."
+                className="w-full pl-10 pr-4 py-2 sm:py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-hidden focus:border-blue-500"
               />
             </div>
 
@@ -327,10 +326,10 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full md:w-auto">
               {(
                 [
-                  { id: 'all', label: 'الكل' },
-                  { id: 'preposition', label: 'حروف جر' },
-                  { id: 'expression', label: 'تعبيرات' },
-                  { id: 'idiom', label: 'مصطلحات' }
+                  { id: 'all', label: 'All' },
+                  { id: 'preposition', label: 'Prepositions' },
+                  { id: 'expression', label: 'Expressions' },
+                  { id: 'idiom', label: 'Idioms' }
                 ] as const
               ).map((type) => (
                 <button
@@ -355,14 +354,14 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
         <div className="space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between">
             <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">
-              عرض {filteredPhrases.length} من أصل {phrases.length} تعبير ومصطلح
+              Showing {filteredPhrases.length} of {phrases.length} expressions & idioms
             </span>
             <button
               onClick={() => setActiveSubTab('quiz')}
               className="flex items-center gap-1 text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline"
             >
-              <span>بدء اختبار التحدي التفاعلي</span>
-              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span>Start Interactive Quiz</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           </div>
 
@@ -387,7 +386,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
                 </div>
 
                 <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                  <span className="text-sm sm:text-lg font-black text-blue-600 dark:text-blue-400">
+                  <span className="text-sm sm:text-lg font-black text-blue-600 dark:text-blue-400 font-ar">
                     {item.arabicMeaning}
                   </span>
                 </div>
@@ -398,26 +397,26 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
           {filteredPhrases.length === 0 && (
             <div className="text-center py-12 sm:py-16 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800">
               <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-base font-bold">
-                لم يتم العثور على أي تعبير يطابق بحثك.
+                No expressions match your search.
               </p>
             </div>
           )}
 
           {/* Bottom Banner to Start Quiz */}
-          <div className="bg-gradient-to-l from-blue-600 to-indigo-700 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 shadow-md shadow-blue-500/10 mt-6 sm:mt-8">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 shadow-md shadow-blue-500/10 mt-6 sm:mt-8">
             <div>
               <h3 className="text-lg sm:text-2xl font-black mb-1">
-                هل أنت جاهز لاختبار فهمك لحروف الجر؟
+                Ready to Test Your Collocations & Prepositions?
               </h3>
               <p className="text-xs sm:text-sm text-blue-100">
-                تدرب على أسئلة الاختيار من متعدد مطابقة لنمط امتحانات الثانوية العامة مع شروحات فورية.
+                Practice multiple-choice questions aligned with curriculum exams with instant explanations.
               </p>
             </div>
             <button
               onClick={() => setActiveSubTab('quiz')}
               className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-white text-blue-700 rounded-xl sm:rounded-2xl font-black text-xs sm:text-base shadow-sm hover:bg-blue-50 transition-all shrink-0 active:scale-95 touch-manipulation text-center"
             >
-              بدء التدريب التفاعلي الآن
+              Start Interactive Practice Now
             </button>
           </div>
         </div>
@@ -431,13 +430,13 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-3">
                 <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
-                  سؤال {currentIndex + 1} من {questions.length}
+                  Question {currentIndex + 1} of {questions.length}
                 </span>
                 <button
                   onClick={() => setActiveSubTab('study')}
                   className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:underline font-bold px-1.5 py-1"
                 >
-                  العودة للجدول
+                  Back to Table
                 </button>
               </div>
 
@@ -463,7 +462,7 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
 
           {/* Question Card */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
-            <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">اختر التعبير أو حرف الجر الصحيح:</span>
+            <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">Choose the correct preposition or expression:</span>
             <h3 className="text-base sm:text-2xl lg:text-3xl font-bold font-en text-slate-900 dark:text-white leading-relaxed mb-6 sm:mb-8" dir="ltr">
               {currentQ.question}
             </h3>
@@ -513,10 +512,10 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
 
             {/* Explanation & Next */}
             {selectedOption !== null && (
-              <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800" dir="rtl">
+              <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800">
                 <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl mb-4 sm:mb-6">
                   <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-1.5 sm:mb-2">
-                    💡 القاعدة والتوضيح:
+                    💡 Rule & Explanation:
                   </span>
                   <p className="text-xs sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 font-en leading-relaxed">
                     {currentQ.explanation}
@@ -527,8 +526,8 @@ export const CollocationsGame: React.FC<CollocationsGameProps> = ({
                   onClick={handleNext}
                   className="w-full py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl sm:rounded-2xl transition-all flex items-center justify-center gap-2 text-sm sm:text-lg shadow-md active:scale-95 touch-manipulation min-h-[46px] sm:min-h-[54px]"
                 >
-                  <span>{currentIndex + 1 === questions.length ? 'إنهاء التدريب' : 'السؤال التالي'}</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
+                  <span>{currentIndex + 1 === questions.length ? 'Finish Practice' : 'Next Question'}</span>
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             )}

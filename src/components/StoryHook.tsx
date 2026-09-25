@@ -735,7 +735,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
             </div>
             <div className="min-w-0 flex-1">
               <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 block mb-1">
-                The Core Warm-Up Hook • خطاف التمهيد والتفكير
+                The Core Warm-Up Hook
               </span>
               <h2 className="text-base sm:text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white font-en leading-snug tracking-tight break-words">
                 {hook.hookQuestionEn}
@@ -763,7 +763,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
           >
             <div className="flex items-center gap-2.5">
               <BrainCircuit className="w-5 h-5 shrink-0" />
-              <span>{isExpanded ? 'إخفاء محاور النقاش التفاعلية' : '🧠 اضغط هنا لفتح محاور النقاش وسؤال العصف الذهني للفصل'}</span>
+              <span>{isExpanded ? 'Hide Classroom Discussion Prompts' : '🧠 Click to Open Interactive Classroom Discussion Prompts'}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs opacity-90 hidden sm:inline">
@@ -781,7 +781,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
             <div>
               <div className="flex items-center gap-2 text-xs font-black uppercase text-slate-500 dark:text-slate-400 mb-3">
                 <Users className="w-4 h-4 text-indigo-500" />
-                <span>Classroom Discussion Questions • محاور النقاش الصفي للسبورة الذكية</span>
+                <span>Classroom Discussion Questions • Whiteboard Prompts</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -822,7 +822,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
             <div className="p-5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50">
               <div className="flex items-center gap-2 text-xs font-black uppercase text-amber-800 dark:text-amber-300 mb-2">
                 <Flame className="w-4 h-4 text-amber-600 animate-pulse" />
-                <span>Did You Know? • معلومة علمية مدهشة</span>
+                <span>Did You Know? • Fascinating Fact</span>
               </div>
               <p className="font-en text-sm sm:text-base text-slate-800 dark:text-slate-200 font-semibold mb-1">
                 "{hook.funFactEn}"
@@ -835,7 +835,7 @@ export const StoryHook: React.FC<StoryHookProps> = ({ unitNumber, partNumber }) 
             {/* Key Vocabulary Teaser Badges */}
             <div>
               <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-2">
-                Key Concept Tags in this Passage • مفاهيم محورية ستتعرف عليها في النص:
+                Key Concept Tags in this Passage:
               </span>
               <div className="flex flex-wrap gap-2">
                 {hook.keywords.map((kw, i) => (

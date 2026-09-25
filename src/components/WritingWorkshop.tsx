@@ -111,11 +111,12 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                   Lesson {writingData.lessonNumber} • Writing Skills
                 </span>
               </div>
-              <h2 className="text-xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-                {writingData.lessonTitleArabic}
+              <h2 className="text-xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight font-en">
+                {writingData.lessonTitle}
               </h2>
-              <p className="text-xs sm:text-base text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 font-en">
-                {writingData.lessonTitle} • Structure, Exam Practice & Practical Workshop
+              <p className="text-xs sm:text-base text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 font-en flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <span className="font-ar font-bold text-slate-700 dark:text-slate-300">{writingData.lessonTitleArabic}</span>
+                <span>• Structure, Exam Practice & Practical Workshop</span>
               </p>
             </div>
           </div>
@@ -131,7 +132,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               }`}
             >
               <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>هيكل الكتابة</span>
+              <span>Writing Structure</span>
             </button>
 
             <button
@@ -143,7 +144,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>أسئلة الامتحانات ({writingData.examQuestions.length})</span>
+              <span>Exam Practice ({writingData.examQuestions.length})</span>
             </button>
 
             {hasSpecialActivities && (
@@ -160,7 +161,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                 }`}
               >
                 <Sparkles className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isPoemLesson ? 'text-rose-500' : isBiographyLesson ? 'text-indigo-500' : 'text-teal-500'}`} />
-                <span>{isPoemLesson ? 'استوديو نظم الشعر' : isBiographyLesson ? 'استوديو السيرة الذاتية' : 'أنشطة الكتاب (5 أنشطة)'}</span>
+                <span>{isPoemLesson ? 'Poem Studio' : isBiographyLesson ? 'Biography Studio' : 'Textbook Activities (5)'}</span>
               </button>
             )}
 
@@ -173,7 +174,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               }`}
             >
               <PenTool className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>التاسك التطبيقي</span>
+              <span>Writing Workshop</span>
             </button>
           </div>
         </div>
@@ -200,7 +201,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           <div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>الخصائص والمواصفات الأساسية ({writingData.lessonTitle})</span>
+              <span>Key Characteristics & Guidelines ({writingData.lessonTitle})</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {writingData.characteristics.map((char, idx) => (
@@ -231,7 +232,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           <div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>هيكل وخطوات الكتابة خطوة بخطوة ({writingData.lessonTitle})</span>
+              <span>Step-by-Step Writing Structure ({writingData.lessonTitle})</span>
             </h3>
 
             <div className="space-y-4">
@@ -256,14 +257,14 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                     </div>
 
                     <div className="bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
-                      <span className="font-bold text-slate-900 dark:text-white">الهدف (Purpose): </span>
+                      <span className="font-bold text-slate-900 dark:text-white">Purpose: </span>
                       {step.purposeArabic}
                     </div>
                   </div>
 
                   {/* Examples from Textbook */}
                   <div className="space-y-2">
-                    <span className="text-xs font-bold text-slate-400 block mb-1.5">أمثلة تطبيقية من كتاب الوزارة:</span>
+                    <span className="text-xs font-bold text-slate-400 block mb-1.5">Textbook Examples:</span>
                     {step.examples.map((ex, exIdx) => (
                       <div
                         key={exIdx}
@@ -287,20 +288,20 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           </div>
 
           {/* CTA to start task */}
-          <div className="bg-gradient-to-l from-indigo-600 to-blue-700 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md shadow-indigo-500/10">
+          <div className="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md shadow-indigo-500/10">
             <div>
               <h4 className="text-lg sm:text-xl font-bold mb-1">
-                جاهز لتطبيق ما تعلمته في كتابة {writingData.lessonTitleArabic || 'موضوعك'}؟
+                Ready to Practice Writing Your {writingData.lessonTitle}?
               </h4>
               <p className="text-xs sm:text-sm text-indigo-100">
-                انتقل الآن إلى ورشة العمل التفاعلية وجرب الكتابة والتطبيق العملي مع عداد الكلمات ونموذج الإجابة الاسترشادي.
+                Switch to the interactive writing workshop to practice with real-time word count and full model answers.
               </p>
             </div>
             <button
               onClick={() => setActiveTab('task')}
               className="px-6 py-3 bg-white text-indigo-700 rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:bg-indigo-50 transition-all shrink-0"
             >
-              بدء التاسك التطبيقي الآن
+              Start Writing Task Now
             </button>
           </div>
         </div>
@@ -315,14 +316,14 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                 <Award className="w-7 h-7" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                اكتمل تدريب أسئلة مهارات الكتابة!
+                Writing Skills Practice Completed!
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
-                أحسنت! أصبحت مطلعاً على نمط أسئلة امتحانات الثانوية العامة في مهارات الكتابة ({writingData.lessonTitle}).
+                Well done! You have reviewed all exam-style questions for {writingData.lessonTitle}.
               </p>
 
               <div className="my-4 inline-flex items-center gap-4 px-6 py-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
-                <span className="text-xs text-slate-500 dark:text-slate-400">النتيجة:</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400">Score:</span>
                 <span className="text-2xl font-black font-en text-indigo-600 dark:text-indigo-400">
                   {mcqScore} / {writingData.examQuestions.length}
                 </span>
@@ -334,13 +335,13 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                   className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs sm:text-sm transition-all"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>إعادة الأسئلة</span>
+                  <span>Restart Questions</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('task')}
                   className="flex items-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl font-bold text-xs sm:text-sm transition-all"
                 >
-                  <span>الانتقال للتاسك العملي</span>
+                  <span>Go to Writing Task</span>
                 </button>
               </div>
             </div>
@@ -350,9 +351,9 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 font-en">
-                    سؤال {mcqIndex + 1} من {writingData.examQuestions.length}
+                    Question {mcqIndex + 1} of {writingData.examQuestions.length}
                   </span>
-                  <span className="text-xs text-slate-400">نماذج أسئلة الثانوية العامة (MCQ)</span>
+                  <span className="text-xs text-slate-400">Curriculum Exam Practice (MCQ)</span>
                 </div>
                 <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
                   <div
@@ -364,7 +365,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
 
               {/* Question Card */}
               <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
-                <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">اختر الإجابة الصحيحة طبقاً للمنهج:</span>
+                <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">Choose the correct answer according to the curriculum:</span>
                 <h3 className="text-base sm:text-2xl lg:text-3xl font-bold font-en text-slate-900 dark:text-white leading-relaxed mb-6 sm:mb-8" dir="ltr">
                   {currentQ.question}
                 </h3>
@@ -410,9 +411,9 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                 {/* Explanation */}
                 {selectedOption !== null && (
                   <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800">
-                    <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl mb-4 sm:mb-6" dir="rtl">
+                    <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl mb-4 sm:mb-6">
                       <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-1.5 sm:mb-2">
-                        💡 توضيح الإجابة الصحيحة:
+                        💡 Explanation & Answer Analysis:
                       </span>
                       <p className="text-xs sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 font-en leading-relaxed" dir="ltr">
                         {currentQ.explanation}
@@ -423,7 +424,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                       onClick={handleNextMCQ}
                       className="w-full py-3 sm:py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-2xl transition-all flex items-center justify-center gap-2 text-sm sm:text-lg shadow-md active:scale-95 touch-manipulation min-h-[46px] sm:min-h-[54px]"
                     >
-                      <span>{mcqIndex + 1 === writingData.examQuestions.length ? 'عرض النتيجة' : 'السؤال التالي'}</span>
+                      <span>{mcqIndex + 1 === writingData.examQuestions.length ? 'View Results' : 'Next Question'}</span>
                     </button>
                   </div>
                 )}
@@ -452,10 +453,13 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-6">
               <div>
                 <span className="text-[11px] sm:text-sm font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-1.5 sm:mb-2 inline-block">
-                  تاسك تطبيقي عملي
+                  Practical Writing Task
                 </span>
-                <h3 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white">
-                  {writingData.task.titleArabic}
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white font-en">
+                  <span>{writingData.lessonTitle} Task</span>
+                  <span className="block text-sm sm:text-base font-normal font-ar text-slate-500 dark:text-slate-400 mt-1">
+                    {writingData.task.titleArabic}
+                  </span>
                 </h3>
               </div>
 
@@ -470,28 +474,28 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               </div>
             </div>
 
-            <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 mb-4 sm:mb-5 leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 mb-4 sm:mb-5 leading-relaxed font-ar">
               {writingData.task.promptArabic}
             </p>
 
             {/* Suggested Topic Buttons */}
             <div>
-              <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 block mb-2 sm:mb-3">اختر موضوعاً للكتابة:</span>
+              <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 block mb-2 sm:mb-3">Select a Topic to Write About:</span>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 {writingData.task.suggestedTopics.map((topic) => (
                   <button
                     key={topic.id}
                     onClick={() => setSelectedTopicId(topic.id)}
-                    className={`p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border-2 text-right transition-all flex flex-col justify-between touch-manipulation min-h-[75px] sm:min-h-[85px] ${
+                    className={`p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border-2 text-left transition-all flex flex-col justify-between touch-manipulation min-h-[75px] sm:min-h-[85px] ${
                       selectedTopicId === topic.id
                         ? 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-500 shadow-md ring-2 ring-indigo-200 dark:ring-indigo-900'
                         : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 border-slate-200 dark:border-slate-700'
                     }`}
                   >
-                    <span className="text-xs sm:text-base font-black text-slate-900 dark:text-white mb-1">
+                    <span className="text-xs sm:text-base font-black text-slate-900 dark:text-white mb-1 font-ar">
                       {topic.title}
                     </span>
-                    <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
+                    <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-ar">
                       {topic.hint}
                     </span>
                   </button>
@@ -504,8 +508,8 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4 sm:space-y-6">
             {currentTopic && (
               <div className="pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between text-xs sm:text-sm gap-1.5 sm:gap-2">
-                <span className="text-slate-500">الموضوع المختار: <strong className="text-indigo-600 dark:text-indigo-400 text-xs sm:text-base">{currentTopic.title}</strong></span>
-                <span className="text-[11px] sm:text-xs text-slate-400">{currentTopic.hint}</span>
+                <span className="text-slate-500">Selected Topic: <strong className="text-indigo-600 dark:text-indigo-400 text-xs sm:text-base font-ar">{currentTopic.title}</strong></span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-ar">{currentTopic.hint}</span>
               </div>
             )}
 
@@ -514,7 +518,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                 <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
                   <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">1</span>
-                  <span>العنوان الجذاب (Catchy Title / Headline):</span>
+                  <span>Catchy Title / Headline:</span>
                 </label>
                 <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(headline)} words</span>
               </div>
@@ -533,7 +537,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                 <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
                   <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">2</span>
-                  <span>المقدمة والخاطف (Introduction & Hook):</span>
+                  <span>Introduction & Hook:</span>
                 </label>
                 <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(intro)} words</span>
               </div>
@@ -552,7 +556,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                 <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
                   <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">3</span>
-                  <span>صلب التدوينة والتفاصيل (Main Body):</span>
+                  <span>Main Body Paragraphs:</span>
                 </label>
                 <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(body)} words</span>
               </div>
@@ -571,7 +575,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                 <label className="text-xs sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
                   <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[11px] sm:text-xs font-en font-black">4</span>
-                  <span>الخاتمة وسؤال التفاعل (Conclusion & Question):</span>
+                  <span>Conclusion & Question:</span>
                 </label>
                 <span className="text-[11px] sm:text-xs text-slate-400 font-en font-bold">{countWords(conclusion)} words</span>
               </div>
@@ -594,7 +598,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                   className="flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold rounded-xl sm:rounded-2xl text-xs sm:text-base transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
                 >
                   <Copy className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>{copied ? 'تم النسخ بنجاح!' : 'نسخ النص كاملاً'}</span>
+                  <span>{copied ? 'Copied to Clipboard!' : 'Copy Full Text'}</span>
                 </button>
 
                 <button
@@ -603,7 +607,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                   className="flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors active:scale-95 touch-manipulation"
                 >
                   <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  <span>تفريغ الحقول</span>
+                  <span>Clear Fields</span>
                 </button>
               </div>
 
@@ -613,7 +617,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                 className="flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-indigo-700 dark:text-indigo-400 font-bold rounded-xl sm:rounded-2xl text-xs sm:text-base transition-all border border-slate-200 dark:border-slate-700 active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[50px]"
               >
                 {showModelAnswer ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
-                <span>{showModelAnswer ? 'إخفاء النموذج المثالي' : 'عرض النموذج المثالي الإرشادي'}</span>
+                <span>{showModelAnswer ? 'Hide Model Answer' : 'View Model Answer'}</span>
               </button>
             </div>
           </div>
@@ -625,7 +629,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
                 <div className="flex items-center gap-2">
                   <Award className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                   <h4 className="font-bold text-slate-900 dark:text-white text-base">
-                    النموذج الإرشادي المثالي (Model Answer)
+                    Full Model Answer
                   </h4>
                 </div>
                 <span className="text-[11px] font-en font-bold text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-900 px-3 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800">
@@ -660,7 +664,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
               </div>
 
               <div className="mt-4 pt-3 border-t border-indigo-200 dark:border-indigo-800 text-xs text-slate-600 dark:text-slate-400">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400">تحليل النموذج: </span>
+                <span className="font-bold text-indigo-600 dark:text-indigo-400">Model Breakdown: </span>
                 {writingData.task.modelBlogPost.arabicTranslation}
               </div>
             </div>
@@ -670,7 +674,7 @@ export const WritingWorkshop: React.FC<WritingWorkshopProps> = ({ writingData })
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>قائمة التحقق الذاتي قبل التسليم (Checklist):</span>
+              <span>Self-Checklist Before Submission:</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {writingData.task.checklist.map((item, idx) => (

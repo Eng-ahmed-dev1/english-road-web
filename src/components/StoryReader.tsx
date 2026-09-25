@@ -298,10 +298,10 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
           (common.length >= 1 && (wordsA.length <= 2 || wordsB.length <= 2))
         ) {
           const typeLabel = p.type === 'idiom'
-            ? 'تعبير اصطلاحي (Idiom)'
+            ? 'Idiom'
             : p.type === 'preposition'
-            ? 'حرف جر وتعبير (Preposition)'
-            : 'تعبير لغوي (Expression)';
+            ? 'Preposition'
+            : 'Expression';
           return {
             word: p.phrase,
             partOfSpeech: typeLabel,
@@ -336,8 +336,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     const cleanDisplayWord = wordStr.replace(/^[“"'‘\s]+|[”"'’,\.\!\?\s]+$/g, '').trim();
     return {
       word: cleanDisplayWord,
-      partOfSpeech: 'تعبير / مصطلح مميز في الدرس',
-      arabicMeaning: 'انقر للاستماع للنطق الصوتي بلكنة إنجليزية واضحة',
+      partOfSpeech: 'Curriculum Highlight',
+      arabicMeaning: 'Click to listen to native English audio pronunciation',
       definition: 'A highlighted key phrase or expression from the official curriculum passage.',
       exampleSentence: `From text: “${cleanDisplayWord}”`,
       type: 'expression'
@@ -383,7 +383,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
     }
 
     if (!isSpeechSynthesisSupported()) {
-      alert('ميزة القراءة الصوتية غير مدعومة في هذا المتصفح');
+      alert('Text-to-speech audio is not supported in this browser.');
       return;
     }
 
@@ -503,24 +503,24 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
               Paragraph {pIndex + 1}
             </span>
             {isCurrentParagraphPlaying && (
-              <span className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 animate-pulse font-ar">
+              <span className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 animate-pulse font-en">
                 <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 inline-block animate-ping"></span>
-                جاري الاستماع الآن...
+                Now Playing...
               </span>
             )}
           </div>
 
           <button
             onClick={() => readParagraphByIndex(pIndex)}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all active:scale-95 touch-manipulation ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all active:scale-95 touch-manipulation cursor-pointer ${
               isCurrentParagraphPlaying
                 ? 'bg-blue-600 text-white shadow-2xs'
                 : 'text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/60'
             }`}
-            title="استمع لهذه الفقرة بصوت واضح"
+            title="Listen to this paragraph"
           >
             <Volume2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{isCurrentParagraphPlaying ? 'إعادة الفقرة' : 'استمع للفقرة'}</span>
+            <span className="hidden sm:inline">{isCurrentParagraphPlaying ? 'Replay' : 'Listen'}</span>
           </button>
         </div>
 
@@ -534,7 +534,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                   key={index}
                   onClick={() => handleWordClick(rawWord)}
                   className="cursor-pointer inline-block px-1.5 sm:px-2.5 py-0.5 my-0.5 mx-0.5 sm:mx-1 rounded-md sm:rounded-lg font-bold transition-all duration-150 bg-blue-100 dark:bg-blue-950/70 text-blue-950 dark:text-blue-200 border-b-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-900 active:scale-95 touch-manipulation shadow-2xs hover:shadow-xs"
-                  title="اضغط لعرض المعنى والتعريف والاستماع للنطق"
+                  title="Click to view meaning, definition, and hear audio pronunciation"
                 >
                   {rawWord}
                 </span>
@@ -568,14 +568,14 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
           <div className="self-stretch sm:self-auto">
             <button
               onClick={onCompleteReading}
-              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all border min-h-[44px] sm:min-h-[50px] shadow-xs active:scale-95 touch-manipulation ${
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all border min-h-[44px] sm:min-h-[50px] shadow-xs active:scale-95 touch-manipulation cursor-pointer ${
                 isCompleted
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 cursor-default'
                   : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600'
               }`}
             >
               <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>{isCompleted ? 'تمت القراءة والاستيعاب ✓' : 'تحديد الدرس كمكتمل'}</span>
+              <span>{isCompleted ? 'Completed ✓' : 'Mark as Completed'}</span>
             </button>
           </div>
         </div>
@@ -603,8 +603,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white font-ar">
-                      القارئ الصوتي التفاعلي للدرس (Audio Player)
+                    <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white font-en">
+                      Interactive Audio Player
                     </h3>
                     {isPlaying && !isPaused && (
                       <span className="flex gap-0.5 items-end h-3.5">
@@ -614,10 +614,10 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-ar">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-en">
                     {isPlaying
-                      ? `جاري قراءة الفقرة ${(activeParagraphIndex ?? 0) + 1} من أصل ${passage.paragraphs.length}`
-                      : 'استمع إلى قراءة النص الإنجليزي بالكامل بلكنة واضحة مع إبراز الفقرات'}
+                      ? `Reading paragraph ${(activeParagraphIndex ?? 0) + 1} of ${passage.paragraphs.length}`
+                      : 'Listen to the full text with synchronized highlighting and native English audio'}
                   </p>
                 </div>
               </div>
@@ -628,8 +628,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 <button
                   onClick={handlePrevParagraph}
                   disabled={!isPlaying || activeParagraphIndex === 0}
-                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors"
-                  title="الفقرة السابقة"
+                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors cursor-pointer"
+                  title="Previous paragraph"
                 >
                   <SkipBack className="w-4 h-4" />
                 </button>
@@ -637,17 +637,17 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 {/* Main Play / Pause Button */}
                 <button
                   onClick={togglePlayPause}
-                  className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-xs active:scale-95 transition-all touch-manipulation"
+                  className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-xs active:scale-95 transition-all touch-manipulation cursor-pointer"
                 >
                   {isPlaying && !isPaused ? (
                     <>
                       <Pause className="w-4 h-4 fill-white" />
-                      <span>إيقاف مؤقت</span>
+                      <span>Pause</span>
                     </>
                   ) : (
                     <>
                       <Play className="w-4 h-4 fill-white" />
-                      <span>{isPaused ? 'استئناف القراءة' : 'تشغيل النص كاملاً'}</span>
+                      <span>{isPaused ? 'Resume Reading' : 'Play Full Text'}</span>
                     </>
                   )}
                 </button>
@@ -656,8 +656,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 {isPlaying && (
                   <button
                     onClick={stopReading}
-                    className="p-2 sm:p-2.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/60 hover:bg-red-100 dark:hover:bg-red-900/60 shadow-2xs transition-colors"
-                    title="إيقاف نهائي"
+                    className="p-2 sm:p-2.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/60 hover:bg-red-100 dark:hover:bg-red-900/60 shadow-2xs transition-colors cursor-pointer"
+                    title="Stop reading"
                   >
                     <Square className="w-4 h-4 fill-current" />
                   </button>
@@ -667,8 +667,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 <button
                   onClick={handleNextParagraph}
                   disabled={!isPlaying || activeParagraphIndex === passage.paragraphs.length - 1}
-                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors"
-                  title="الفقرة التالية"
+                  className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs transition-colors cursor-pointer"
+                  title="Next paragraph"
                 >
                   <SkipForward className="w-4 h-4" />
                 </button>
@@ -684,12 +684,12 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                     <button
                       key={s.label}
                       onClick={() => handleSpeedChange(s.val)}
-                      className={`px-2 py-0.5 rounded-lg transition-colors ${
+                      className={`px-2 py-0.5 rounded-lg transition-colors cursor-pointer ${
                         playbackSpeed === s.val
                           ? 'bg-blue-600 text-white font-black'
                           : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                       }`}
-                      title={`سرعة القراءة: ${s.label}`}
+                      title={`Reading Speed: ${s.label}`}
                     >
                       {s.label}
                     </button>
@@ -706,7 +706,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
           <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2.5">
             <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 shrink-0" />
-            <span>نصيحة للمذاكرة والشرح: اضغط على أي كلمة أو تعبير مظلل لسماع النطق الصوتي المباشر ورؤية المعنى والتعريف.</span>
+            <span>Study Tip: Click on any highlighted word or phrase to listen to its audio pronunciation and view its meaning and definition.</span>
           </div>
         </div>
 
@@ -716,13 +716,13 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             <div className="pb-4 border-b border-slate-100 dark:border-slate-800 mb-5 flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                 <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                معلومات الكلمة أو التعبير
+                Word Details & Meaning
               </span>
               {selectedWord && (
                 <button
                   onClick={() => speakEnglish(selectedWord.word)}
-                  className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors shadow-2xs"
-                  title="استمع للنطق الصوتي"
+                  className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors shadow-2xs cursor-pointer"
+                  title="Listen to pronunciation"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -743,21 +743,21 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
                   <button
                     onClick={() => speakEnglish(selectedWord.word)}
-                    className="p-3 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-xs shrink-0 active:scale-95"
-                    title="نطق الكلمة صوتياً"
+                    className="p-3 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-xs shrink-0 active:scale-95 cursor-pointer"
+                    title="Pronounce word"
                   >
                     <Volume2 className="w-5 h-5" />
                   </button>
                 </div>
 
                 <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
-                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1">المعنى بالعربية:</span>
+                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1">Arabic Meaning:</span>
                   <p className="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400 font-ar">{selectedWord.arabicMeaning}</p>
                 </div>
 
                 {selectedWord.definition && (
                   <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700" dir="ltr">
-                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1 text-right">English Definition:</span>
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1">English Definition:</span>
                     <p className="text-sm sm:text-base font-en text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
                       "{selectedWord.definition}"
                     </p>
@@ -766,7 +766,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
                 {selectedWord.exampleSentence && (
                   <div className="p-4 bg-blue-50/50 dark:bg-blue-950/40 rounded-2xl border border-blue-100 dark:border-blue-800/50" dir="ltr">
-                    <span className="text-xs font-bold text-blue-900 dark:text-blue-300 block mb-1 text-right">Example in text:</span>
+                    <span className="text-xs font-bold text-blue-900 dark:text-blue-300 block mb-1">Example in text:</span>
                     <p className="text-xs sm:text-sm font-en text-slate-700 dark:text-slate-300 leading-relaxed">
                       "{selectedWord.exampleSentence}"
                     </p>
@@ -778,9 +778,9 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                 <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-3">
                   <BookOpen className="w-6 h-6" />
                 </div>
-                <h4 className="font-bold text-slate-800 dark:text-slate-200 text-base mb-1.5 font-ar">انقر على أي كلمة أو تعبير</h4>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-ar">
-                  اضغط على أي كلمة أو مصطلح في النص لسماع نطقها بالإنجليزية وعرض تفاصيل معناها وتعريفها هنا بوضوح.
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 text-base mb-1.5 font-en">Click on Any Highlighted Word</h4>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-en">
+                  Select any vocabulary term in the reading passage to hear its native pronunciation and view its complete definition and Arabic translation here.
                 </p>
               </div>
             )}
@@ -811,8 +811,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
                   </h3>
                   <button
                     onClick={() => speakEnglish(selectedWord.word)}
-                    className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 transition-colors shadow-2xs shrink-0"
-                    title="استمع للنطق الصوتي"
+                    className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 transition-colors shadow-2xs shrink-0 cursor-pointer"
+                    title="Listen to pronunciation"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
@@ -824,8 +824,8 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
               <button
                 onClick={() => setSelectedWord(null)}
-                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-xl shrink-0"
-                aria-label="إغلاق"
+                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-xl shrink-0 cursor-pointer"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -834,13 +834,13 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
             {/* Content Details */}
             <div className="space-y-3">
               <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
-                <span className="text-[11px] font-bold text-slate-400 block mb-0.5">المعنى بالعربية:</span>
+                <span className="text-[11px] font-bold text-slate-400 block mb-0.5">Arabic Meaning:</span>
                 <p className="text-xl font-black text-blue-600 dark:text-blue-400 font-ar">{selectedWord.arabicMeaning}</p>
               </div>
 
               {selectedWord.definition && (
                 <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700" dir="ltr">
-                  <span className="text-[11px] font-bold text-slate-400 block mb-0.5 text-right">English Definition:</span>
+                  <span className="text-[11px] font-bold text-slate-400 block mb-0.5">English Definition:</span>
                   <p className="text-sm font-en text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
                     "{selectedWord.definition}"
                   </p>
@@ -849,7 +849,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({
 
               {selectedWord.exampleSentence && (
                 <div className="p-3.5 bg-blue-50/50 dark:bg-blue-950/40 rounded-2xl border border-blue-100 dark:border-blue-800/50" dir="ltr">
-                  <span className="text-[11px] font-bold text-blue-900 dark:text-blue-300 block mb-0.5 text-right">Example in text:</span>
+                  <span className="text-[11px] font-bold text-blue-900 dark:text-blue-300 block mb-0.5">Example in text:</span>
                   <p className="text-xs font-en text-slate-700 dark:text-slate-300 leading-relaxed">
                     "{selectedWord.exampleSentence}"
                   </p>

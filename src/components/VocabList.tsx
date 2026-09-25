@@ -85,7 +85,7 @@ export const VocabList: React.FC<VocabListProps> = ({
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="ابحث عن كلمة بالإنجليزي أو العربي..."
+              placeholder="Search by word, definition, or meaning..."
               className="w-full pl-4 pr-10 sm:pr-12 py-2.5 sm:py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl text-xs sm:text-base text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
             />
           </div>
@@ -93,9 +93,9 @@ export const VocabList: React.FC<VocabListProps> = ({
           {/* Filter Tabs */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto w-full md:w-auto scrollbar-none pb-1 md:pb-0">
             {[
-              { id: 'all', label: `الكل (${allWords.length})` },
-              { id: 'key', label: `المفردات الرئيسية (${keyWords.length})` },
-              { id: 'reading_listening', label: `القراءة والاستماع (${additionalWords.length})` },
+              { id: 'all', label: `All (${allWords.length})` },
+              { id: 'key', label: `Key Vocab (${keyWords.length})` },
+              { id: 'reading_listening', label: `Reading & Listening (${additionalWords.length})` },
             ].map(cat => (
               <button
                 key={cat.id}
@@ -117,9 +117,9 @@ export const VocabList: React.FC<VocabListProps> = ({
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 sm:p-4 border border-slate-200 dark:border-slate-800 shadow-xs mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 sm:gap-3">
           <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-ar">
-            تم تحديد <span className="font-mono text-sm sm:text-base font-black text-blue-600 dark:text-blue-400">{selectedWordIds.size}</span> كلمة
-            {selectedWordIds.size === 0 && <span className="text-slate-400 text-xs font-normal"> (اختر الكلمات التي تريد طباعتها أو تصديرها)</span>}
+          <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-en">
+            Selected <span className="font-mono text-sm sm:text-base font-black text-blue-600 dark:text-blue-400">{selectedWordIds.size}</span> words
+            {selectedWordIds.size === 0 && <span className="text-slate-400 text-xs font-normal"> (choose words to study, print, or export)</span>}
           </span>
         </div>
 
@@ -129,8 +129,8 @@ export const VocabList: React.FC<VocabListProps> = ({
             className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
             {filteredWords.length > 0 && filteredWords.every(w => selectedWordIds.has(w.id))
-              ? 'إلغاء تحديد المعروض'
-              : 'تحديد كل المعروض'}
+              ? 'Deselect All'
+              : 'Select All Displayed'}
           </button>
 
           {selectedWordIds.size > 0 && (
@@ -138,17 +138,17 @@ export const VocabList: React.FC<VocabListProps> = ({
               onClick={handleClearSelection}
               className="px-3 py-1.5 rounded-xl text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors cursor-pointer"
             >
-              مسح التحديد
+              Clear Selection
             </button>
           )}
 
           <button
             onClick={() => setIsExportModalOpen(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-black text-white bg-blue-600 hover:bg-blue-700 shadow-xs active:scale-95 transition-all touch-manipulation cursor-pointer"
-            title="تصدير الكلمات المحددة كـ PDF"
+            title="Export selected words as PDF"
           >
             <FileDown className="w-4 h-4" />
-            <span>تصدير كـ PDF {selectedWordIds.size > 0 ? `(${selectedWordIds.size})` : `(كل المعروض: ${filteredWords.length})`}</span>
+            <span>Export as PDF {selectedWordIds.size > 0 ? `(${selectedWordIds.size})` : `(All: ${filteredWords.length})`}</span>
           </button>
         </div>
       </div>
@@ -181,7 +181,7 @@ export const VocabList: React.FC<VocabListProps> = ({
                           ? 'bg-blue-600 border-blue-600 text-white'
                           : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-transparent hover:border-blue-400'
                       }`}
-                      title={isSelected ? 'إلغاء تحديد هذه الكلمة' : 'تحديد الكلمة للتصدير'}
+                      title={isSelected ? 'Deselect this word' : 'Select word for export'}
                     >
                       <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </button>
@@ -200,7 +200,7 @@ export const VocabList: React.FC<VocabListProps> = ({
                         speakEnglish(word.word);
                       }}
                       className="p-1.5 sm:p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 active:scale-95 transition-all shadow-2xs cursor-pointer"
-                      title="استمع للنطق الصوتي"
+                      title="Listen to pronunciation"
                     >
                       <Volume2 className="w-4 h-4" />
                     </button>
@@ -211,7 +211,7 @@ export const VocabList: React.FC<VocabListProps> = ({
                   </div>
                 </div>
 
-                <p className="text-sm sm:text-lg font-black text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2">
+                <p className="text-sm sm:text-lg font-black text-blue-600 dark:text-blue-400 mb-1.5 sm:mb-2 font-ar">
                   {word.arabicMeaning}
                 </p>
 
@@ -225,7 +225,7 @@ export const VocabList: React.FC<VocabListProps> = ({
               {word.category === 'key' && (
                 <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
                   <span className="bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80 px-2 sm:px-2.5 py-0.5 rounded-md font-bold text-[11px] sm:text-xs">
-                    مفردات رئيسية (Key Vocab)
+                    Key Vocabulary
                   </span>
                 </div>
               )}
@@ -237,8 +237,8 @@ export const VocabList: React.FC<VocabListProps> = ({
       {filteredWords.length === 0 && (
         <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
           <BookOpen className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-          <h4 className="font-bold text-slate-700 dark:text-slate-300 text-base">لا توجد كلمات مطابقة للبحث</h4>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">جرّب البحث باسم كلمة أخرى.</p>
+          <h4 className="font-bold text-slate-700 dark:text-slate-300 text-base">No matching words found</h4>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">Try searching with another keyword.</p>
         </div>
       )}
 

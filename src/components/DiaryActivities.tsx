@@ -110,18 +110,18 @@ export const DiaryActivities: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-xs rounded-full text-xs font-bold mb-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>أنشطة كتاب الوزارة الرسمية • صفحة 66 (Lesson 5: A Diary)</span>
+              <span>Ministry Textbook Activities • Page 66 (Lesson 5: A Diary)</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-black">
-              الأنشطة التفاعلية لكتابة المذكرات اليومية (5 Activities)
+              Interactive Diary Writing Activities (5 Activities)
             </h3>
             <p className="text-teal-100 text-xs sm:text-sm mt-1 max-w-2xl">
-              طبق الأنشطة الخمسة المعتمدة في كتاب الوزارة خطوة بخطوة للسبورة الذكية: ملخص الـ 3 جمل، تعبيرات الإيموجي، عجلة المشاعر الدوارة، وويدجت تحدي الـ 7 أيام!
+              Practice the 5 curriculum-approved diary activities step-by-step: 3-Sentence Day, Emoji Expressions, Feelings Wheel Spinner, Picture Your Day, and 7-Day Habit Tracker!
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 text-center shrink-0">
-            <span className="text-xs text-teal-100 block">نسبة إنجاز الأنشطة</span>
-            <span className="text-2xl font-black font-en">5 / 5 جاهزة</span>
+            <span className="text-xs text-teal-100 block">Activities Progress</span>
+            <span className="text-2xl font-black font-en">5 / 5 Ready</span>
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export const DiaryActivities: React.FC = () => {
             </span>
             <div>
               <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                تمرين 1: اكتب 3 جُمل فقط عن يومك (3 Sentences About Your Day)
+                Activity 1: 3 Sentences About Your Day
               </h4>
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 1- Write just 3 sentences about your day. (Action → Outcome → Feeling)
@@ -146,7 +146,7 @@ export const DiaryActivities: React.FC = () => {
             onClick={handleLoadA1Example}
             className="text-xs font-bold px-3.5 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors self-start sm:self-auto"
           >
-            💡 تحميل مثال كتاب الوزارة
+            💡 Load Textbook Example
           </button>
         </div>
 
@@ -154,7 +154,7 @@ export const DiaryActivities: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
           <div>
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-              الجملة 1: ماذا فعلت اليوم؟ (Main Action)
+              Sentence 1: What did you do today? (Action)
             </label>
             <input
               type="text"
@@ -167,7 +167,7 @@ export const DiaryActivities: React.FC = () => {
           </div>
           <div>
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-              الجملة 2: ما هي النتيجة أو الحدث التالي؟ (The Result)
+              Sentence 2: What was the outcome? (Result)
             </label>
             <input
               type="text"
@@ -180,7 +180,7 @@ export const DiaryActivities: React.FC = () => {
           </div>
           <div>
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-              الجملة 3: كيف شعرت؟ (Your Emotion / Feeling)
+              Sentence 3: How did you feel? (Emotion)
             </label>
             <input
               type="text"
@@ -198,7 +198,7 @@ export const DiaryActivities: React.FC = () => {
           <div className="p-5 bg-indigo-50/70 dark:bg-indigo-950/40 rounded-2xl border border-indigo-200 dark:border-indigo-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <span className="text-xs font-bold text-indigo-700 dark:text-indigo-400 block mb-1">
-                📖 المعاينة المكتملة لمذكرات الـ 3 جمل:
+                📖 Completed 3-Sentence Entry Preview:
               </span>
               <p className="font-en text-sm sm:text-base font-semibold text-slate-900 dark:text-white" dir="ltr">
                 {s1} {s2} {s3}
@@ -209,7 +209,7 @@ export const DiaryActivities: React.FC = () => {
               className="flex items-center gap-1.5 px-3.5 py-2 bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-xl text-xs font-bold hover:shadow-xs transition-all shrink-0"
             >
               {copiedA1 ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-              <span>{copiedA1 ? 'تم النسخ!' : 'نسخ النص'}</span>
+              <span>{copiedA1 ? 'Copied!' : 'Copy Text'}</span>
             </button>
           </div>
         )}
@@ -223,7 +223,7 @@ export const DiaryActivities: React.FC = () => {
           </span>
           <div>
             <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-              تمرين 2: اختر إيموجي المشاعر ثم اشرح السبب (Draw Emojis & Explain)
+              Activity 2: Draw Emojis & Explain
             </h4>
             <span className="text-xs text-slate-500 dark:text-slate-400">
               2- Draw emojis to show how you felt that day. Then write one sentence to explain.
@@ -234,7 +234,7 @@ export const DiaryActivities: React.FC = () => {
         {/* Emoji Selector */}
         <div className="mb-5">
           <span className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-2.5">
-            اختر الإيموجي التي تمثل تسلسل مشاعرك اليوم (انقر للاختيار):
+            Select emojis representing your emotional progression today:
           </span>
           <div className="flex flex-wrap gap-2.5">
             {emojiList.map((item) => {
@@ -251,7 +251,6 @@ export const DiaryActivities: React.FC = () => {
                 >
                   <span className="text-2xl">{item.emoji}</span>
                   <span className="text-xs font-bold font-en text-slate-800 dark:text-slate-200">{item.name}</span>
-                  <span className="text-[11px] text-slate-400">({item.ar})</span>
                 </button>
               );
             })}
@@ -260,7 +259,7 @@ export const DiaryActivities: React.FC = () => {
 
         {/* Selected Flow */}
         <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 mb-4 flex items-center gap-3">
-          <span className="text-xs font-bold text-slate-500">تسلسل مشاعرك:</span>
+          <span className="text-xs font-bold text-slate-500">Your feeling progression:</span>
           <div className="flex items-center gap-2 text-2xl">
             {selectedEmojis.map((e, idx) => (
               <span key={idx} className="flex items-center gap-2">
@@ -274,7 +273,7 @@ export const DiaryActivities: React.FC = () => {
         {/* Sentence explanation input */}
         <div>
           <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-            اكتب جملة تفسر هذا التسلسل الشعوري (One sentence to explain):
+            Write a sentence explaining this sequence of feelings:
           </label>
           <input
             type="text"
@@ -287,7 +286,7 @@ export const DiaryActivities: React.FC = () => {
         </div>
       </div>
 
-      {/* ACTIVITY 3: Interactive Feelings Wheel (عجلة المشاعر الدوارة) */}
+      {/* ACTIVITY 3: Interactive Feelings Wheel */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div className="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800 mb-6">
           <span className="w-9 h-9 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black font-en text-sm shadow-xs">
@@ -295,7 +294,7 @@ export const DiaryActivities: React.FC = () => {
           </span>
           <div>
             <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-              تمرين 3: عجلة المشاعر الدوارة التفاعلية (The Feelings Wheel Spinner)
+              Activity 3: Interactive Feelings Wheel Spinner
             </h4>
             <span className="text-xs text-slate-500 dark:text-slate-400">
               3- Make a wheel with feelings (happy, angry, tired, excited). Spin it and write about a time you felt that way.
@@ -345,7 +344,7 @@ export const DiaryActivities: React.FC = () => {
               className="mt-6 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold rounded-2xl text-sm sm:text-base flex items-center gap-2 shadow-md transition-all active:scale-95 touch-manipulation"
             >
               <RotateCw className={`w-4 h-4 ${isSpinning ? 'animate-spin' : ''}`} />
-              <span>{isSpinning ? 'العجلة تدور الآن...' : '🎡 دوّر عجلة المشاعر (Spin the Wheel)'}</span>
+              <span>{isSpinning ? 'Spinning the wheel...' : '🎡 Spin the Feelings Wheel'}</span>
             </button>
           </div>
 
@@ -355,16 +354,16 @@ export const DiaryActivities: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <span className={`px-4 py-1.5 rounded-xl font-en font-black text-sm ${wheelResult.color}`}>
-                    {wheelResult.name} ({wheelResult.ar})
+                    {wheelResult.name} <span className="font-ar">({wheelResult.ar})</span>
                   </span>
                   <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
-                    وقفت العجلة على هذا الشعور!
+                    The wheel landed on this feeling!
                   </span>
                 </div>
 
                 <div className="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700">
                   <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">
-                    🎯 مهمة التدوين الخاصة بهذا الشعور:
+                    🎯 Diary prompt for this feeling:
                   </span>
                   <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                     {wheelResult.prompt}
@@ -373,7 +372,7 @@ export const DiaryActivities: React.FC = () => {
 
                 <div>
                   <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-                    اكتب في مذكراتك عن موقف شعرت فيه بـ ({wheelResult.name}):
+                    Write in your diary about a time you felt ({wheelResult.name}):
                   </label>
                   <textarea
                     rows={3}
@@ -389,10 +388,10 @@ export const DiaryActivities: React.FC = () => {
               <div className="text-center py-8">
                 <Smile className="w-12 h-12 text-slate-400 mx-auto mb-3 opacity-60" />
                 <h5 className="text-base font-bold text-slate-700 dark:text-slate-300 mb-1">
-                  اضغط على زر تدوير العجلة لاختيار شعور عشوائي!
+                  Click the Spin button to pick a random feeling!
                 </h5>
                 <p className="text-xs text-slate-400 max-w-md mx-auto">
-                  تضم العجلة المشاعر الأربعة المحددة في تمرين 3 بكتاب الوزارة: (happy, angry, tired, excited).
+                  The wheel features the 4 feelings from Activity 3 in the student book: (happy, angry, tired, excited).
                 </p>
               </div>
             )}
@@ -408,7 +407,7 @@ export const DiaryActivities: React.FC = () => {
           </span>
           <div>
             <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-              تمرين 4: تخيّل صورة ليومك واكتب 2 إلى 3 جمل (Picture Your Day)
+              Activity 4: Picture Your Day & Write 2–3 Sentences
             </h4>
             <span className="text-xs text-slate-500 dark:text-slate-400">
               4- Draw a picture of your day, then write 2–3 sentences about it.
@@ -419,7 +418,7 @@ export const DiaryActivities: React.FC = () => {
         {/* Theme presets */}
         <div className="mb-4">
           <span className="text-xs font-bold text-slate-600 dark:text-slate-300 block mb-2">
-            اختر مشهد الصورة المتخيل:
+            Choose an imagined scene:
           </span>
           <div className="flex flex-wrap gap-2">
             {[
@@ -445,7 +444,7 @@ export const DiaryActivities: React.FC = () => {
 
         <div>
           <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
-            اكتب 2 إلى 3 جمل تصف هذا المشهد (2-3 sentences):
+            Write 2 to 3 sentences describing this scene:
           </label>
           <textarea
             rows={3}
@@ -467,7 +466,7 @@ export const DiaryActivities: React.FC = () => {
             </span>
             <div>
               <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                تمرين 5: تحدي كتابة المذكرات لـ 7 أيام متتالية (7-Day Diary Challenge)
+                Activity 5: 7-Day Diary Habit Challenge
               </h4>
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 5- Try writing every day for 7 days. Put a sticker on your calendar each day you write!
@@ -477,17 +476,17 @@ export const DiaryActivities: React.FC = () => {
 
           <div className="flex items-center gap-2 px-3.5 py-1.5 bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 rounded-xl border border-amber-200 dark:border-amber-800 text-xs font-bold self-start sm:self-auto">
             <Trophy className="w-4 h-4" />
-            <span>إنجاز التحدي: {completedDaysCount} / 7 أيام</span>
+            <span>Challenge Progress: {completedDaysCount} / 7 Days</span>
           </div>
         </div>
 
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-5 leading-relaxed">
-          انقر على أي يوم من أيام الأسبوع لوضع ملصق النجمة الذهبية ⭐ بعد الانتهاء من كتابة مذكراتك اليومية:
+          Click on each day of the week to place a golden star sticker ⭐ after writing your daily entry:
         </p>
 
         {/* 7 Days Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-          {['Mon (إثنين)', 'Tue (ثلاثاء)', 'Wed (أربعاء)', 'Thu (خميس)', 'Fri (جمعة)', 'Sat (سبت)', 'Sun (أحد)'].map((day, idx) => {
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, idx) => {
             const hasSticker = weekDays[idx];
             return (
               <button
@@ -502,14 +501,14 @@ export const DiaryActivities: React.FC = () => {
                 <span className="text-xs font-bold text-slate-600 dark:text-slate-300 font-en">
                   Day 0{idx + 1}
                 </span>
-                <span className="text-[11px] text-slate-400">{day}</span>
+                <span className="text-xs font-semibold text-slate-400 font-en">{day}</span>
                 {hasSticker ? (
                   <div className="flex items-center justify-center animate-bounce">
                     <Star className="w-7 h-7 text-amber-500 fill-amber-400 drop-shadow-xs" />
                   </div>
                 ) : (
-                  <span className="text-xs text-slate-400 border border-dashed border-slate-300 dark:border-slate-600 rounded-full px-2 py-0.5">
-                    + ضع ملصق
+                  <span className="text-xs text-slate-400 border border-dashed border-slate-300 dark:border-slate-600 rounded-full px-2 py-0.5 font-en">
+                    + Add Sticker
                   </span>
                 )}
               </button>
@@ -521,7 +520,7 @@ export const DiaryActivities: React.FC = () => {
           <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-300 dark:border-emerald-800 flex items-center gap-3 text-emerald-800 dark:text-emerald-300">
             <Trophy className="w-6 h-6 shrink-0 text-emerald-600" />
             <span className="text-xs sm:text-sm font-bold">
-              🎉 رائع جداً! لقد أكملت تحدي الـ 7 أيام واكتسبت عادة تدوين المذكرات اليومية بنجاح مبهر!
+              🎉 Fantastic! You completed the 7-day challenge and built an impressive daily diary journaling habit!
             </span>
           </div>
         )}

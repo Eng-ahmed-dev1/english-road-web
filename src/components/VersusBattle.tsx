@@ -18,51 +18,51 @@ export type BattleGameType = 'match' | 'spelling' | 'collocations' | 'fill' | 's
 const BATTLE_GAMES: { id: BattleGameType; title: string; icon: string; description: string; pointsNote: string }[] = [
   {
     id: 'match',
-    title: 'مطابقة الكلمات (Word Match)',
+    title: 'Word Match',
     icon: '⚡',
-    description: 'توصيل الكلمة الإنجليزية بمعناها العربي بسرعة ودقة',
-    pointsNote: '+10 نقاط لكل زوج'
+    description: 'Match English words with Arabic meanings with speed and accuracy',
+    pointsNote: '+10 pts / pair'
   },
   {
     id: 'spelling',
-    title: 'تحدي التهجئة (Spelling)',
+    title: 'Spelling Challenge',
     icon: '🔤',
-    description: 'ترتيب الحروف لكتابة الكلمة بالشكل الإملائي الصحيح',
-    pointsNote: '+15 نقطة لكل كلمة'
+    description: 'Arrange scrambled letters in the correct spelling order',
+    pointsNote: '+15 pts / word'
   },
   {
     id: 'collocations',
-    title: 'حروف الجر والمتلازمات (Collocations)',
+    title: 'Collocations & Prepositions',
     icon: '🔗',
-    description: 'اختيار حرف الجر أو التعبير المرتبط بالكلمة في المنهج',
-    pointsNote: '+15 نقطة لكل إجابة'
+    description: 'Choose the correct preposition or expression',
+    pointsNote: '+15 pts / answer'
   },
   {
     id: 'fill',
-    title: 'إكمال الجمل السياقية (Fill in Blank)',
+    title: 'Fill in Blanks',
     icon: '✏️',
-    description: 'اختيار الكلمة المناسبة التي تكمل معنى الجملة',
-    pointsNote: '+15 نقطة لكل جملة'
+    description: 'Select the contextual word completing the sentence',
+    pointsNote: '+15 pts / sentence'
   },
   {
     id: 'sentences',
-    title: 'ترتيب الجمل (Sentence Builder)',
+    title: 'Sentence Builder',
     icon: '🧩',
-    description: 'ترتيب كتل الكلمات لتكوين جملة إنجليزية سليمة',
-    pointsNote: '+20 نقطة لكل جملة'
+    description: 'Arrange word blocks to assemble correct sentences',
+    pointsNote: '+20 pts / sentence'
   },
   {
     id: 'quiz',
-    title: 'كويز التعريفات (Definitions Quiz)',
+    title: 'Definitions Quiz',
     icon: '📝',
-    description: 'اختيار الكلمة الصحيحة للتعريف الرسمي من كتاب الوزارة',
-    pointsNote: '+20 نقطة لكل إجابة'
+    description: 'Identify the word matching the official definition',
+    pointsNote: '+20 pts / answer'
   }
 ];
 
 export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
-  const [teamAName, setTeamAName] = useState('فريق الصقور (Team A)');
-  const [teamBName, setTeamBName] = useState('فريق النجوم (Team B)');
+  const [teamAName, setTeamAName] = useState('Team A (Falcons)');
+  const [teamBName, setTeamBName] = useState('Team B (Stars)');
   const [teamAScore, setTeamAScore] = useState(0);
   const [teamBScore, setTeamBScore] = useState(0);
 
@@ -93,7 +93,7 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
     } else if (teamBScore > teamAScore) {
       setWinner({ name: teamBName, score: teamBScore, opponentScore: teamAScore });
     } else {
-      setWinner({ name: 'تعادل الفريقين', score: teamAScore, opponentScore: teamBScore, isTie: true });
+      setWinner({ name: 'Tie Game', score: teamAScore, opponentScore: teamBScore, isTie: true });
     }
   };
 
@@ -141,7 +141,7 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                 )}
               </div>
               <div className="text-3xl sm:text-6xl lg:text-7xl font-black font-en text-white mt-0.5 sm:mt-1 tracking-tight">
-                {teamAScore} <span className="text-xs sm:text-sm font-normal text-slate-400">نقاط</span>
+                {teamAScore} <span className="text-xs sm:text-sm font-normal text-slate-400">pts</span>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 text-center w-full lg:w-1/3">
             <div className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-5 sm:py-2 bg-slate-800 rounded-full border border-slate-700 text-amber-400 text-xs sm:text-sm font-black">
               <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>الوضع التنافسي المباشر • Classroom Arena</span>
+              <span>Classroom Arena • 2-Player Versus Battle</span>
             </div>
 
             {isPlaying && (
@@ -160,15 +160,15 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                   className="px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-base rounded-xl sm:rounded-2xl shadow-lg transition-all flex items-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[48px]"
                 >
                   <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>إعلان النتيجة والفائز 🏆</span>
+                  <span>Declare Winner 🏆</span>
                 </button>
 
                 <button
                   onClick={() => setIsPlaying(false)}
                   className="px-3 py-2.5 sm:px-4 sm:py-3 bg-slate-800 hover:bg-slate-750 text-slate-300 text-xs sm:text-sm font-bold rounded-xl sm:rounded-2xl border border-slate-700 transition-colors active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[48px]"
-                  title="العودة لاختيار الألعاب"
+                  title="Change selected games"
                 >
-                  تغيير اللعبة
+                  Change Games
                 </button>
               </div>
             )}
@@ -199,7 +199,7 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                 )}
               </div>
               <div className="text-3xl sm:text-6xl lg:text-7xl font-black font-en text-white mt-0.5 sm:mt-1 tracking-tight">
-                {teamBScore} <span className="text-xs sm:text-sm font-normal text-slate-400">نقاط</span>
+                {teamBScore} <span className="text-xs sm:text-sm font-normal text-slate-400">pts</span>
               </div>
             </div>
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-rose-600 flex items-center justify-center font-black text-xl sm:text-3xl shadow-lg shadow-rose-500/40 shrink-0 font-en">
@@ -215,10 +215,10 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
           {/* Instructions and START Banner */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
             <h3 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-white mb-1.5 sm:mb-2">
-              مرحلة اختيار التحدي (6 ألعاب تنافسية متاحة)
+              Game Selection Stage (6 Interactive Activities)
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-              اختر لعبة لكل فريق من القائمة أدناه، واضغط على زر START للانطلاق على السبورة التفاعلية!
+              Choose an activity for each team below, then press START to begin on the whiteboard!
             </p>
 
             {/* Central START Button - Launcher */}
@@ -229,17 +229,17 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                   className="px-6 py-3.5 sm:px-12 sm:py-5 bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-black text-base sm:text-2xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-emerald-500/40 animate-pulse hover:scale-105 active:scale-95 transition-all flex items-center gap-2 sm:gap-3.5 tracking-wider font-en touch-manipulation min-h-[50px] sm:min-h-[64px]"
                 >
                   <Play className="w-5 h-5 sm:w-7 sm:h-7 fill-white" />
-                  <span>START • ابدأ المنافسة الآن!</span>
+                  <span>START • Begin Battle Now!</span>
                 </button>
               ) : (
                 <div className="px-5 py-3 sm:px-8 sm:py-4 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold border border-slate-200 dark:border-slate-700 flex items-center gap-2 sm:gap-3">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
                   <span>
                     {!teamAGame && !teamBGame
-                      ? 'في انتظار اختيار الفريقين للتحدي...'
+                      ? 'Waiting for both teams to choose their games...'
                       : !teamAGame
-                      ? `في انتظار اختيار ${teamAName}...`
-                      : `في انتظار اختيار ${teamBName}...`}
+                      ? `Waiting for ${teamAName} to choose...`
+                      : `Waiting for ${teamBName} to choose...`}
                   </span>
                 </div>
               )}
@@ -254,12 +254,12 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-600" />
                   <h4 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
-                    اختر لعبة لـ: <span className="text-blue-600 dark:text-blue-400">{teamAName}</span>
+                    Choose game for: <span className="text-blue-600 dark:text-blue-400">{teamAName}</span>
                   </h4>
                 </div>
                 {teamAGame && (
                   <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> تم الاختيار
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Selected ✓
                   </span>
                 )}
               </div>
@@ -307,12 +307,12 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-600" />
                   <h4 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
-                    اختر لعبة لـ: <span className="text-rose-600 dark:text-rose-400">{teamBName}</span>
+                    Choose game for: <span className="text-rose-600 dark:text-rose-400">{teamBName}</span>
                   </h4>
                 </div>
                 {teamBGame && (
                   <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> تم الاختيار
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Selected ✓
                   </span>
                 )}
               </div>
@@ -511,11 +511,11 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
             </div>
 
             <h3 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1.5 sm:mb-2">
-              {winner.isTie ? 'تعادل بين الفريقين! 🤝' : `مبروك فوز ${winner.name}! 🏆`}
+              {winner.isTie ? "It's a Tie! 🤝" : `Congratulations ${winner.name}! 🏆`}
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-4 sm:mb-6">
-              أداء تنافسي رائع بين الفريقين في إتقان مفردات وأنشطة الوحدة!
+              Outstanding performance by both teams in mastering unit vocabulary and activities!
             </p>
 
             <div className="flex items-center justify-center gap-4 sm:gap-6 p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 mb-4 sm:mb-6">
@@ -538,14 +538,14 @@ export const VersusBattle: React.FC<VersusBattleProps> = ({ unit }) => {
                 }}
                 className="flex-1 py-2.5 sm:py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-xs sm:text-sm transition-all"
               >
-                جولة جديدة
+                New Match
               </button>
 
               <button
                 onClick={() => setWinner(null)}
                 className="flex-1 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all"
               >
-                متابعة اللعب
+                Continue Playing
               </button>
             </div>
           </div>

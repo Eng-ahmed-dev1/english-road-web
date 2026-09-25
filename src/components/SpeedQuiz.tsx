@@ -86,15 +86,15 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
           </div>
 
           <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-1">
-            اكتمل كويز التعريفات
+            Definitions Quiz Completed!
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 sm:mb-6">
-            تمت مراجعة جميع أسئلة التعريفات بنجاح.
+            Successfully reviewed all curriculum definitions questions.
           </p>
 
           {showPoints && (
             <div className="my-3 sm:my-4 inline-flex items-center gap-3 sm:gap-4 px-4 py-2 sm:px-5 sm:py-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-              <span className="text-xs text-slate-500 dark:text-slate-400">النتيجة:</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Score:</span>
               <span className="text-xl font-black font-en text-blue-600 dark:text-blue-400">{score} / {questions.length}</span>
             </div>
           )}
@@ -105,7 +105,7 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
               className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs sm:text-sm transition-all"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>إعادة الاختبار</span>
+              <span>Restart Quiz</span>
             </button>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
-              سؤال {currentIndex + 1} من {questions.length}
+              Question {currentIndex + 1} of {questions.length}
             </span>
           </div>
 
@@ -147,7 +147,7 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
 
       {/* Question Card */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs">
-        <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">اختر الكلمة المناسبة للتعريف من واقع المنهج:</span>
+        <span className="text-[11px] sm:text-xs font-bold text-slate-400 block mb-2 sm:mb-3 uppercase tracking-wider">Choose the word matching the curriculum definition:</span>
         <h3 className={`${compactMode ? 'text-sm sm:text-base' : 'text-base sm:text-2xl lg:text-3xl'} font-bold font-en text-slate-900 dark:text-white leading-relaxed mb-6 sm:mb-8`} dir="ltr">
           {currentQ.question}
         </h3>
@@ -197,9 +197,9 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
 
         {/* Explanation & Next */}
         {selectedOption !== null && (
-          <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800" dir="rtl">
+          <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800">
             <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl sm:rounded-2xl mb-4 sm:mb-6">
-              <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-1.5 sm:mb-2">💡 الشرح والتوضيح النموذجي:</span>
+              <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 block mb-1.5 sm:mb-2">💡 Explanation & Context:</span>
               <p className="text-xs sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 font-en leading-relaxed">
                 {currentQ.explanation}
               </p>
@@ -209,8 +209,8 @@ export const SpeedQuiz: React.FC<SpeedQuizProps> = ({
               onClick={handleNext}
               className="w-full py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl sm:rounded-2xl transition-all flex items-center justify-center gap-2 text-sm sm:text-lg shadow-md active:scale-95 touch-manipulation min-h-[46px] sm:min-h-[54px]"
             >
-              <span>{currentIndex + 1 === questions.length ? 'إنهاء المراجعة' : 'السؤال التالي'}</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
+              <span>{currentIndex + 1 === questions.length ? 'Finish Quiz' : 'Next Question'}</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         )}

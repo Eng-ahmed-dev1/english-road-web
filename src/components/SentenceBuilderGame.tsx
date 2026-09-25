@@ -89,21 +89,21 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
           <div className="flex items-center gap-2 sm:gap-3">
             {!compactMode && <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" />}
             <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
-              جملة {currentIndex + 1} من {puzzles.length}
+              Sentence {currentIndex + 1} of {puzzles.length}
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
             {showPoints && (
               <span className="text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 font-en">
-                الدرجة: {score}
+                Score: {score}
               </span>
             )}
             <button
               onClick={handleReset}
               disabled={selectedChunks.length === 0 || isCorrect}
               className="p-2 sm:p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 disabled:opacity-40 active:scale-95 touch-manipulation transition-all"
-              title="إعادة الترتيب"
+              title="Reset Sentence"
             >
               <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
@@ -115,8 +115,8 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
       <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
         {/* Arabic Translation Target */}
         <div className="mb-6 sm:mb-8 space-y-1.5 sm:space-y-2">
-          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">معنى الجملة المطلوب تكوينها:</span>
-          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white leading-snug`}>
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Target Sentence Meaning:</span>
+          <h3 className={`${compactMode ? 'text-lg' : 'text-xl sm:text-3xl lg:text-4xl'} font-black text-slate-900 dark:text-white leading-snug font-ar`}>
             {currentPuzzle.arabicTranslation}
           </h3>
         </div>
@@ -145,7 +145,7 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
         {isCorrect && (
           <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300 text-xs sm:text-base font-bold animate-pulse">
             <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
-            <span>ترتيب نحوي صحيح وسليم 100%! أحسنت 👏</span>
+            <span>100% correct grammatical order! Well done 👏</span>
           </div>
         )}
 
@@ -173,8 +173,8 @@ export const SentenceBuilderGame: React.FC<SentenceBuilderGameProps> = ({
             onClick={handleNext}
             className="flex items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all shadow-md active:scale-95 touch-manipulation min-h-[44px] sm:min-h-[52px]"
           >
-            <span>الجملة التالية</span>
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
+            <span>Next Sentence</span>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
       </div>

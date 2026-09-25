@@ -53,18 +53,18 @@ export const PoemActivities: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-xs rounded-full text-xs font-bold mb-2">
               <Feather className="w-3.5 h-3.5" />
-              <span>أنشطة كتاب الوزارة الرسمية • صفحة 78 (Lesson 5: My First Poem)</span>
+              <span>Ministry Textbook Activities • Page 78 (Lesson 5: My First Poem)</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-black">
-              استوديو نظم الشعر التفاعلي (Poetry Workshop Studio)
+              Interactive Poetry Workshop Studio
             </h3>
             <p className="text-amber-100 text-xs sm:text-sm mt-1 max-w-2xl">
-              تعلم كيف تنظم قصيدتك الأولى خطوة بخطوة: استكشف روائع وردزورث، معمل التشبيهات والصور الحسية، كاشف القوافي، ومحرر الأسطر القصيرة الموزونة!
+              Learn how to craft your first poem step-by-step: explore Wordsworth's masterpiece, discover sensory imagery & similes, inspect rhymes, and compose melodic short lines!
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 text-center shrink-0">
-            <span className="text-xs text-amber-100 block">خطوات نظم القصيدة</span>
-            <span className="text-2xl font-black font-en">5 / 5 خطوات</span>
+            <span className="text-xs text-amber-100 block">Workshop Steps</span>
+            <span className="text-2xl font-black font-en">4 / 4 Steps</span>
           </div>
         </div>
       </div>
@@ -78,10 +78,10 @@ export const PoemActivities: React.FC = () => {
             </span>
             <div>
               <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                تحليل قصيدة وردزورث الشهيرة واكتشاف القوافي (Wordsworth Rhyme Inspector)
+                Activity 1: Wordsworth Rhyme Inspector
               </h4>
               <span className="text-xs text-slate-500 dark:text-slate-400">
-                “I Wandered Lonely as a Cloud” • انقر على أزواج القوافي لتسليط الضوء على الأبيات المتناغمة
+                “I Wandered Lonely as a Cloud” • Click rhyme pairs to highlight harmonious rhyming lines
               </span>
             </div>
           </div>
@@ -189,10 +189,10 @@ export const PoemActivities: React.FC = () => {
           </span>
           <div>
             <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-              استكشاف الحواس والمشاعر (What do you see? Hear? Feel?)
+              Activity 2: Sensory Imagery Explorer (See, Hear, Feel)
             </h4>
             <span className="text-xs text-slate-500 dark:text-slate-400">
-              الخطوة 2 في كتاب الوزارة: كيف تحول المشاهد اليومية إلى مشاعر وصور شعرية ساحرة
+              Step 2 in the textbook: Transform everyday sights into evocative emotions and poetic imagery
             </span>
           </div>
         </div>
@@ -206,7 +206,7 @@ export const PoemActivities: React.FC = () => {
             }`}
           >
             <Eye className="w-4 h-4 text-indigo-500" />
-            <span>ماذا ترى؟ (See)</span>
+            <span>What do you see?</span>
           </button>
           <button
             onClick={() => setSensoryTab('hear')}
@@ -215,7 +215,7 @@ export const PoemActivities: React.FC = () => {
             }`}
           >
             <Ear className="w-4 h-4 text-purple-500" />
-            <span>ماذا تسمع؟ (Hear)</span>
+            <span>What do you hear?</span>
           </button>
           <button
             onClick={() => setSensoryTab('feel')}
@@ -224,7 +224,7 @@ export const PoemActivities: React.FC = () => {
             }`}
           >
             <Heart className="w-4 h-4 text-rose-500" />
-            <span>ماذا تشعر؟ (Feel)</span>
+            <span>What do you feel?</span>
           </button>
         </div>
 
@@ -233,25 +233,25 @@ export const PoemActivities: React.FC = () => {
           {sensoryTab === 'see' && (
             <>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">صورة بصرية 1:</span>
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">Visual Image 1:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   A high white cloud drifting lazily over quiet green hills.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">سحابة بيضاء هائمة فوق التلال الخضراء</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">سحابة بيضاء هائمة فوق التلال الخضراء</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">صورة بصرية 2:</span>
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">Visual Image 2:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   A sparkling host of ten thousand golden daffodils.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">حشد متلألئ من أزهار النرجس الذهبية البراقة</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">حشد متلألئ من أزهار النرجس الذهبية البراقة</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">صورة بصرية 3:</span>
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block mb-1">Visual Image 3:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   Crystal water ripples shimmering in the early morning sunlight.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">موجات ماء نقية تتلألأ تحت أشعة شمس الصباح</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">موجات ماء نقية تتلألأ تحت أشعة شمس الصباح</span>
               </div>
             </>
           )}
@@ -259,25 +259,25 @@ export const PoemActivities: React.FC = () => {
           {sensoryTab === 'hear' && (
             <>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">صوت مسموع 1:</span>
+                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">Sound Image 1:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   The gentle whispering of leaves moving softly in the breeze.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">حفيف أوراق الشجر يهمس برفق في النسيم</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">حفيف أوراق الشجر يهمس برفق في النسيم</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">صوت مسموع 2:</span>
+                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">Sound Image 2:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   Cheerful morning birds singing melodious tunes from high branches.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">عصافير الصباح تغرد بألحان عذبة مبهجة</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">عصافير الصباح تغرد بألحان عذبة مبهجة</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">صوت مسموع 3:</span>
+                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block mb-1">Sound Image 3:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   The tranquil silence of the lake reflecting the vast sky.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">سكون البحيرة الهادئ وهي تعكس صفحة السماء</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">سكون البحيرة الهادئ وهي تعكس صفحة السماء</span>
               </div>
             </>
           )}
@@ -285,25 +285,25 @@ export const PoemActivities: React.FC = () => {
           {sensoryTab === 'feel' && (
             <>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">شعور وجداني 1:</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">Emotional Feeling 1:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   Wandering alone, feeling quiet solitude and distant sadness.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">الهيام وحيداً والشعور بالعزلة الهادئة</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">الهيام وحيداً والشعور بالعزلة الهادئة</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">شعور وجداني 2:</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">Emotional Feeling 2:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   Sudden awe and joyful surprise at discovering golden blossoms.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">دهشة وفرحة غامرة عند اكتشاف شريط الزهور الذهبية</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">دهشة وفرحة غامرة عند اكتشاف شريط الزهور الذهبية</span>
               </div>
               <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">شعور وجداني 3:</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block mb-1">Emotional Feeling 3:</span>
                 <p className="font-en text-sm font-semibold text-slate-900 dark:text-white" dir="ltr">
                   Lasting inner peace and enduring strength stored in memory.
                 </p>
-                <span className="text-xs text-slate-500 mt-1 block">سكينة باطنية وطمأنينة دائمة تحفظها الذاكرة</span>
+                <span className="text-xs text-slate-500 mt-1 block font-ar">سكينة باطنية وطمأنينة دائمة تحفظها الذاكرة</span>
               </div>
             </>
           )}
@@ -318,34 +318,34 @@ export const PoemActivities: React.FC = () => {
           </span>
           <div>
             <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-              معمل التشبيهات والصفات البلاغية (Adjectives & Comparisons Forge)
+              Activity 3: Adjectives & Comparisons Forge
             </h4>
             <span className="text-xs text-slate-500 dark:text-slate-400">
-              الخطوة 3: Use adjectives and comparisons (bright, quiet, as tall as a tree / lonely as a cloud)
+              Step 3: Use descriptive adjectives and comparisons (bright, quiet, as tall as a tree / lonely as a cloud)
             </span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-900">
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">تشبيه 1 (وردزورث):</span>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">Simile 1 (Wordsworth):</span>
             <strong className="font-en text-base block text-slate-900 dark:text-white">“lonely as a cloud”</strong>
-            <p className="text-xs text-slate-500 mt-1">وحيد كالسحابة الهائمة في السماء العالية</p>
+            <p className="text-xs text-slate-500 mt-1 font-ar">وحيد كالسحابة الهائمة في السماء العالية</p>
           </div>
           <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-900">
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">تشبيه 2 (تشخيص الطبيعة):</span>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">Simile 2 (Personification):</span>
             <strong className="font-en text-base block text-slate-900 dark:text-white">“dancing like people”</strong>
-            <p className="text-xs text-slate-500 mt-1">الأزهار تتمايل وترقص كالأصدقاء المحتفلين</p>
+            <p className="text-xs text-slate-500 mt-1 font-ar">الأزهار تتمايل وترقص كالأصدقاء المحتفلين</p>
           </div>
           <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-900">
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">تشبيه 3 (من أمثلة الكتاب):</span>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">Simile 3 (Textbook Example):</span>
             <strong className="font-en text-base block text-slate-900 dark:text-white">“as tall as a tree”</strong>
-            <p className="text-xs text-slate-500 mt-1">شامخ ومهيب كشجرة سنديان عتيقة</p>
+            <p className="text-xs text-slate-500 mt-1 font-ar">شامخ ومهيب كشجرة سنديان عتيقة</p>
           </div>
           <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-900">
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">تشبيه 4 (صفات النور والهدوء):</span>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1">Simile 4 (Quiet & Calm):</span>
             <strong className="font-en text-base block text-slate-900 dark:text-white">“as quiet as a whisper”</strong>
-            <p className="text-xs text-slate-500 mt-1">هادئ ولطيف كهمسة نسيم عابر</p>
+            <p className="text-xs text-slate-500 mt-1 font-ar">هادئ ولطيف كهمسة نسيم عابر</p>
           </div>
         </div>
       </div>
@@ -359,10 +359,10 @@ export const PoemActivities: React.FC = () => {
             </span>
             <div>
               <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                مُنظّم الأبيات الشعرية القصيرة (4-Line Short Poem Composer)
+                Activity 4: 4-Line Short Poem Composer
               </h4>
               <span className="text-xs text-slate-500 dark:text-slate-400">
-                الخطوة 4: Keep lines short (poems don’t need full sentences)
+                Step 4: Keep lines short (poems don’t need full sentences)
               </span>
             </div>
           </div>
@@ -372,13 +372,13 @@ export const PoemActivities: React.FC = () => {
               onClick={handleLoadTextbookShortPoem}
               className="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 transition-colors"
             >
-              📖 نموذج كتاب الوزارة
+              📖 Textbook Example
             </button>
             <button
               onClick={handleLoadSpringSong}
               className="text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 transition-colors"
             >
-              🌸 نموذج أنشودة الربيع
+              🌸 Spring Song Example
             </button>
           </div>
         </div>
@@ -388,7 +388,7 @@ export const PoemActivities: React.FC = () => {
           <div className="lg:col-span-7 space-y-3.5">
             <div>
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                السطر 1 (المشهد / العنصر الأساسي):
+                Line 1 (Setting / Main Subject):
               </label>
               <input
                 type="text"
@@ -401,7 +401,7 @@ export const PoemActivities: React.FC = () => {
             </div>
             <div>
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                السطر 2 (الحركة والتفاعل):
+                Line 2 (Action & Movement):
               </label>
               <input
                 type="text"
@@ -414,7 +414,7 @@ export const PoemActivities: React.FC = () => {
             </div>
             <div>
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                السطر 3 (عنصر الطبيعة أو الصوت):
+                Line 3 (Nature Element or Sound):
               </label>
               <input
                 type="text"
@@ -427,7 +427,7 @@ export const PoemActivities: React.FC = () => {
             </div>
             <div>
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                السطر 4 (الخاتمة أو المشهد الأخير):
+                Line 4 (Conclusion or Final Sight):
               </label>
               <input
                 type="text"
@@ -446,7 +446,7 @@ export const PoemActivities: React.FC = () => {
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold text-rose-700 dark:text-rose-300 flex items-center gap-1.5">
                   <Music className="w-4 h-4" />
-                  <span>معاينة القصيدة المكتملة</span>
+                  <span>Completed Poem Preview</span>
                 </span>
                 <span className="text-[11px] font-en font-bold text-slate-500 bg-white/80 dark:bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
                   4 Short Lines
@@ -466,7 +466,7 @@ export const PoemActivities: React.FC = () => {
               className="mt-6 flex items-center justify-center gap-2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs active:scale-95"
             >
               {copiedPoem ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              <span>{copiedPoem ? 'تم نسخ الأبيات بنجاح!' : 'نسخ الأبيات الشعرية'}</span>
+              <span>{copiedPoem ? 'Copied to Clipboard!' : 'Copy Poem Verses'}</span>
             </button>
           </div>
         </div>

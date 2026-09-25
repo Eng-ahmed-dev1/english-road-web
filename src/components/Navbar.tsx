@@ -23,12 +23,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleDarkMode
 }) => {
   const practiceTabs = [
-    { id: 'match', label: 'مطابقة الكلمات', icon: '⚡' },
-    { id: 'spelling', label: 'تحدي التهجئة', icon: '🔤' },
-    { id: 'collocations', label: 'حروف الجر والمتلازمات', icon: '🔗' },
-    { id: 'fill', label: 'إكمال الجمل', icon: '✏️' },
-    { id: 'sentences', label: 'ترتيب الجمل', icon: '🧩' },
-    { id: 'quiz', label: 'كويز التعريفات', icon: '📝' },
+    { id: 'match', label: 'Word Match', icon: '⚡' },
+    { id: 'spelling', label: 'Spelling Quiz', icon: '🔤' },
+    { id: 'collocations', label: 'Collocations', icon: '🔗' },
+    { id: 'fill', label: 'Fill in Blanks', icon: '✏️' },
+    { id: 'sentences', label: 'Sentence Builder', icon: '🧩' },
+    { id: 'quiz', label: 'Definitions Quiz', icon: '📝' },
   ];
 
   return (
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 English Road
               </span>
               <span className="hidden sm:block text-[11px] text-slate-400 font-medium">
-                منصة تعليمية شاملة للمنهج المدرسي
+                Interactive Secondary Curriculum Platform
               </span>
             </div>
           </div>
@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <select
                 value={currentUnit.id}
                 onChange={(e) => onSelectUnit(e.target.value)}
-                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pl-7 sm:pl-9 pr-2.5 sm:pr-4 py-1.5 sm:py-2.5 max-w-[135px] xs:max-w-[185px] sm:max-w-[300px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
+                className="appearance-none bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-bold rounded-xl pr-7 sm:pr-9 pl-2.5 sm:pl-4 py-1.5 sm:py-2.5 max-w-[140px] xs:max-w-[200px] sm:max-w-[320px] truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-2xs"
               >
                 {units.map((u) => (
                   <option 
@@ -67,18 +67,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                     disabled={!u.isAvailable}
                     className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-1.5"
                   >
-                    {u.title} {!u.isAvailable ? '(قريباً)' : ''}
+                    {u.title} {!u.isAvailable ? '(Coming Soon)' : ''}
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
             {/* Dark / Light Mode Toggle */}
             <button
               onClick={onToggleDarkMode}
-              className="p-2 sm:p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors shadow-2xs shrink-0"
-              title={isDarkMode ? 'التبديل إلى الوضع الفاتح (Light Mode)' : 'التبديل إلى الوضع الداكن (Dark Mode)'}
+              className="p-2 sm:p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-colors shadow-2xs shrink-0 cursor-pointer"
+              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDarkMode ? (
                 <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
@@ -95,39 +95,39 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Core Study Tabs */}
             <button
               onClick={() => setActiveTab('story')}
-              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation cursor-pointer ${
                 activeTab === 'story'
                   ? 'bg-blue-600 text-white shadow-xs font-bold'
                   : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
               }`}
             >
               <span>📖</span>
-              <span>نص الدرس (Reading)</span>
+              <span>Reading Passage</span>
             </button>
 
             <button
               onClick={() => setActiveTab('vocab')}
-              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation cursor-pointer ${
                 activeTab === 'vocab'
                   ? 'bg-blue-600 text-white shadow-xs font-bold'
                   : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
               }`}
             >
               <span>📚</span>
-              <span>بنك المفردات</span>
+              <span>Vocabulary Bank</span>
             </button>
 
             {currentUnit.writingLesson && (
               <button
                 onClick={() => setActiveTab('writing')}
-                className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
+                className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation cursor-pointer ${
                   activeTab === 'writing'
                     ? 'bg-indigo-600 text-white shadow-xs font-bold'
                     : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-850'
                 }`}
               >
                 <span>✍️</span>
-                <span>{currentUnit.writingLesson.lessonTitleArabic || 'الكتابة (Blog)'}</span>
+                <span>{currentUnit.writingLesson.lessonTitle || 'Writing Studio'}</span>
               </button>
             )}
 
@@ -139,10 +139,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation ${
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl whitespace-nowrap shrink-0 transition-all touch-manipulation cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-blue-600 text-white shadow-xs font-bold'
-                    : 'bg-slate-100 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
+                    : 'bg-slate-100 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-850 border border-slate-200/80 dark:border-slate-800'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -156,14 +156,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Versus Battle Tab */}
             <button
               onClick={() => setActiveTab('versus')}
-              className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 font-bold transition-all shadow-xs touch-manipulation ${
+              className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl whitespace-nowrap shrink-0 font-bold transition-all shadow-xs touch-manipulation cursor-pointer ${
                 activeTab === 'versus'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-sm ring-2 ring-amber-400'
                   : 'bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/80 hover:bg-amber-100 dark:hover:bg-amber-900/60'
               }`}
             >
               <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>الوضع التنافسي ⚔️</span>
+              <span>Versus Battle ⚔️</span>
             </button>
           </div>
         </div>
