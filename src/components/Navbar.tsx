@@ -25,7 +25,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenExamGenerator
 }) => {
   const practiceTabs = [
-    { id: 'memory', label: 'Memory Flip', icon: '🃏' },
     { id: 'match', label: 'Word Match', icon: '⚡' },
     { id: 'spelling', label: 'Spelling Quiz', icon: '🔤' },
     { id: 'collocations', label: 'Collocations', icon: '🔗' },

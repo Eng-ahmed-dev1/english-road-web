@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { StoryReader } from './components/StoryReader';
 import { WordMatchGame } from './components/WordMatchGame';
-import { MemoryCardGame } from './components/MemoryCardGame';
 import { SpellingGame } from './components/SpellingGame';
 import { CollocationsGame } from './components/CollocationsGame';
 import { FillBlankGame } from './components/FillBlankGame';
@@ -88,13 +87,6 @@ export function App() {
             unitNumber={currentUnit.unitNumber}
             partNumber={currentUnit.partNumber}
             lessonName={currentUnit.lessonName}
-          />
-        )}
-
-        {activeTab === 'memory' && (
-          <MemoryCardGame
-            words={[...currentUnit.keyVocabulary, ...currentUnit.additionalVocabulary]}
-            unitTitle={currentUnit.title}
           />
         )}
 
