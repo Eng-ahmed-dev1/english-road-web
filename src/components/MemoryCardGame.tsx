@@ -22,27 +22,28 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   unitTitle = 'Current Unit'
 }) => {
   const [cards, setCards] = useState<MemoryCard[]>([]);
-  // IDs of cards currently face-up because user clicked them
+  // IDs of cards currently flipped face-up in the current turn (up to 2)
   const [flippedIds, setFlippedIds] = useState<string[]>([]);
-  // vocabIds of pairs that have been successfully matched
+  // vocabIds of pairs that have been matched
   const [matchedVocabIds, setMatchedVocabIds] = useState<string[]>([]);
-  // IDs of 2 mismatched cards temporarily highlighted in red
+  // IDs of mismatched pair (temporarily showing red border)
   const [mismatchedIds, setMismatchedIds] = useState<string[]>([]);
 
   const [gameState, setGameState] = useState<'preview' | 'playing' | 'won'>('preview');
   const [moves, setMoves] = useState(0);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [roundOffset, setRoundOffset] = useState(0);
+  const [isShuffling, setIsShuffling] = useState(false);
 
   const mismatchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Available unique words in this unit
+  // Filter valid words
   const validWords = words.filter(w => w && w.word && w.arabicMeaning);
   const totalRounds = Math.max(1, Math.ceil(validWords.length / 4));
   const currentRoundIndex = Math.min(totalRounds, Math.floor(roundOffset / 4) + 1);
 
-  // Clear any pending timeout on unmount
+  // Clean timeouts on unmount
   useEffect(() => {
     return () => {
       if (mismatchTimeoutRef.current) clearTimeout(mismatchTimeoutRef.current);
@@ -51,8 +52,8 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   }, []);
 
   // Initialize a round of 4 words (8 cards) in PREVIEW mode:
-  // Top row: 4 English cards
-  // Bottom row: 4 Arabic cards matching them
+  // Row 1: 4 English cards
+  // Row 2: 4 Arabic cards matching them
   const setupDeck = useCallback((offset: number) => {
     if (validWords.length === 0) return;
 
@@ -61,7 +62,6 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       mismatchTimeoutRef.current = null;
     }
 
-    // Pick 4 words starting from offset
     const pickedWords: VocabWord[] = [];
     for (let i = 0; i < 4; i++) {
       const idx = (offset + i) % validWords.length;
@@ -91,6 +91,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
     setMismatchedIds([]);
     setMoves(0);
     setSecondsElapsed(0);
+    setIsShuffling(false);
     setGameState('preview');
   }, [validWords]);
 
@@ -114,36 +115,40 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   }, [gameState]);
 
   // START & SHUFFLE GAME:
-  // "المفروض الاول يبقا ال 8 معمولين على وشهم اول م ادوس start يتقلبوا على ضهرهم و يتشقلبوا"
+  // "اول م ادوس start يتقلبوا على ضهرهم و يتشقلبوا"
   const handleStartGame = () => {
-    soundEffects.playClick();
+    try {
+      soundEffects.playClick();
+    } catch {
+      // ignore
+    }
 
     if (mismatchTimeoutRef.current) {
       clearTimeout(mismatchTimeoutRef.current);
       mismatchTimeoutRef.current = null;
     }
 
-    // Shuffle the 8 cards thoroughly and flip them face down
-    setCards(prev => [...prev].sort(() => Math.random() - 0.5));
-    setFlippedIds([]);
-    setMatchedVocabIds([]);
-    setMismatchedIds([]);
-    setMoves(0);
-    setSecondsElapsed(0);
-    setGameState('playing');
+    setIsShuffling(true);
+
+    // Trigger visual shuffle animation, then shuffle cards and flip face-down
+    setTimeout(() => {
+      setCards(prev => [...prev].sort(() => Math.random() - 0.5));
+      setFlippedIds([]);
+      setMatchedVocabIds([]);
+      setMismatchedIds([]);
+      setMoves(0);
+      setSecondsElapsed(0);
+      setIsShuffling(false);
+      setGameState('playing');
+    }, 250);
   };
 
   // Card click handler
   const handleCardClick = (card: MemoryCard) => {
-    // In preview state: pronounce English words if tapped
+    // If user clicks ANY card during preview mode, automatically START the game!
+    // That way cards NEVER stay frozen/static if the user taps directly on them!
     if (gameState === 'preview') {
-      if (card.type === 'en') {
-        try {
-          speakEnglish(card.text);
-        } catch {
-          // ignore
-        }
-      }
+      handleStartGame();
       return;
     }
 
@@ -151,15 +156,19 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
     // If card is already matched, ignore
     if (matchedVocabIds.includes(card.vocabId)) return;
 
-    // If card is already one of the flipped cards, ignore
+    // If card is already flipped in current turn, ignore
     if (flippedIds.includes(card.id)) return;
 
     // If 2 cards are currently flipped and waiting for mismatch flip-back, ignore clicks
     if (flippedIds.length >= 2) return;
 
-    soundEffects.playClick();
+    try {
+      soundEffects.playClick();
+    } catch {
+      // ignore
+    }
 
-    // Pronounce English card if applicable
+    // Pronounce English word if English card
     if (card.type === 'en') {
       try {
         speakEnglish(card.text);
@@ -168,13 +177,13 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       }
     }
 
-    // First card flipped
+    // First card flipped in this turn
     if (flippedIds.length === 0) {
       setFlippedIds([card.id]);
       return;
     }
 
-    // Second card flipped:
+    // Second card flipped in this turn
     if (flippedIds.length === 1) {
       const firstCardId = flippedIds[0];
       const firstCard = cards.find(c => c.id === firstCardId);
@@ -187,12 +196,17 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       setMoves(m => m + 1);
       setFlippedIds([firstCardId, card.id]);
 
-      // Check match: same vocabId and different types ('en' vs 'ar')
+      // Check match: same vocabId and opposite types ('en' vs 'ar')
       const isMatch = firstCard.vocabId === card.vocabId && firstCard.type !== card.type;
 
       if (isMatch) {
-        // Correct match!
-        soundEffects.playCorrect();
+        // CORRECT MATCH!
+        try {
+          soundEffects.playCorrect();
+        } catch {
+          // ignore
+        }
+
         const nextMatched = [...matchedVocabIds, card.vocabId];
         setMatchedVocabIds(nextMatched);
         setFlippedIds([]);
@@ -200,21 +214,26 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
         // Check if all 4 pairs are matched
         if (nextMatched.length === 4) {
           setGameState('won');
-          soundEffects.playWin();
           try {
+            soundEffects.playWin();
             confetti({
               particleCount: 120,
               spread: 80,
               origin: { y: 0.6 }
             });
           } catch {
-            // fallback
+            // ignore
           }
         }
       } else {
-        // Mismatch!
-        // "لو اختارنا غلط كلهم يتقلبوا تانى بس بدون شقلبة"
-        soundEffects.playWrong();
+        // MISMATCH!
+        // "لو اختارنا غلط كلهم يتقلبوا تانى بس بدون شقلبة فاهم"
+        try {
+          soundEffects.playWrong();
+        } catch {
+          // ignore
+        }
+
         setMismatchedIds([firstCardId, card.id]);
 
         mismatchTimeoutRef.current = setTimeout(() => {
@@ -228,7 +247,11 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
 
   // Next Deck / Round (Next 4 words)
   const handleNextDeck = () => {
-    soundEffects.playClick();
+    try {
+      soundEffects.playClick();
+    } catch {
+      // ignore
+    }
     const nextOffset = (roundOffset + 4) >= validWords.length ? 0 : roundOffset + 4;
     setRoundOffset(nextOffset);
     setupDeck(nextOffset);
@@ -236,7 +259,11 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
 
   // Replay current 4 words
   const handleReplayCurrent = () => {
-    soundEffects.playClick();
+    try {
+      soundEffects.playClick();
+    } catch {
+      // ignore
+    }
     setupDeck(roundOffset);
   };
 
@@ -310,7 +337,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
           </div>
         </div>
 
-        {/* Start Game Action Banner (prominent, centered) */}
+        {/* Start Game Action Banner */}
         {gameState === 'preview' && (
           <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-2xl p-3 sm:p-4 border border-blue-200/60 dark:border-blue-800/60">
             <div className="flex items-center gap-2.5 text-xs sm:text-sm text-blue-950 dark:text-blue-200 font-medium">
@@ -319,7 +346,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                 <strong className="block text-slate-900 dark:text-white font-bold sm:inline sm:mr-1">
                   الـ 8 كروت مفتوحة على وشها للحفظ!
                 </strong>
-                <span>اضغط على الزر ليتم قلب الكروت على ضهرها وشقلبتها لبدء اللعب:</span>
+                <span>اضغط على الزر (أو اضغط على أي كارت) ليتم قلب الكروت على ضهرها وشقلبتها لبدء اللعب:</span>
               </div>
             </div>
 
@@ -338,7 +365,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
           <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs sm:text-sm text-slate-600 dark:text-slate-300">
             <span className="flex items-center gap-1.5 font-medium">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>اقلب كارتين لمطابقة الكلمة الإنجليزية بمعناها بالعربي!</span>
+              <span>اضغط على أي كارت لقلبه ومطابقة الكلمة الإنجليزية بمعناها بالعربي!</span>
             </span>
             <button
               onClick={handleStartGame}
@@ -354,44 +381,100 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       {/* 
         GRID LAYOUT: STRICTLY 2 ROWS (4 cards on top row, 4 cards on bottom row)
         grid-cols-4 on ALL screen sizes!
-        First 4 cards: Row 1
-        Second 4 cards: Row 2
+        First 4 cards: Row 1 (top row)
+        Second 4 cards: Row 2 (bottom row)
         Identical aspect ratio so every card has the EXACT same size.
       */}
-      <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-5">
+      <div className={`grid grid-cols-4 gap-2 sm:gap-4 md:gap-5 transition-transform duration-300 ${isShuffling ? 'scale-95 opacity-50' : 'scale-100 opacity-100'}`}>
         {cards.map((card) => {
           const isMatched = matchedVocabIds.includes(card.vocabId);
-          // Face up if preview mode, or matched, or currently clicked/flipped
+          // Face up if preview mode, or matched, or currently clicked/flipped in this turn
           const isFaceUp = gameState === 'preview' || isMatched || flippedIds.includes(card.id);
           const isMismatched = mismatchedIds.includes(card.id);
 
           return (
-            <button
+            <div
               key={card.id}
               onClick={() => handleCardClick(card)}
-              disabled={isMatched}
-              className={`relative w-full aspect-[3/4] sm:aspect-[4/5] rounded-xl sm:rounded-2xl transition-all duration-200 select-none cursor-pointer focus:outline-none touch-manipulation active:scale-95 ${
-                isMatched ? 'cursor-default opacity-90' : 'hover:scale-[1.02]'
-              }`}
+              className="relative w-full aspect-[3/4] sm:aspect-[4/5] cursor-pointer select-none touch-manipulation group"
+              style={{ perspective: '1000px' }}
             >
-              {isFaceUp ? (
-                /* 
-                  FRONT OF CARD (Face-up):
-                  Shows the word, meaning, badge, and match status
-                */
+              {/* 3D Flip Card Container */}
+              <div
+                className={`relative w-full h-full rounded-xl sm:rounded-2xl transition-transform duration-500 shadow-sm ${
+                  isMismatched ? 'ring-4 ring-rose-500 animate-pulse' : ''
+                }`}
+                style={{
+                  transformStyle: 'preserve-3d',
+                  WebkitTransformStyle: 'preserve-3d',
+                  transform: isFaceUp ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                }}
+              >
+                {/* 
+                  BACK OF CARD (Shown when face-down):
+                  Luxury playing card back design with ER monogram 
+                */}
                 <div
-                  className={`w-full h-full rounded-xl sm:rounded-2xl border-2 sm:border-[3px] flex flex-col justify-between p-1.5 sm:p-3 text-center shadow-md transition-all ${
+                  className="absolute inset-0 rounded-xl sm:rounded-2xl overflow-hidden border-2 sm:border-[3px] border-amber-400/80 bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-amber-300 flex flex-col items-center justify-between p-1.5 sm:p-3 shadow-md group-hover:shadow-lg transition-all"
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden'
+                  }}
+                >
+                  {/* Playing card background texture */}
+                  <div
+                    className="absolute inset-0 opacity-20 pointer-events-none"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 2px 2px, #f59e0b 1px, transparent 0)`,
+                      backgroundSize: '10px 10px'
+                    }}
+                  />
+
+                  {/* Top Suits */}
+                  <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-bold font-mono text-amber-400/80 z-10 leading-none pointer-events-none">
+                    <span>♠</span>
+                    <span>♦</span>
+                  </div>
+
+                  {/* Center ER Monogram Seal */}
+                  <div className="relative z-10 flex flex-col items-center justify-center my-auto pointer-events-none">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-amber-400/90 bg-gradient-to-b from-amber-400/20 to-transparent flex items-center justify-center shadow-inner">
+                      <span className="font-en font-black text-amber-300 text-xs sm:text-base tracking-wider">ER</span>
+                    </div>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-amber-200/90 tracking-widest uppercase mt-0.5 sm:mt-1">
+                      FLIP
+                    </span>
+                  </div>
+
+                  {/* Bottom Suits */}
+                  <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-bold font-mono text-amber-400/80 z-10 leading-none pointer-events-none">
+                    <span>♣</span>
+                    <span>♥</span>
+                  </div>
+                </div>
+
+                {/* 
+                  FRONT OF CARD (Shown when face-up):
+                  Shows the word, meaning, badge, and match status
+                */}
+                <div
+                  className={`absolute inset-0 rounded-xl sm:rounded-2xl border-2 sm:border-[3px] flex flex-col justify-between p-1.5 sm:p-3 text-center shadow-md transition-colors ${
                     isMatched
                       ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 dark:border-emerald-400 ring-2 sm:ring-4 ring-emerald-400/40'
                       : isMismatched
-                      ? 'bg-rose-50 dark:bg-rose-950/70 border-rose-500 ring-2 ring-rose-400/50 animate-pulse'
+                      ? 'bg-rose-50 dark:bg-rose-950/70 border-rose-500'
                       : gameState === 'preview'
-                      ? 'bg-white dark:bg-slate-900 border-blue-300 dark:border-blue-700/80 shadow-xs'
-                      : 'bg-white dark:bg-slate-900 border-blue-500 shadow-md ring-2 ring-blue-300 dark:ring-blue-600'
+                      ? 'bg-white dark:bg-slate-900 border-blue-300 dark:border-blue-700/80'
+                      : 'bg-white dark:bg-slate-900 border-blue-500 dark:border-blue-400 shadow-md ring-2 ring-blue-300 dark:ring-blue-600'
                   }`}
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)'
+                  }}
                 >
                   {/* Card Corner Tag & Audio Button */}
-                  <div className="w-full flex items-center justify-between leading-none">
+                  <div className="w-full flex items-center justify-between leading-none pointer-events-none">
                     <span
                       className={`text-[8px] sm:text-[11px] font-black px-1 sm:px-1.5 py-0.5 rounded ${
                         card.type === 'en'
@@ -405,12 +488,12 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                     {/* Pronunciation button for English cards */}
                     {card.type === 'en' && (
                       <span
+                        className="p-0.5 sm:p-1 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors pointer-events-auto cursor-pointer"
+                        title="Pronounce word"
                         onClick={(e) => {
                           e.stopPropagation();
                           speakEnglish(card.text);
                         }}
-                        className="p-0.5 sm:p-1 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        title="Pronounce word"
                       >
                         <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       </span>
@@ -418,7 +501,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                   </div>
 
                   {/* Card Center: Text */}
-                  <div className="my-auto px-0.5 flex flex-col items-center justify-center">
+                  <div className="my-auto px-0.5 flex flex-col items-center justify-center pointer-events-none">
                     <div
                       className={`font-black tracking-tight leading-tight line-clamp-3 ${
                         card.type === 'en'
@@ -438,7 +521,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                   </div>
 
                   {/* Card Footer: Match Status */}
-                  <div className="w-full flex justify-center items-center min-h-[14px] sm:min-h-[18px] leading-none">
+                  <div className="w-full flex justify-center items-center min-h-[14px] sm:min-h-[18px] leading-none pointer-events-none">
                     {isMatched && (
                       <span className="text-[9px] sm:text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 sm:gap-1">
                         <CheckCircle2 className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
@@ -452,45 +535,8 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                     )}
                   </div>
                 </div>
-              ) : (
-                /* 
-                  BACK OF CARD (Face-down):
-                  Luxury playing card back design with ER monogram 
-                */
-                <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden border-2 sm:border-[3px] border-amber-400/80 bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-amber-300 flex flex-col items-center justify-between p-1.5 sm:p-3 shadow-md hover:shadow-lg transition-all">
-                  {/* Playing card background texture */}
-                  <div
-                    className="absolute inset-0 opacity-20 pointer-events-none"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at 2px 2px, #f59e0b 1px, transparent 0)`,
-                      backgroundSize: '10px 10px'
-                    }}
-                  />
-
-                  {/* Top Suits */}
-                  <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-bold font-mono text-amber-400/80 z-10 leading-none">
-                    <span>♠</span>
-                    <span>♦</span>
-                  </div>
-
-                  {/* Center ER Monogram Seal */}
-                  <div className="relative z-10 flex flex-col items-center justify-center my-auto">
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-amber-400/90 bg-gradient-to-b from-amber-400/20 to-transparent flex items-center justify-center shadow-inner">
-                      <span className="font-en font-black text-amber-300 text-xs sm:text-base tracking-wider">ER</span>
-                    </div>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-amber-200/90 tracking-widest uppercase mt-0.5 sm:mt-1">
-                      FLIP
-                    </span>
-                  </div>
-
-                  {/* Bottom Suits */}
-                  <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-bold font-mono text-amber-400/80 z-10 leading-none">
-                    <span>♣</span>
-                    <span>♥</span>
-                  </div>
-                </div>
-              )}
-            </button>
+              </div>
+            </div>
           );
         })}
       </div>
