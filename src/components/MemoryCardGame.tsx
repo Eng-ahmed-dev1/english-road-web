@@ -15,7 +15,6 @@ interface MemoryCard {
   text: string;
   type: 'en' | 'ar';
   partOfSpeech?: string;
-  isMatched: boolean;
 }
 
 export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
@@ -23,15 +22,19 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   unitTitle = 'Current Unit'
 }) => {
   const [cards, setCards] = useState<MemoryCard[]>([]);
-  const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
-  const [mismatchedCardIds, setMismatchedCardIds] = useState<string[]>([]);
+  // IDs of cards currently face-up because user clicked them
+  const [flippedIds, setFlippedIds] = useState<string[]>([]);
+  // vocabIds of pairs that have been successfully matched
+  const [matchedVocabIds, setMatchedVocabIds] = useState<string[]>([]);
+  // IDs of 2 mismatched cards temporarily highlighted in red
+  const [mismatchedIds, setMismatchedIds] = useState<string[]>([]);
+
   const [gameState, setGameState] = useState<'preview' | 'playing' | 'won'>('preview');
   const [moves, setMoves] = useState(0);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [roundOffset, setRoundOffset] = useState(0);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isShuffling, setIsShuffling] = useState(false);
 
+  const mismatchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Available unique words in this unit
@@ -39,13 +42,26 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   const totalRounds = Math.max(1, Math.ceil(validWords.length / 4));
   const currentRoundIndex = Math.min(totalRounds, Math.floor(roundOffset / 4) + 1);
 
-  // Initialize or deal a round of 4 words (8 cards) in PREVIEW state:
-  // Row 1 (top 4 cards): 4 English cards
-  // Row 2 (bottom 4 cards): 4 Arabic cards matching them
+  // Clear any pending timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (mismatchTimeoutRef.current) clearTimeout(mismatchTimeoutRef.current);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  // Initialize a round of 4 words (8 cards) in PREVIEW mode:
+  // Top row: 4 English cards
+  // Bottom row: 4 Arabic cards matching them
   const setupDeck = useCallback((offset: number) => {
     if (validWords.length === 0) return;
 
-    // Pick 4 words starting from offset, wrapping around if needed
+    if (mismatchTimeoutRef.current) {
+      clearTimeout(mismatchTimeoutRef.current);
+      mismatchTimeoutRef.current = null;
+    }
+
+    // Pick 4 words starting from offset
     const pickedWords: VocabWord[] = [];
     for (let i = 0; i < 4; i++) {
       const idx = (offset + i) % validWords.length;
@@ -57,8 +73,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       vocabId: w.id || `word-${idx}`,
       text: w.word.trim(),
       type: 'en',
-      partOfSpeech: w.partOfSpeech,
-      isMatched: false
+      partOfSpeech: w.partOfSpeech
     }));
 
     const arCards: MemoryCard[] = pickedWords.map((w, idx) => ({
@@ -66,20 +81,16 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       vocabId: w.id || `word-${idx}`,
       text: w.arabicMeaning.split('/')[0].split('(')[0].trim(),
       type: 'ar',
-      partOfSpeech: w.partOfSpeech,
-      isMatched: false
+      partOfSpeech: w.partOfSpeech
     }));
 
-    // Initially in preview mode: Top row 4 English, Bottom row 4 Arabic
-    const previewCards = [...enCards, ...arCards];
-
-    setCards(previewCards);
-    setFlippedCardIds([]);
-    setMismatchedCardIds([]);
+    // In preview: top 4 English, bottom 4 Arabic
+    setCards([...enCards, ...arCards]);
+    setFlippedIds([]);
+    setMatchedVocabIds([]);
+    setMismatchedIds([]);
     setMoves(0);
     setSecondsElapsed(0);
-    setIsProcessing(false);
-    setIsShuffling(false);
     setGameState('preview');
   }, [validWords]);
 
@@ -95,9 +106,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
         setSecondsElapsed(s => s + 1);
       }, 1000);
     } else {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
+      if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -105,117 +114,114 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
   }, [gameState]);
 
   // START & SHUFFLE GAME:
-  // "اول ما نقول start يبداوا يتلخبطوا و يبقا مقلوبين على ضهرهم و احنا نماتش بعد اللخبطة"
+  // "المفروض الاول يبقا ال 8 معمولين على وشهم اول م ادوس start يتقلبوا على ضهرهم و يتشقلبوا"
   const handleStartGame = () => {
     soundEffects.playClick();
-    setIsShuffling(true);
 
-    // Shuffle the cards thoroughly
-    setTimeout(() => {
-      setCards(prev => [...prev].sort(() => Math.random() - 0.5));
-      setIsShuffling(false);
-      setFlippedCardIds([]);
-      setMismatchedCardIds([]);
-      setMoves(0);
-      setSecondsElapsed(0);
-      setGameState('playing');
-    }, 400);
+    if (mismatchTimeoutRef.current) {
+      clearTimeout(mismatchTimeoutRef.current);
+      mismatchTimeoutRef.current = null;
+    }
+
+    // Shuffle the 8 cards thoroughly and flip them face down
+    setCards(prev => [...prev].sort(() => Math.random() - 0.5));
+    setFlippedIds([]);
+    setMatchedVocabIds([]);
+    setMismatchedIds([]);
+    setMoves(0);
+    setSecondsElapsed(0);
+    setGameState('playing');
   };
 
   // Card click handler
   const handleCardClick = (card: MemoryCard) => {
-    // If game is in preview state, allow pronouncing English word or prompt to start
+    // In preview state: pronounce English words if tapped
     if (gameState === 'preview') {
       if (card.type === 'en') {
-        speakEnglish(card.text);
+        try {
+          speakEnglish(card.text);
+        } catch {
+          // ignore
+        }
       }
       return;
     }
 
     // In playing mode:
-    // Ignore if card already matched, currently processing comparison, or card already flipped up
-    if (
-      gameState !== 'playing' ||
-      card.isMatched ||
-      isProcessing ||
-      flippedCardIds.includes(card.id)
-    ) {
-      return;
-    }
+    // If card is already matched, ignore
+    if (matchedVocabIds.includes(card.vocabId)) return;
+
+    // If card is already one of the flipped cards, ignore
+    if (flippedIds.includes(card.id)) return;
+
+    // If 2 cards are currently flipped and waiting for mismatch flip-back, ignore clicks
+    if (flippedIds.length >= 2) return;
 
     soundEffects.playClick();
 
-    // If English card, pronounce it immediately
+    // Pronounce English card if applicable
     if (card.type === 'en') {
-      speakEnglish(card.text);
+      try {
+        speakEnglish(card.text);
+      } catch {
+        // ignore
+      }
     }
 
-    // Flip this card
-    const nextFlipped = [...flippedCardIds, card.id];
-    setFlippedCardIds(nextFlipped);
+    // First card flipped
+    if (flippedIds.length === 0) {
+      setFlippedIds([card.id]);
+      return;
+    }
 
-    // If this is the second card flipped in the turn
-    if (nextFlipped.length === 2) {
-      setMoves(m => m + 1);
-      setIsProcessing(true);
-
-      const firstCard = cards.find(c => c.id === nextFlipped[0]);
-      const secondCard = card;
+    // Second card flipped:
+    if (flippedIds.length === 1) {
+      const firstCardId = flippedIds[0];
+      const firstCard = cards.find(c => c.id === firstCardId);
 
       if (!firstCard) {
-        setIsProcessing(false);
-        setFlippedCardIds([]);
+        setFlippedIds([card.id]);
         return;
       }
 
-      // Check match: same vocabId and opposite types (one 'en' and one 'ar')
-      const isMatch = firstCard.vocabId === secondCard.vocabId && firstCard.type !== secondCard.type;
+      setMoves(m => m + 1);
+      setFlippedIds([firstCardId, card.id]);
+
+      // Check match: same vocabId and different types ('en' vs 'ar')
+      const isMatch = firstCard.vocabId === card.vocabId && firstCard.type !== card.type;
 
       if (isMatch) {
-        // MATCH FOUND!
-        setTimeout(() => {
-          soundEffects.playCorrect();
+        // Correct match!
+        soundEffects.playCorrect();
+        const nextMatched = [...matchedVocabIds, card.vocabId];
+        setMatchedVocabIds(nextMatched);
+        setFlippedIds([]);
 
-          setCards(prev =>
-            prev.map(c =>
-              c.vocabId === firstCard.vocabId ? { ...c, isMatched: true } : c
-            )
-          );
-
-          setFlippedCardIds([]);
-          setIsProcessing(false);
-
-          // Check if all 8 cards are matched
-          setCards(latestCards => {
-            const allMatched = latestCards.every(c => c.vocabId === firstCard.vocabId || c.isMatched);
-            if (allMatched) {
-              setGameState('won');
-              soundEffects.playWin();
-              try {
-                confetti({
-                  particleCount: 120,
-                  spread: 80,
-                  origin: { y: 0.6 }
-                });
-              } catch {
-                // confetti fallback
-              }
-            }
-            return latestCards;
-          });
-        }, 300);
+        // Check if all 4 pairs are matched
+        if (nextMatched.length === 4) {
+          setGameState('won');
+          soundEffects.playWin();
+          try {
+            confetti({
+              particleCount: 120,
+              spread: 80,
+              origin: { y: 0.6 }
+            });
+          } catch {
+            // fallback
+          }
+        }
       } else {
-        // MISMATCH!
-        setTimeout(() => {
-          soundEffects.playWrong();
-          setMismatchedCardIds([firstCard.id, secondCard.id]);
+        // Mismatch!
+        // "لو اختارنا غلط كلهم يتقلبوا تانى بس بدون شقلبة"
+        soundEffects.playWrong();
+        setMismatchedIds([firstCardId, card.id]);
 
-          setTimeout(() => {
-            setFlippedCardIds([]);
-            setMismatchedCardIds([]);
-            setIsProcessing(false);
-          }, 700);
-        }, 400);
+        mismatchTimeoutRef.current = setTimeout(() => {
+          setFlippedIds([]);
+          setMismatchedIds([]);
+          mismatchTimeoutRef.current = null;
+        }, 700);
       }
     }
   };
@@ -248,7 +254,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
     return '⭐';
   };
 
-  const matchedPairsCount = cards.filter(c => c.isMatched).length / 2;
+  const matchedPairsCount = matchedVocabIds.length;
 
   return (
     <div className="max-w-5xl 2xl:max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-6">
@@ -269,7 +275,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
               Playing Cards Match (لعبة كروت الكوتشينة)
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-              {unitTitle} • 4 English words on top & 4 Arabic meanings below. Click Start to shuffle & flip!
+              {unitTitle} • 4 English words on top row & 4 Arabic meanings on bottom row.
             </p>
           </div>
 
@@ -311,9 +317,9 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
               <span className="text-2xl animate-bounce">👇</span>
               <div>
                 <strong className="block text-slate-900 dark:text-white font-bold sm:inline sm:mr-1">
-                  Memorize the 4 words and meanings below!
+                  الـ 8 كروت مفتوحة على وشها للحفظ!
                 </strong>
-                <span>Click &quot;Start & Shuffle&quot; to flip cards on their backs and test your memory!</span>
+                <span>اضغط على الزر ليتم قلب الكروت على ضهرها وشقلبتها لبدء اللعب:</span>
               </div>
             </div>
 
@@ -322,7 +328,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
               className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-extrabold text-sm sm:text-base rounded-xl shadow-lg shadow-indigo-500/25 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shrink-0 animate-pulse"
             >
               <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
-              <span>Start &amp; Shuffle Cards</span>
+              <span>ابدأ واقلب الكروت (Start &amp; Shuffle)</span>
             </button>
           </div>
         )}
@@ -332,14 +338,14 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
           <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs sm:text-sm text-slate-600 dark:text-slate-300">
             <span className="flex items-center gap-1.5 font-medium">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Tap any card to flip and match English with Arabic!</span>
+              <span>اقلب كارتين لمطابقة الكلمة الإنجليزية بمعناها بالعربي!</span>
             </span>
             <button
               onClick={handleStartGame}
               className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-bold cursor-pointer"
             >
               <Shuffle className="w-3.5 h-3.5" />
-              <span>Reshuffle</span>
+              <span>إعادة اللخبطة (Reshuffle)</span>
             </button>
           </div>
         )}
@@ -347,46 +353,111 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
 
       {/* 
         GRID LAYOUT: STRICTLY 2 ROWS (4 cards on top row, 4 cards on bottom row)
-        grid-cols-4 unconditionally on ALL screen sizes!
+        grid-cols-4 on ALL screen sizes!
         First 4 cards: Row 1
         Second 4 cards: Row 2
-        Identical aspect-[3/4] so every card has the EXACT same size.
+        Identical aspect ratio so every card has the EXACT same size.
       */}
-      <div className={`grid grid-cols-4 gap-2 sm:gap-4 md:gap-5 transition-opacity duration-300 ${isShuffling ? 'opacity-30 scale-95' : 'opacity-100'}`}>
+      <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-5">
         {cards.map((card) => {
-          // If in preview mode, all cards are face up!
-          // If in playing mode, card is face up only if flipped or matched
-          const isFaceUp = gameState === 'preview' || card.isMatched || flippedCardIds.includes(card.id);
-          const isMismatched = mismatchedCardIds.includes(card.id);
+          const isMatched = matchedVocabIds.includes(card.vocabId);
+          // Face up if preview mode, or matched, or currently clicked/flipped
+          const isFaceUp = gameState === 'preview' || isMatched || flippedIds.includes(card.id);
+          const isMismatched = mismatchedIds.includes(card.id);
 
           return (
-            <div
+            <button
               key={card.id}
               onClick={() => handleCardClick(card)}
-              className="relative w-full aspect-[3/4] sm:aspect-[4/5] select-none cursor-pointer group touch-manipulation"
-              style={{ perspective: '1000px' }}
+              disabled={isMatched}
+              className={`relative w-full aspect-[3/4] sm:aspect-[4/5] rounded-xl sm:rounded-2xl transition-all duration-200 select-none cursor-pointer focus:outline-none touch-manipulation active:scale-95 ${
+                isMatched ? 'cursor-default opacity-90' : 'hover:scale-[1.02]'
+              }`}
             >
-              {/* 3D Flip Card Container */}
-              <div
-                className="relative w-full h-full transition-transform duration-500 rounded-xl sm:rounded-2xl shadow-sm"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  WebkitTransformStyle: 'preserve-3d',
-                  transform: isFaceUp ? 'rotateY(180deg)' : 'rotateY(0deg)'
-                }}
-              >
-                {/* 
-                  BACK OF CARD (Shown when face-down)
-                  Luxury playing card back design with ER monogram 
-                */}
+              {isFaceUp ? (
+                /* 
+                  FRONT OF CARD (Face-up):
+                  Shows the word, meaning, badge, and match status
+                */
                 <div
-                  className="absolute inset-0 rounded-xl sm:rounded-2xl overflow-hidden border-2 sm:border-[3px] border-amber-400/80 bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-amber-300 flex flex-col items-center justify-between p-1.5 sm:p-3 shadow-md group-hover:shadow-lg transition-all"
-                  style={{
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
-                    zIndex: isFaceUp ? 0 : 2
-                  }}
+                  className={`w-full h-full rounded-xl sm:rounded-2xl border-2 sm:border-[3px] flex flex-col justify-between p-1.5 sm:p-3 text-center shadow-md transition-all ${
+                    isMatched
+                      ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 dark:border-emerald-400 ring-2 sm:ring-4 ring-emerald-400/40'
+                      : isMismatched
+                      ? 'bg-rose-50 dark:bg-rose-950/70 border-rose-500 ring-2 ring-rose-400/50 animate-pulse'
+                      : gameState === 'preview'
+                      ? 'bg-white dark:bg-slate-900 border-blue-300 dark:border-blue-700/80 shadow-xs'
+                      : 'bg-white dark:bg-slate-900 border-blue-500 shadow-md ring-2 ring-blue-300 dark:ring-blue-600'
+                  }`}
                 >
+                  {/* Card Corner Tag & Audio Button */}
+                  <div className="w-full flex items-center justify-between leading-none">
+                    <span
+                      className={`text-[8px] sm:text-[11px] font-black px-1 sm:px-1.5 py-0.5 rounded ${
+                        card.type === 'en'
+                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300'
+                          : 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300'
+                      }`}
+                    >
+                      {card.type === 'en' ? 'EN' : 'AR'}
+                    </span>
+
+                    {/* Pronunciation button for English cards */}
+                    {card.type === 'en' && (
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          speakEnglish(card.text);
+                        }}
+                        className="p-0.5 sm:p-1 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        title="Pronounce word"
+                      >
+                        <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Card Center: Text */}
+                  <div className="my-auto px-0.5 flex flex-col items-center justify-center">
+                    <div
+                      className={`font-black tracking-tight leading-tight line-clamp-3 ${
+                        card.type === 'en'
+                          ? 'font-en text-slate-900 dark:text-white text-[11px] sm:text-base md:text-lg break-words'
+                          : 'font-ar text-blue-700 dark:text-blue-300 text-[11px] sm:text-base md:text-lg break-words'
+                      }`}
+                    >
+                      {card.text}
+                    </div>
+
+                    {/* Part of Speech Pill if English */}
+                    {card.type === 'en' && card.partOfSpeech && (
+                      <span className="hidden xs:inline-block text-[8px] sm:text-[10px] text-slate-400 dark:text-slate-500 font-medium italic mt-0.5 sm:mt-1">
+                        {card.partOfSpeech}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Card Footer: Match Status */}
+                  <div className="w-full flex justify-center items-center min-h-[14px] sm:min-h-[18px] leading-none">
+                    {isMatched && (
+                      <span className="text-[9px] sm:text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 sm:gap-1">
+                        <CheckCircle2 className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
+                        <span>Matched</span>
+                      </span>
+                    )}
+                    {!isMatched && gameState === 'preview' && (
+                      <span className="text-[8px] sm:text-[10px] text-slate-400 font-medium">
+                        {card.type === 'en' ? 'Row 1 (English)' : 'Row 2 (Arabic)'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* 
+                  BACK OF CARD (Face-down):
+                  Luxury playing card back design with ER monogram 
+                */
+                <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden border-2 sm:border-[3px] border-amber-400/80 bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-amber-300 flex flex-col items-center justify-between p-1.5 sm:p-3 shadow-md hover:shadow-lg transition-all">
                   {/* Playing card background texture */}
                   <div
                     className="absolute inset-0 opacity-20 pointer-events-none"
@@ -418,92 +489,8 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
                     <span>♥</span>
                   </div>
                 </div>
-
-                {/* 
-                  FRONT OF CARD (Shown when face-up)
-                  Displays English Word or Arabic Meaning
-                */}
-                <div
-                  className={`absolute inset-0 rounded-xl sm:rounded-2xl border-2 sm:border-[3px] flex flex-col justify-between p-1.5 sm:p-3 text-center shadow-md transition-all ${
-                    card.isMatched
-                      ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 dark:border-emerald-400 ring-2 sm:ring-4 ring-emerald-400/40'
-                      : isMismatched
-                      ? 'bg-rose-50 dark:bg-rose-950/60 border-rose-500 ring-2 ring-rose-400/50 animate-pulse'
-                      : gameState === 'preview'
-                      ? 'bg-white dark:bg-slate-900 border-blue-300 dark:border-blue-700/80'
-                      : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700'
-                  }`}
-                  style={{
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)',
-                    zIndex: isFaceUp ? 2 : 0
-                  }}
-                >
-                  {/* Card Corner Tag & Audio Button */}
-                  <div className="w-full flex items-center justify-between leading-none">
-                    <span
-                      className={`text-[8px] sm:text-[11px] font-black px-1 sm:px-1.5 py-0.5 rounded ${
-                        card.type === 'en'
-                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300'
-                          : 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300'
-                      }`}
-                    >
-                      {card.type === 'en' ? 'EN' : 'AR'}
-                    </span>
-
-                    {/* Pronunciation button for English cards */}
-                    {card.type === 'en' && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          speakEnglish(card.text);
-                        }}
-                        className="p-0.5 sm:p-1 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-                        title="Pronounce word"
-                      >
-                        <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Card Center: Text */}
-                  <div className="my-auto px-0.5 flex flex-col items-center justify-center">
-                    <div
-                      className={`font-black tracking-tight leading-tight line-clamp-3 ${
-                        card.type === 'en'
-                          ? 'font-en text-slate-900 dark:text-white text-[11px] sm:text-base md:text-lg break-words'
-                          : 'font-ar text-blue-700 dark:text-blue-300 text-[11px] sm:text-base md:text-lg break-words'
-                      }`}
-                    >
-                      {card.text}
-                    </div>
-
-                    {/* Part of Speech Pill if English */}
-                    {card.type === 'en' && card.partOfSpeech && (
-                      <span className="hidden xs:inline-block text-[8px] sm:text-[10px] text-slate-400 dark:text-slate-500 font-medium italic mt-0.5 sm:mt-1">
-                        {card.partOfSpeech}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Card Footer: Match Status */}
-                  <div className="w-full flex justify-center items-center min-h-[14px] sm:min-h-[18px] leading-none">
-                    {card.isMatched && (
-                      <span className="text-[9px] sm:text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 sm:gap-1">
-                        <CheckCircle2 className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
-                        <span>Matched</span>
-                      </span>
-                    )}
-                    {!card.isMatched && gameState === 'preview' && (
-                      <span className="text-[8px] sm:text-[10px] text-slate-400 font-medium">
-                        {card.type === 'en' ? 'Top Row' : 'Bottom Row'}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+              )}
+            </button>
           );
         })}
       </div>
@@ -516,10 +503,10 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
           </div>
 
           <h3 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1">
-            Excellent Memory! 🎉 (أحسنت!)
+            Excellent Memory! 🎉 (أحسنت! فوز رائع)
           </h3>
           <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 mb-4">
-            You matched all 4 vocabulary pairs in {moves} moves!
+            وصلت جميع الأزواج بنجاح في {moves} حركات فقط!
           </p>
 
           {/* Performance Rating */}
@@ -567,7 +554,7 @@ export const MemoryCardGame: React.FC<MemoryCardGameProps> = ({
       {/* Footer Info */}
       <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2 text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 text-center">
         <HelpCircle className="w-3.5 h-3.5 shrink-0" />
-        <span>Tip: Exactly 2 rows of 4 cards. 4 English words on top & 4 Arabic meanings below.</span>
+        <span>صفين بس: 4 كروت فوق و 4 كروت تحت بنفس المقاس تماماً.</span>
       </div>
     </div>
   );
